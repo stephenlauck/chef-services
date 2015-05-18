@@ -1,0 +1,46 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.6
+
+suites:
+  - name: chef-server
+    run_list:
+      - recipe[chef-server::default]
+    attributes:
+    driver:
+      vm_hostname: chef.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.10'}]
+
+  - name: analytics
+    run_list:
+      - recipe[chef-analytics::default]
+    attributes:
+    driver:
+      vm_hostname: analytics.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.11'}]
+
+  - name: delivery
+    run_list:
+      - recipe[delivery-cluster::delivery]
+    attributes:
+    driver:
+      vm_hostname: delivery.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.12'}]
+
+  - name: supermarket
+    run_list:
+      - recipe[supermarket-omnibus-cookbook::default]
+    attributes:
+    driver:
+      vm_hostname: supermarket.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.13'}]

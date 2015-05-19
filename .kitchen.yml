@@ -1,6 +1,8 @@
 ---
 driver:
   name: vagrant
+  ssh:
+    insert_key: false
 
 provisioner:
   name: chef_zero
@@ -11,35 +13,68 @@ platforms:
 suites:
   - name: chef-server
     run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::setup_ssh_keys]
       - recipe[chef-server::default]
-    attributes:
+      - recipe[chef-server::addons]
     driver:
       vm_hostname: chef.example.com
       network:
         - ['private_network', {ip: '33.33.33.10'}]
+      customize:
+        memory: 2048
+        cpus: 2
+    attributes:
+      chef-server:
+        api_fqdn: 'chef.example.com'
+        addons:
+          - opscode-manage
+          - opscode-reporting
+          - opscode-push-jobs-server
+        configuration:
+          oc_id:
+            applications:
+              analytics:
+                redirect_uri: 'https://analytics.example.com/'
+              supermarket:
+                redirect_uri: 'https://supermarket.example.com/auth/chef_oauth2/callback'
+          rabbitmq:
+            vip: '33.33.33.10'
+            node_ip_address: '0.0.0.0'
 
   - name: analytics
     run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::replicate_opscode_analytics]
       - recipe[chef-analytics::default]
     attributes:
     driver:
       vm_hostname: analytics.example.com
       network:
         - ['private_network', {ip: '33.33.33.11'}]
+      customize:
+        memory: 1024
+        cpus: 1
 
-  - name: delivery
-    run_list:
-      - recipe[delivery-cluster::delivery]
-    attributes:
-    driver:
-      vm_hostname: delivery.example.com
-      network:
-        - ['private_network', {ip: '33.33.33.12'}]
+  # - name: delivery
+  #   run_list:
+  #     - recipe[delivery-cluster::delivery]
+  #   attributes:
+  #   driver:
+  #     vm_hostname: delivery.example.com
+  #     network:
+  #       - ['private_network', {ip: '33.33.33.12'}]
 
   - name: supermarket
     run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::setup_ssh_keys]
       - recipe[supermarket-omnibus-cookbook::default]
+      - recipe[test::supermarket_oc_id]
     attributes:
+      supermarket_omnibus:
+        chef_server_url: 'https://chef.example.com'
+        chef_oauth2_verify_ssl: false
     driver:
       vm_hostname: supermarket.example.com
       network:

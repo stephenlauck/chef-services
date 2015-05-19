@@ -11,7 +11,8 @@ kitchen converge
 3. chef-delivery
 4. chef-supermarket
 
-### Make sure to upload your Delivery License
+### The delivery server may fail on converge and give an error that your license key was not found.
+### Make sure to upload your Delivery License.
 ```
 scp -i ~/.vagrant.d/insecure_private_key /PATHTOLICENSEKEY/delivery.license root@33.33.33.12:/var/opt/delivery/license/delivery.license
 ```

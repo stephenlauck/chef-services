@@ -6,8 +6,8 @@ cache_path = Chef::Config[:file_cache_path]
 
 file "#{cache_path}/delivery.firstrun" do
   action :create
+  not_if do ::File.exists?("#{cache_path}/delivery.firstrun") || !::File.exists?("/var/opt/delivery/license/delivery.license") end
   notifies :run, 'execute[delivery-ctl reconfigure]', :immediately
-  not_if do ::File.exists?("#{cache_path}/delivery.firstrun") end
 end
 
 execute 'create test enterprise' do

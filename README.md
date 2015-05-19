@@ -1,4 +1,12 @@
 # chef-services
 
-TODO: Enter the cookbook description here.
+```
+kitchen list
+kitchen converge
+```
+### Sets up:
+
+1. chef-server
+2. chef-analytics
+3. supermarket
 

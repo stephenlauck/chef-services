@@ -74,6 +74,9 @@ suites:
       vm_hostname: delivery.example.com
       network:
         - ['private_network', {ip: '33.33.33.12'}]
+      customize:
+        memory: 1024
+        cpus: 1
 
   - name: supermarket
     run_list:
@@ -89,3 +92,6 @@ suites:
       vm_hostname: supermarket.example.com
       network:
         - ['private_network', {ip: '33.33.33.13'}]
+      customize:
+        memory: 1024
+        cpus: 1

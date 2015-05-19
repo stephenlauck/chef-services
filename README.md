@@ -34,3 +34,9 @@ scp -i ~/.vagrant.d/insecure_private_key /PATHTOLICENSEKEY/delivery.license root
 [http://delivery.example.com](http://delivery.example.com)
 
 [http://supermarket.example.com](http://supermarket.example.com)
+
+#### log in credentials for your delivery server are on the server
+```
+kitchen login delivery
+cat /tmp/test.creds
+```

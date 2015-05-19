@@ -19,6 +19,7 @@ suites:
       - recipe[chef-server::default]
       - recipe[chef-server::addons]
       - recipe[test::example_org_and_user]
+      - recipe[test::delivery_setup]
     driver:
       vm_hostname: chef.example.com
       network:
@@ -58,14 +59,21 @@ suites:
         memory: 1024
         cpus: 1
 
-  # - name: delivery
-  #   run_list:
-  #     - recipe[delivery-cluster::delivery]
-  #   attributes:
-  #   driver:
-  #     vm_hostname: delivery.example.com
-  #     network:
-  #       - ['private_network', {ip: '33.33.33.12'}]
+  - name: delivery
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::delivery_keys]
+      - recipe[delivery-cluster::delivery]
+      - recipe[test::create_enterprise]
+    attributes:
+      delivery-cluster:
+        delivery:
+          fqdn: 'delivery.example.com'
+          chef_server: https://chef.example.com/organizations/chef_delivery
+    driver:
+      vm_hostname: delivery.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.12'}]
 
   - name: supermarket
     run_list:

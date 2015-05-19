@@ -6,6 +6,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  chef_zero_port: 9010
 
 platforms:
   - name: centos-6.6
@@ -17,6 +18,7 @@ suites:
       - recipe[test::setup_ssh_keys]
       - recipe[chef-server::default]
       - recipe[chef-server::addons]
+      - recipe[test::example_org_and_user]
     driver:
       vm_hostname: chef.example.com
       network:

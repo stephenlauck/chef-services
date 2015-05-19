@@ -1,5 +1,5 @@
 execute 'chef-server-ctl restart' do
-  action :run
+  action :nothing
 end
 
 cache_path = Chef::Config[:file_cache_path]
@@ -28,11 +28,4 @@ end
 chef_server_org 'example' do
   admins %w{ testuser }
   action :add_admin
-end
-
-cache_path = Chef::Config[:file_cache_path]
-
-file "#{cache_path}/chef-server-core.firstrun" do
-  action :create
-  notifies :reconfigure, 'chef_server_ingredient[chef-server-core]', :immediately
 end

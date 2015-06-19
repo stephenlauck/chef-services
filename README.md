@@ -8,9 +8,7 @@ kitchen converge
 
 1. chef-server
 2. chef-analytics
- 
-~~3. chef-delivery~~
-
+3. ~~chef-delivery~~
 4. chef-supermarket
 
 ### The delivery server may fail on converge and give an error that your license key was not found.

@@ -59,24 +59,24 @@ suites:
         memory: 1024
         cpus: 1
 
-  - name: delivery
-    run_list:
-      - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
-      - recipe[delivery-cluster::delivery]
-      - recipe[test::create_enterprise]
-    attributes:
-      delivery-cluster:
-        delivery:
-          fqdn: 'delivery.example.com'
-          chef_server: https://chef.example.com/organizations/chef_delivery
-    driver:
-      vm_hostname: delivery.example.com
-      network:
-        - ['private_network', {ip: '33.33.33.12'}]
-      customize:
-        memory: 1024
-        cpus: 1
+  # - name: delivery
+  #   run_list:
+  #     - recipe[test::hostsfile]
+  #     - recipe[test::delivery_keys]
+  #     - recipe[delivery-cluster::delivery]
+  #     - recipe[test::create_enterprise]
+  #   attributes:
+  #     delivery-cluster:
+  #       delivery:
+  #         fqdn: 'delivery.example.com'
+  #         chef_server: https://chef.example.com/organizations/chef_delivery
+  #   driver:
+  #     vm_hostname: delivery.example.com
+  #     network:
+  #       - ['private_network', {ip: '33.33.33.12'}]
+  #     customize:
+  #       memory: 1024
+  #       cpus: 1
 
   - name: supermarket
     run_list:

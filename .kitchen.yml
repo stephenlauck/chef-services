@@ -36,6 +36,7 @@ suites:
           - opscode-push-jobs-server
         configuration:
           oc_id:
+            vip: localhost
             applications:
               analytics:
                 redirect_uri: 'https://analytics.example.com/'

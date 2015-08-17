@@ -36,6 +36,7 @@ suites:
           - opscode-push-jobs-server
         configuration:
           oc_id:
+            vip: localhost # workaround for chef version <=12.1.2 expected to be fixed in >12.1.2
             applications:
               analytics:
                 redirect_uri: 'https://analytics.example.com/'

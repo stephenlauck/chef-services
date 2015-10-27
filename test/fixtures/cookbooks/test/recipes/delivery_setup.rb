@@ -34,6 +34,7 @@ end
 
 execute 'knife ssl fetch -c /tmp/config.rb'
 
-execute 'knife upload cookbooks data_bags --chef-repo-path . -c ../config.rb' do
+# execute 'knife upload cookbooks data_bags --chef-repo-path . -c ../config.rb' do
+execute 'knife cookbook upload -a cookbooks -c ../config.rb && knife upload data_bags --chef-repo-path . -c ../config.rb' do
   cwd '/tmp/kitchen'
 end

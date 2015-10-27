@@ -9,11 +9,16 @@ hostsfile_entry '33.33.33.11' do
 end
 
 hostsfile_entry '33.33.33.12' do
-  hostname  'delivery.example.com'
+  hostname  'supermarket.example.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.13' do
-  hostname  'supermarket.example.com'
+  hostname  'delivery.example.com'
+  unique    true
+end
+
+hostsfile_entry '33.33.33.14' do
+  hostname  'build.example.com'
   unique    true
 end

@@ -16,7 +16,9 @@ kitchen converge
 ```
 33.33.33.10 chef.example.com
 33.33.33.11 analytics.example.com
-33.33.33.13 supermarket.example.com
+33.33.33.12 supermarket.example.com
+33.33.33.13 delivery.example.com
+33.33.33.14 build.example.com
 ```
 
 ### Login to each service and authenticate with 'testuser' / 'testuser'

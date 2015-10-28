@@ -1,6 +1,10 @@
 ---
 driver:
   name: vagrant
+  #uncomment synched_folders to transfer this cookbook to the /tmp/data directory
+  #synced_folders:
+  #    - [<%= File.join(ENV['PWD'])%>, '/tmp/data']
+  
   ssh:
     insert_key: false
 
@@ -54,6 +58,13 @@ suites:
       - recipe[test::replicate_opscode_analytics]
       - recipe[chef-analytics::default]
     attributes:
+    # uncomment this to install from package_source where
+    # 1. You've uncommented the synched_folders in lines ~5&6
+    # 2. You've copied the package to the root of chef-services
+    # 3. You've updated the version and package_source values below
+    #  chef-analytics:
+    #    version: '1.1.6-beta.0'
+    #    package_source: '/tmp/data/opscode-analytics-1.1.6-beta.0.rpm'
     driver:
       vm_hostname: analytics.example.com
       network:

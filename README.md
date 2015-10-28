@@ -12,7 +12,7 @@ kitchen converge
 4. delivery
 5. build-node
 
-#### you must have a license key to build Delivery
+#### Must have a license key to build Delivery
 `scp -i ~/.vagrant.d/insecure_private_key /PATH_TO_YOUR/delivery.license root@33.33.33.13:/var/opt/delivery/license/delivery.license`
 
 ### Add this to your local workstation /etc/hosts

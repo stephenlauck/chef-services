@@ -7,9 +7,10 @@ kitchen converge
 ### Sets up:
 
 1. chef-server
-2. chef-analytics
-3. ~~chef-delivery~~
-4. chef-supermarket
+2. analytics
+3. supermarket
+4. delivery
+5. build-node
 
 ### Add this to your local workstation /etc/hosts
 
@@ -21,7 +22,7 @@ kitchen converge
 33.33.33.14 build.example.com
 ```
 
-### Login to each service and authenticate with 'testuser' / 'testuser'
+### Login to each service and authenticate with 'delivery' / 'delivery'
 
 [http://chef.example.com](http://chef.example.com)
 

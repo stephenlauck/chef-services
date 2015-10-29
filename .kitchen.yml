@@ -37,9 +37,9 @@ suites:
       chef-server:
         api_fqdn: 'chef.example.com'
         addons:
-          - opscode-manage
-          - opscode-reporting
-          - opscode-push-jobs-server
+          - manage
+          - reporting
+          - push-server
         configuration:
           oc_id:
             vip: localhost # workaround for chef version <=12.1.2 expected to be fixed in >12.1.2
@@ -95,16 +95,14 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
-      - recipe[test::delivery_license]
-      - recipe[delivery-cluster::delivery]
+      - recipe[test::delivery]
       - recipe[test::create_enterprise]
       - recipe[test::delivery_node]
     attributes:
-      delivery-cluster:
-        delivery:
-          fqdn: 'delivery.example.com'
-          chef_server: https://chef.example.com/organizations/chef_delivery
-          license_file: '/tmp/delivery.license'
+      delivery:
+        fqdn: 'delivery.example.com'
+        chef_server: https://chef.example.com/organizations/chef_delivery
+        version: '0.3.341-1'
     driver:
       vm_hostname: delivery.example.com
       network:

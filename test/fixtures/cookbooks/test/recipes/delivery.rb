@@ -6,7 +6,7 @@ delivery['chef_username']    = "delivery"
 delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
 delivery['chef_server']      = "#{node['delivery']['chef_server']}"
 
-delivery['default_search']   = "((recipes:delivery_build OR recipes:delivery_build\\\\:\\\\:default) AND chef_environment:_default)"
+delivery['default_search']   = "((recipes:delivery_build OR recipes:delivery_build\\\\\\\\:\\\\\\\\:default) AND chef_environment:_default)"
   EOS
   channel :stable
   version node['delivery']['version']

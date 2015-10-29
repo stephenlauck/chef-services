@@ -47,7 +47,7 @@ GRAPH
     chef-server (>= 0.0.0)
   chef-server-ingredient (0.4.0)
     packagecloud (>= 0.0.0)
-  chef-services (1.0.0)
+  chef-services (1.1.0)
     chef-analytics (>= 0.0.0)
     chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)

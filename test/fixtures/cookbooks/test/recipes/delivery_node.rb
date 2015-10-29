@@ -19,17 +19,15 @@ end
 file '/etc/chef/dna.json' do
   content <<-EOF
 {
-    "delivery-cluster": {
-        "delivery": {
-            "fqdn": "delivery.example.com",
-            "chef_server": "https://chef.example.com/organizations/chef_delivery",
-            "license_file": "/tmp/delivery.license"
-        }
+    "delivery": {
+        "fqdn": "delivery.example.com",
+        "chef_server": "https://chef.example.com/organizations/chef_delivery",
+        "version": "0.3.341-1"
     },
     "run_list": [
         "recipe[test::hostsfile]",
         "recipe[test::delivery_keys]",
-        "recipe[delivery-cluster::delivery]",
+        "recipe[test::delivery]",
         "recipe[test::create_enterprise]"
     ]
 }

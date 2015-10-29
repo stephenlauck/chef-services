@@ -1,0 +1,69 @@
+DEPENDENCIES
+  chef-analytics
+    git: https://github.com/stephenlauck/chef-analytics.git
+    revision: c9e7c9eea6637b649cba25ae9ed279f00fe36ff3
+  chef-server
+    git: https://github.com/stephenlauck/chef-server.git
+    revision: 6b22d49431c12ed001cef67a4766b46abf2d3575
+    branch: add_org_and_user
+  chef-services
+    path: .
+    metadata: true
+  delivery-cluster
+    git: https://github.com/stephenlauck/delivery-cluster.git
+    revision: 1c13e88ba29d07b870e96685a606d0d3648486dc
+    branch: deprecate_chef12
+  supermarket-omnibus-cookbook
+    git: https://github.com/stephenlauck/supermarket-omnibus-cookbook.git
+    revision: 71853848667ef0b1c159b20bb97a25b2150c98c4
+    branch: template_supermarket_json
+  test
+    path: test/fixtures/cookbooks/test
+
+GRAPH
+  build-essential (2.2.3)
+  chef-analytics (0.1.0)
+    chef-server-ingredient (>= 0.0.0)
+  chef-server (3.1.1)
+    chef-server-ingredient (>= 0.0.0)
+  chef-server-ingredient (0.3.2)
+    packagecloud (>= 0.0.0)
+  chef-services (0.3.3)
+    chef-analytics (>= 0.0.0)
+    chef-server (>= 0.0.0)
+    delivery-cluster (>= 0.0.0)
+    supermarket-omnibus-cookbook (>= 0.0.0)
+  chef-splunk (1.3.0)
+    chef-vault (>= 1.0.4)
+  chef-vault (1.3.0)
+  chef_handler (1.1.8)
+  delivery-cluster (0.2.19)
+    chef-server-ingredient (>= 0.0.0)
+    chef-splunk (>= 0.0.0)
+    git (>= 0.0.0)
+    packagecloud (>= 0.0.0)
+    push-jobs (>= 0.0.0)
+    supermarket-omnibus-cookbook (>= 0.0.0)
+  dmg (2.2.2)
+  git (4.2.2)
+    build-essential (>= 0.0.0)
+    dmg (>= 0.0.0)
+    windows (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  hostsfile (2.4.5)
+  packagecloud (0.0.17)
+  push-jobs (2.2.0)
+    runit (>= 0.0.0)
+    windows (>= 0.0.0)
+  runit (1.6.0)
+    packagecloud (>= 0.0.0)
+  supermarket-omnibus-cookbook (0.3.1)
+    chef-server-ingredient (>= 0.0.0)
+    hostsfile (>= 0.0.0)
+  test (0.0.1)
+    hostsfile (>= 0.0.0)
+  windows (1.37.0)
+    chef_handler (>= 0.0.0)
+  yum (3.6.0)
+  yum-epel (0.6.0)
+    yum (~> 3.0)

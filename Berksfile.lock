@@ -24,9 +24,8 @@ DEPENDENCIES
     git: https://github.com/chef-cookbooks/omnibus.git
     revision: a6eab8ef602d2a9f76a6d74497857c9e7611b7c3
   supermarket-omnibus-cookbook
-    git: https://github.com/stephenlauck/supermarket-omnibus-cookbook.git
-    revision: 71853848667ef0b1c159b20bb97a25b2150c98c4
-    branch: template_supermarket_json
+    git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
+    revision: 9bd8c0262c4b54dc30601c7921a30b830bdeccb3
   test
     path: test/fixtures/cookbooks/test
 
@@ -75,6 +74,7 @@ GRAPH
     git (>= 0.0.0)
     packagecloud (>= 0.0.0)
   dmg (2.3.0)
+  fancy_execute (1.0.0)
   git (4.3.4)
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
@@ -105,13 +105,15 @@ GRAPH
   remote_install (1.0.1)
   runit (1.7.4)
     packagecloud (>= 0.0.0)
-  supermarket-omnibus-cookbook (0.3.1)
-    chef-server-ingredient (>= 0.0.0)
+  supermarket-omnibus-cookbook (1.1.0)
+    chef-ingredient (>= 0.0.0)
+    fancy_execute (>= 0.0.0)
     hostsfile (>= 0.0.0)
   test (0.0.1)
     chef-ingredient (>= 0.0.0)
     chef-server-ctl (>= 0.0.0)
     hostsfile (>= 0.0.0)
+    supermarket-omnibus-cookbook (>= 0.0.0)
   windows (1.38.2)
     chef_handler (>= 0.0.0)
   windows-sdk (1.0.2)

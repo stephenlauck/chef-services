@@ -4,7 +4,6 @@ driver:
   #uncomment synched_folders to transfer this cookbook to the /tmp/data directory
   #synced_folders:
   #    - [<%= File.join(ENV['PWD'])%>, '/tmp/data']
-  
   ssh:
     insert_key: false
 
@@ -40,17 +39,13 @@ suites:
           - manage
           - reporting
           - push-server
-        configuration:
-          oc_id:
-            vip: localhost # workaround for chef version <=12.1.2 expected to be fixed in >12.1.2
-            applications:
-              analytics:
-                redirect_uri: 'https://analytics.example.com/'
-              supermarket:
-                redirect_uri: 'https://supermarket.example.com/auth/chef_oauth2/callback'
-          rabbitmq:
-            vip: '33.33.33.10'
-            node_ip_address: '0.0.0.0'
+        configuration: |
+          oc_id['applications'] = {
+            "analytics"=>{"redirect_uri"=>"https://analytics.trusty.aws"}, 
+            "supermarket"=>{"redirect_uri"=>"https://default-centos-66/auth/chef_oauth2/callback"}
+          }
+          rabbitmq['vip'] = '33.33.33.10'
+          rabbitmq['node_ip_address'] = '0.0.0.0'
 
   - name: analytics
     run_list:
@@ -77,7 +72,6 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
-      - recipe[supermarket-omnibus-cookbook::default]
       - recipe[test::supermarket_oc_id]
     attributes:
       supermarket_omnibus:

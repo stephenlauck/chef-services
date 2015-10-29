@@ -1,18 +1,28 @@
 DEPENDENCIES
   chef-analytics
-    git: https://github.com/stephenlauck/chef-analytics.git
-    revision: c9e7c9eea6637b649cba25ae9ed279f00fe36ff3
+    git: https://github.com/chef-cookbooks/chef-analytics.git
+    revision: d699be990e18049ab6be43cceb39560164922143
   chef-server
-    git: https://github.com/stephenlauck/chef-server.git
-    revision: 6b22d49431c12ed001cef67a4766b46abf2d3575
-    branch: add_org_and_user
+  chef-server-ctl
+    git: https://github.com/stephenlauck/chef-server-ctl.git
+    revision: 55bfa054f9d5cda86f1a96b28b5ccaddbec7a69d
   chef-services
     path: .
     metadata: true
+  delivery-base
+    git: https://github.com/chef-cookbooks/delivery-base.git
+    revision: 5f17ebe8fd2be9f345bbfb125084122fe81d4468
   delivery-cluster
     git: https://github.com/stephenlauck/delivery-cluster.git
     revision: 1c13e88ba29d07b870e96685a606d0d3648486dc
     branch: deprecate_chef12
+  delivery_build
+    git: https://github.com/chef-cookbooks/delivery_build.git
+    revision: 93d43869df526789cb95189ea2ac44276a47b6e0
+    ref: 93d4386
+  omnibus
+    git: https://github.com/chef-cookbooks/omnibus.git
+    revision: a6eab8ef602d2a9f76a6d74497857c9e7611b7c3
   supermarket-omnibus-cookbook
     git: https://github.com/stephenlauck/supermarket-omnibus-cookbook.git
     revision: 71853848667ef0b1c159b20bb97a25b2150c98c4
@@ -21,22 +31,36 @@ DEPENDENCIES
     path: test/fixtures/cookbooks/test
 
 GRAPH
-  build-essential (2.2.3)
-  chef-analytics (0.1.0)
-    chef-server-ingredient (>= 0.0.0)
-  chef-server (3.1.1)
-    chef-server-ingredient (>= 0.0.0)
-  chef-server-ingredient (0.3.2)
+  7-zip (1.0.2)
+    windows (>= 1.2.2)
+  apt (2.9.2)
+  apt-chef (0.2.0)
+    apt (>= 0.0.0)
+  build-essential (2.2.4)
+  chef-analytics (0.2.0)
+    chef-ingredient (>= 0.12.0)
+  chef-ingredient (0.13.1)
+    apt-chef (>= 0.2.0)
+    yum-chef (>= 0.2.0)
+  chef-server (4.1.0)
+    chef-ingredient (>= 0.11.0)
+  chef-server-ctl (0.1.0)
+    chef-server (>= 0.0.0)
+  chef-server-ingredient (0.4.0)
     packagecloud (>= 0.0.0)
-  chef-services (0.3.3)
+  chef-services (1.0.0)
     chef-analytics (>= 0.0.0)
     chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
-  chef-splunk (1.3.0)
+  chef-splunk (1.4.0)
     chef-vault (>= 1.0.4)
-  chef-vault (1.3.0)
-  chef_handler (1.1.8)
+  chef-sugar (3.1.1)
+  chef-vault (1.3.2)
+  chef_handler (1.2.0)
+  compat_resource (12.5.12)
+  delivery-base (0.1.0)
+    push-jobs (>= 0.0.0)
   delivery-cluster (0.2.19)
     chef-server-ingredient (>= 0.0.0)
     chef-splunk (>= 0.0.0)
@@ -44,26 +68,57 @@ GRAPH
     packagecloud (>= 0.0.0)
     push-jobs (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
-  dmg (2.2.2)
-  git (4.2.2)
+  delivery_build (0.3.3)
+    build-essential (>= 0.0.0)
+    chef-sugar (>= 0.0.0)
+    delivery-base (>= 0.0.0)
+    git (>= 0.0.0)
+    packagecloud (>= 0.0.0)
+  dmg (2.3.0)
+  git (4.3.4)
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
+  homebrew (1.13.0)
+    build-essential (>= 2.1.2)
   hostsfile (2.4.5)
-  packagecloud (0.0.17)
-  push-jobs (2.2.0)
+  languages (0.1.20)
+    build-essential (~> 2.2)
+    chef-sugar (~> 3.1)
+    compat_resource (>= 0.0.0)
+    remote_install (~> 1.0)
+  omnibus (2.7.7)
+    7-zip (~> 1.0)
+    build-essential (~> 2.0)
+    chef-sugar (~> 3.0)
+    homebrew (~> 1.9)
+    languages (>= 0.0.0)
+    windows (~> 1.30)
+    windows-sdk (~> 1.0)
+    wix (~> 2.0)
+  packagecloud (0.1.0)
+  push-jobs (2.6.1)
+    chef-ingredient (>= 0.0.0)
     runit (>= 0.0.0)
     windows (>= 0.0.0)
-  runit (1.6.0)
+  remote_install (1.0.1)
+  runit (1.7.4)
     packagecloud (>= 0.0.0)
   supermarket-omnibus-cookbook (0.3.1)
     chef-server-ingredient (>= 0.0.0)
     hostsfile (>= 0.0.0)
   test (0.0.1)
+    chef-ingredient (>= 0.0.0)
+    chef-server-ctl (>= 0.0.0)
     hostsfile (>= 0.0.0)
-  windows (1.37.0)
+  windows (1.38.2)
     chef_handler (>= 0.0.0)
-  yum (3.6.0)
-  yum-epel (0.6.0)
-    yum (~> 3.0)
+  windows-sdk (1.0.2)
+  wix (2.0.0)
+    windows (>= 1.2.2)
+  yum (3.8.2)
+  yum-chef (0.2.1)
+    yum (>= 3.2)
+  yum-epel (0.6.4)
+    yum (~> 3.2)

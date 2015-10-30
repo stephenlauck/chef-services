@@ -72,7 +72,7 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket_oc_id]
+      - recipe[test::supermarket]
     attributes:
       supermarket_omnibus:
         chef_server_url: 'https://chef.example.com'

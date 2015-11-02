@@ -35,5 +35,5 @@ kitchen converge
 
 [http://delivery.example.com](http://delivery.example.com)
 
-### Delivery credentials for intial login
+### Delivery credentials for admin login
 `kitchen exec delivery -c 'cat /tmp/test.creds'`

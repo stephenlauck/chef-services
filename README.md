@@ -12,7 +12,10 @@ kitchen converge
 4. delivery
 5. build-node
 
-#### Must have a license key to build Delivery
+**The intial `kitchen converge` will fail because of a missing *delivery.license* file. You can obtain a *delivery.license* file from Chef Internal Slack channel #delivery-support**
+
+#### You must obtain a *delivery.license* file to continue. Once you obtain the *delivery.license* file, run the following:
+
 `scp -i ~/.vagrant.d/insecure_private_key /PATH_TO_YOUR/delivery.license root@33.33.33.13:/var/opt/delivery/license/delivery.license`
 
 ### Add this to your local workstation /etc/hosts

@@ -22,7 +22,7 @@ kitchen converge
 33.33.33.14 build.example.com
 ```
 
-### Login to each service and authenticate with 'delivery' / 'delivery'
+### Login to each service and authenticate with user/password: delivery/delivery
 
 [http://chef.example.com](http://chef.example.com)
 

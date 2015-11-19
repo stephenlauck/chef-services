@@ -47,7 +47,7 @@ GRAPH
     hostsfile (>= 0.0.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (1.1.0)
+  chef-services (1.2.0)
     chef-analytics (>= 0.0.0)
     chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)

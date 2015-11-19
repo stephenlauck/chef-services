@@ -96,7 +96,6 @@ suites:
       delivery:
         fqdn: 'delivery.example.com'
         chef_server: https://chef.example.com/organizations/chef_delivery
-        version: '0.3.341-1'
     driver:
       vm_hostname: delivery.example.com
       network:
@@ -112,6 +111,9 @@ suites:
       - recipe[delivery_build::default]
       - recipe[test::delivery_build_node]
     attributes:
+      delivery_build:
+        delivery-cli:
+          options: "--nogpgcheck"
     driver:
       vm_hostname: build.example.com
       network:

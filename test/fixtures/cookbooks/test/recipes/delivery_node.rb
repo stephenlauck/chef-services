@@ -21,8 +21,7 @@ file '/etc/chef/dna.json' do
 {
     "delivery": {
         "fqdn": "delivery.example.com",
-        "chef_server": "https://chef.example.com/organizations/chef_delivery",
-        "version": "0.3.341-1"
+        "chef_server": "https://chef.example.com/organizations/chef_delivery"
     },
     "run_list": [
         "recipe[test::hostsfile]",

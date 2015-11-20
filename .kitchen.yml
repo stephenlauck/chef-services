@@ -121,3 +121,16 @@ suites:
       customize:
         memory: 1024
         cpus: 1
+
+  - name: compliance
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::compliance]
+    attributes:
+    driver:
+      vm_hostname: compliance.example.com
+      network:
+        - ['private_network', {ip: '33.33.33.15'}]
+      customize:
+        memory: 1024
+        cpus: 1        

@@ -26,7 +26,7 @@ suites:
       - recipe[test::example_org_and_user]
       - recipe[test::delivery_setup]
     driver:
-      vm_hostname: chef.example.com
+      vm_hostname: chef.services.com
       network:
         - ['private_network', {ip: '33.33.33.10'}]
       customize:
@@ -34,15 +34,15 @@ suites:
         cpus: 2
     attributes:
       chef-server:
-        api_fqdn: 'chef.example.com'
+        api_fqdn: 'chef.services.com'
         addons:
           - manage
           - reporting
           - push-server
         configuration: |
           oc_id['applications'] = {
-            "analytics"=>{"redirect_uri"=>"https://analytics.example.com/"}, 
-            "supermarket"=>{"redirect_uri"=>"https://supermarket.example.com/auth/chef_oauth2/callback"}
+            "analytics"=>{"redirect_uri"=>"https://analytics.services.com/"}, 
+            "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
           }
           rabbitmq['vip'] = '33.33.33.10'
           rabbitmq['node_ip_address'] = '0.0.0.0'
@@ -61,7 +61,7 @@ suites:
     #    version: '1.1.6-beta.0'
     #    package_source: '/tmp/data/opscode-analytics-1.1.6-beta.0.rpm'
     driver:
-      vm_hostname: analytics.example.com
+      vm_hostname: analytics.services.com
       network:
         - ['private_network', {ip: '33.33.33.11'}]
       customize:
@@ -75,10 +75,10 @@ suites:
       - recipe[test::supermarket]
     attributes:
       supermarket_omnibus:
-        chef_server_url: 'https://chef.example.com'
+        chef_server_url: 'https://chef.services.com'
         chef_oauth2_verify_ssl: false
     driver:
-      vm_hostname: supermarket.example.com
+      vm_hostname: supermarket.services.com
       network:
         - ['private_network', {ip: '33.33.33.12'}]
       customize:
@@ -94,10 +94,10 @@ suites:
       - recipe[test::delivery_node]
     attributes:
       delivery:
-        fqdn: 'delivery.example.com'
-        chef_server: https://chef.example.com/organizations/chef_delivery
+        fqdn: 'delivery.services.com'
+        chef_server: https://chef.services.com/organizations/chef_delivery
     driver:
-      vm_hostname: delivery.example.com
+      vm_hostname: delivery.services.com
       network:
         - ['private_network', {ip: '33.33.33.13'}]
       customize:
@@ -115,7 +115,7 @@ suites:
         delivery-cli:
           options: "--nogpgcheck"
     driver:
-      vm_hostname: build.example.com
+      vm_hostname: build.services.com
       network:
         - ['private_network', {ip: '33.33.33.14'}]
       customize:
@@ -128,7 +128,7 @@ suites:
       - recipe[test::compliance]
     attributes:
     driver:
-      vm_hostname: compliance.example.com
+      vm_hostname: compliance.services.com
       network:
         - ['private_network', {ip: '33.33.33.15'}]
       customize:

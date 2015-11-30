@@ -13,7 +13,7 @@ end
 chef_server_user 'testuser' do
   firstname 'Test'
   lastname 'User'
-  email 'testuser@example.com'
+  email 'testuser@services.com'
   password 'testuser'
   private_key_path '/tmp/testuser.pem'
   action :create

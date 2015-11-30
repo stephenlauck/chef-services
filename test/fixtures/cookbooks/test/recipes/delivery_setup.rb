@@ -2,7 +2,7 @@
 chef_server_user 'delivery' do
   firstname 'Delivery'
   lastname 'User'
-  email 'delivery@example.com'
+  email 'delivery@services.com'
   password 'delivery'
   private_key_path '/tmp/delivery.pem'
   action :create
@@ -27,7 +27,7 @@ node_name                "delivery"
 client_key               "/tmp/delivery.pem"
 validation_client_name   "chef_delivery-validator"
 validation_key           "/tmp/delivery-validator.pem"
-chef_server_url          "https://chef.example.com/organizations/chef_delivery"
+chef_server_url          "https://chef.services.com/organizations/chef_delivery"
 cookbook_path            ["/tmp/kitchen/cookbooks"]
 EOF
 end

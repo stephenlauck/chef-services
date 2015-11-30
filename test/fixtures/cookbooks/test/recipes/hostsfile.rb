@@ -1,29 +1,29 @@
 hostsfile_entry '33.33.33.10' do
-  hostname  'chef.example.com'
+  hostname  'chef.services.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.11' do
-  hostname  'analytics.example.com'
+  hostname  'analytics.services.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.12' do
-  hostname  'supermarket.example.com'
+  hostname  'supermarket.services.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.13' do
-  hostname  'delivery.example.com'
+  hostname  'delivery.services.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.14' do
-  hostname  'build.example.com'
+  hostname  'build.services.com'
   unique    true
 end
 
 hostsfile_entry '33.33.33.15' do
-  hostname  'compliance.example.com'
+  hostname  'compliance.services.com'
   unique    true
 end

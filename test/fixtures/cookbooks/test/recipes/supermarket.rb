@@ -1,5 +1,5 @@
 
-execute "scp -i /root/.ssh/insecure_private_key -o StrictHostKeyChecking=no -r root@chef.example.com:/etc/opscode/oc-id-applications/supermarket.json /tmp/"
+execute "scp -i /root/.ssh/insecure_private_key -o StrictHostKeyChecking=no -r root@chef.services.com:/etc/opscode/oc-id-applications/supermarket.json /tmp/"
 
 supermarket_server 'supermarket' do
   chef_server_url node['supermarket_omnibus']['chef_server_url']

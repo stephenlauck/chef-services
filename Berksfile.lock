@@ -26,7 +26,7 @@ DEPENDENCIES
     revision: 0cf08c7e47af5c2616a6c18d82f1882380c622a8
   supermarket-omnibus-cookbook
     git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
-    revision: 9bd8c0262c4b54dc30601c7921a30b830bdeccb3
+    revision: c6134880d934914e783bfc12ba11b6a3893d4e3f
   test
     path: test/fixtures/cookbooks/test
 
@@ -47,7 +47,7 @@ GRAPH
     hostsfile (>= 0.0.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (1.2.0)
+  chef-services (1.4.0)
     chef-analytics (>= 0.0.0)
     chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)
@@ -81,7 +81,7 @@ GRAPH
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
   hostsfile (2.4.5)
-  packagecloud (0.1.0)
+  packagecloud (0.1.1)
   push-jobs (2.6.4)
     chef-ingredient (>= 0.0.0)
     runit (>= 0.0.0)
@@ -102,5 +102,5 @@ GRAPH
   yum (3.8.2)
   yum-chef (0.2.1)
     yum (>= 3.2)
-  yum-epel (0.6.4)
+  yum-epel (0.6.5)
     yum (~> 3.2)

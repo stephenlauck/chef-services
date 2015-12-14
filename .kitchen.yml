@@ -108,6 +108,7 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
+      - recipe[push-jobs::default]
       - recipe[delivery_build::default]
       - recipe[test::delivery_build_node]
     attributes:

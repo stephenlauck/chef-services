@@ -24,8 +24,8 @@ file '/etc/chef/dna.json' do
         }
     },
     "run_list": [
-        "recipe[delivery_build]",
-        "recipe[push-jobs]"
+        "recipe[push-jobs::default]",
+        "recipe[delivery_build::default]"
     ]
 }
   EOF
@@ -41,4 +41,4 @@ execute 'cp /etc/delivery/delivery.pem /var/opt/delivery/workspace/.chef'
 
 execute 'knife ssl fetch -c /etc/chef/client.rb'
 
-execute 'chef-client -j /etc/chef/dna.json'
+execute '/opt/chef/bin/chef-client -j /etc/chef/dna.json'

@@ -15,6 +15,7 @@ provisioner:
 
 platforms:
   - name: centos-6.7
+  - name: ubuntu-14.04
 
 suites:
   - name: chef-server

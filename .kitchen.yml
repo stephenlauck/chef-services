@@ -16,6 +16,8 @@ provisioner:
 platforms:
   - name: centos-6.7
   - name: ubuntu-14.04
+    run_list:
+      - recipe[apt::default]
 
 suites:
   - name: chef-server

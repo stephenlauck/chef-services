@@ -42,9 +42,10 @@ suites:
           - manage
           - reporting
           - push-server
+        accept_license: true
         configuration: |
           oc_id['applications'] = {
-            "analytics"=>{"redirect_uri"=>"https://analytics.services.com/"}, 
+            "analytics"=>{"redirect_uri"=>"https://analytics.services.com/"},
             "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
           }
           rabbitmq['vip'] = '33.33.33.10'
@@ -56,6 +57,8 @@ suites:
       - recipe[test::replicate_opscode_analytics]
       - recipe[chef-analytics::default]
     attributes:
+      chef-analytics:
+        accept_license: true
     # uncomment this to install from package_source where
     # 1. You've uncommented the synched_folders in lines ~5&6
     # 2. You've copied the package to the root of chef-services
@@ -117,7 +120,6 @@ suites:
     attributes:
       delivery_build:
         delivery-cli:
-          options: "--nogpgcheck"
     driver:
       vm_hostname: build.services.com
       network:
@@ -131,10 +133,12 @@ suites:
       - recipe[test::hostsfile]
       - recipe[test::compliance]
     attributes:
+      compliance:
+        accept_license: true
     driver:
       vm_hostname: compliance.services.com
       network:
         - ['private_network', {ip: '33.33.33.15'}]
       customize:
         memory: 1024
-        cpus: 1        
+        cpus: 1

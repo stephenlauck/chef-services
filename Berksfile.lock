@@ -1,13 +1,13 @@
 DEPENDENCIES
   chef-ingredient
     git: https://github.com/chef-cookbooks/chef-ingredient.git
-    revision: 097d70648fd2e872a3f37779aef37e1a3b8c8eca
+    revision: 375df47818c7ce61dc71c033c2ff4d1cf2a6558c
   chef-server
     git: https://github.com/chef-cookbooks/chef-server.git
     revision: ff5055733870cbfb6c0c900189210be595cab337
   chef-server-12
     git: https://github.com/chef-cookbooks/delivery-cluster.git
-    revision: f84c16d377d4f86760d901b1d0ff68440193168e
+    revision: 5371465da2cbd28a8a0f9f1351ae66bee2f5e60d
     rel: vendor/chef-server-12
   chef-server-ctl
     git: https://github.com/stephenlauck/chef-server-ctl.git
@@ -17,16 +17,16 @@ DEPENDENCIES
     metadata: true
   delivery-base
     git: https://github.com/chef-cookbooks/delivery-base.git
-    revision: 876b0e0c6fd1b95947cfebfb6c3d824d6dfd3f1c
+    revision: 246ff5c8ef07a6d5f99d19082d4e1bd2cc53f129
   delivery-cluster
     git: https://github.com/chef-cookbooks/delivery-cluster.git
-    revision: f84c16d377d4f86760d901b1d0ff68440193168e
+    revision: 5371465da2cbd28a8a0f9f1351ae66bee2f5e60d
   delivery_build
     git: https://github.com/chef-cookbooks/delivery_build.git
-    revision: af25ef636a4134c68e21e28db051086d1ff9634a
+    revision: 7e109e9539b6a79424ebe612447f1d2d9c5c0538
   push-jobs
     git: https://github.com/chef-cookbooks/push-jobs.git
-    revision: 558b8c980d7b591cbaba45621e0acdbade13f1f9
+    revision: c56494a98ecbfe2bf9d5676d7b2082c8af1042e2
   supermarket-omnibus-cookbook
     git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
     revision: 552ea1fed606422799db649b8e15424f606c795f
@@ -34,34 +34,36 @@ DEPENDENCIES
     path: test/fixtures/cookbooks/test
 
 GRAPH
-  apt (3.0.0)
-  build-essential (4.0.0)
-    mingw (>= 0.0.0)
+  apt (4.0.1)
+    compat_resource (>= 12.10)
+  build-essential (6.0.2)
+    compat_resource (>= 12.10)
+    mingw (>= 1.1)
     seven_zip (>= 0.0.0)
   chef-analytics (0.2.0)
     chef-ingredient (>= 0.12.0)
-  chef-ingredient (0.18.4)
+  chef-ingredient (0.19.0)
   chef-server (5.0.1)
     chef-ingredient (>= 0.18.0)
-  chef-server-12 (0.1.13)
+  chef-server-12 (0.1.17)
     chef-ingredient (>= 0.0.0)
     hostsfile (>= 0.0.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (1.4.0)
+  chef-services (1.5.0)
     chef-analytics (>= 0.0.0)
     chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
-  chef-splunk (1.5.0)
+  chef-splunk (1.6.0)
     chef-vault (>= 1.0.4)
-  chef-sugar (3.3.0)
+  chef-sugar (3.4.0)
   chef-vault (1.3.3)
   chef_handler (1.4.0)
-  compat_resource (12.9.1)
-  delivery-base (0.2.1)
+  compat_resource (12.10.7)
+  delivery-base (0.2.2)
     push-jobs (>= 0.0.0)
-  delivery-cluster (0.6.11)
+  delivery-cluster (0.6.15)
     apt (>= 0.0.0)
     chef-ingredient (>= 0.18.0)
     chef-server-12 (>= 0.0.0)
@@ -69,7 +71,7 @@ GRAPH
     delivery_build (>= 0.0.0)
     git (>= 0.0.0)
     yum (>= 0.0.0)
-  delivery_build (0.4.25)
+  delivery_build (0.4.28)
     build-essential (>= 0.0.0)
     chef-ingredient (>= 0.18.0)
     chef-sugar (>= 0.0.0)
@@ -77,23 +79,25 @@ GRAPH
     git (>= 0.0.0)
   dmg (2.4.0)
   fancy_execute (1.0.1)
-  git (4.5.0)
+  git (4.6.0)
     build-essential (>= 0.0.0)
     dmg (>= 0.0.0)
     windows (>= 0.0.0)
     yum-epel (>= 0.0.0)
   hostsfile (2.4.5)
-  mingw (1.0.0)
+  mingw (1.2.3)
     compat_resource (>= 0.0.0)
     seven_zip (>= 0.0.0)
-  packagecloud (0.2.0)
-  push-jobs (2.6.6)
+  packagecloud (0.2.4)
+  push-jobs (3.2.0)
     chef-ingredient (>= 0.18.0)
-    runit (>= 0.0.0)
+    compat_resource (>= 0.0.0)
+    runit (>= 1.2.0)
     windows (>= 0.0.0)
-  runit (1.7.8)
+  runit (1.8.0)
     packagecloud (>= 0.0.0)
-  seven_zip (2.0.0)
+    yum-epel (>= 0.0.0)
+  seven_zip (2.0.1)
     windows (>= 1.2.2)
   supermarket-omnibus-cookbook (1.4.1)
     chef-ingredient (>= 0.18.0)
@@ -104,8 +108,8 @@ GRAPH
     chef-server-ctl (>= 0.0.0)
     hostsfile (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
-  windows (1.40.0)
+  windows (1.44.1)
     chef_handler (>= 0.0.0)
-  yum (3.10.0)
+  yum (3.11.0)
   yum-epel (0.7.0)
     yum (>= 3.6.3)

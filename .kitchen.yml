@@ -1,9 +1,6 @@
 ---
 driver:
   name: vagrant
-  #uncomment synched_folders to transfer this cookbook to the /tmp/data directory
-  #synced_folders:
-  #    - [<%= File.join(ENV['PWD'])%>, '/tmp/data']
   ssh:
     insert_key: false
 
@@ -15,7 +12,13 @@ provisioner:
 
 platforms:
   - name: centos-6.8
+    run_list:
+      - recipe[yum::default]
+      - recipe[test::yum_update]
   - name: centos-7.2
+    run_list:
+      - recipe[yum::default]
+      - recipe[test::yum_update]
   - name: ubuntu-14.04
     run_list:
       - recipe[apt::default]
@@ -28,10 +31,9 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
-      - recipe[chef-server::default]
-      - recipe[chef-server::addons]
-      - recipe[test::example_org_and_user]
-      - recipe[test::delivery_setup]
+      - recipe[test::chef-server]
+      # - recipe[test::example_org_and_user]
+      # - recipe[test::delivery_setup]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -40,43 +42,6 @@ suites:
         memory: 2048
         cpus: 2
     attributes:
-      chef-server:
-        api_fqdn: 'chef.services.com'
-        addons:
-          - manage
-          - reporting
-          - push-server
-        accept_license: true
-        configuration: |
-          oc_id['applications'] = {
-            "analytics"=>{"redirect_uri"=>"https://analytics.services.com/"},
-            "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
-          }
-          rabbitmq['vip'] = '33.33.33.10'
-          rabbitmq['node_ip_address'] = '0.0.0.0'
-
-  - name: analytics
-    run_list:
-      - recipe[test::hostsfile]
-      - recipe[test::replicate_opscode_analytics]
-      - recipe[chef-analytics::default]
-    attributes:
-      chef-analytics:
-        accept_license: true
-    # uncomment this to install from package_source where
-    # 1. You've uncommented the synched_folders in lines ~5&6
-    # 2. You've copied the package to the root of chef-services
-    # 3. You've updated the version and package_source values below
-    #  chef-analytics:
-    #    version: '1.1.6-beta.0'
-    #    package_source: '/tmp/data/opscode-analytics-1.1.6-beta.0.rpm'
-    driver:
-      vm_hostname: analytics.services.com
-      network:
-        - ['private_network', {ip: '33.33.33.11'}]
-      customize:
-        memory: 1024
-        cpus: 1
 
   - name: supermarket
     run_list:

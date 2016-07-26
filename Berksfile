@@ -2,7 +2,6 @@ source "https://supermarket.chef.io"
 
 metadata
 
-cookbook 'chef-server', git: 'https://github.com/chef-cookbooks/chef-server.git'
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
 cookbook 'supermarket-omnibus-cookbook', git: 'https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git'
 cookbook 'delivery-cluster', git: 'https://github.com/chef-cookbooks/delivery-cluster.git'
@@ -15,4 +14,3 @@ cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredi
 group :integration do
   cookbook 'test', path: './test/fixtures/cookbooks/test'
 end
-

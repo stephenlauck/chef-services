@@ -2,9 +2,6 @@ DEPENDENCIES
   chef-ingredient
     git: https://github.com/chef-cookbooks/chef-ingredient.git
     revision: 375df47818c7ce61dc71c033c2ff4d1cf2a6558c
-  chef-server
-    git: https://github.com/chef-cookbooks/chef-server.git
-    revision: ff5055733870cbfb6c0c900189210be595cab337
   chef-server-12
     git: https://github.com/chef-cookbooks/delivery-cluster.git
     revision: 5371465da2cbd28a8a0f9f1351ae66bee2f5e60d
@@ -51,10 +48,11 @@ GRAPH
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
   chef-services (1.5.0)
+    apt (>= 0.0.0)
     chef-analytics (>= 0.0.0)
-    chef-server (>= 0.0.0)
     delivery-cluster (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
+    yum (>= 0.0.0)
   chef-splunk (1.6.0)
     chef-vault (>= 1.0.4)
   chef-sugar (3.4.0)

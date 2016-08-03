@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license          'all_rights'
 description      'Installs/Configures chef-services'
 long_description 'Installs/Configures chef-services'
-version          '1.5.0'
+version          '2.0.0'
 
 depends 'yum'
 depends 'apt'

@@ -8,13 +8,13 @@ chef_server_user 'delivery' do
   action :create
 end
 
-chef_server_org 'chef_delivery' do
+chef_server_org 'delivery' do
   org_long_name 'Chef Delivery Organization'
   org_private_key_path '/tmp/delivery-validator.pem'
   action :create
 end
 
-chef_server_org 'chef_delivery' do
+chef_server_org 'delivery' do
   admins %w{ delivery }
   action :add_admin
 end
@@ -25,9 +25,9 @@ log_level                :info
 log_location             STDOUT
 node_name                "delivery"
 client_key               "/tmp/delivery.pem"
-validation_client_name   "chef_delivery-validator"
+validation_client_name   "delivery-validator"
 validation_key           "/tmp/delivery-validator.pem"
-chef_server_url          "https://chef.services.com/organizations/chef_delivery"
+chef_server_url          "https://chef.services.com/organizations/delivery"
 cookbook_path            ["/tmp/kitchen/cookbooks"]
 EOF
 end

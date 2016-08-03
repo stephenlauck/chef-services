@@ -1,6 +1,10 @@
 chef_ingredient "chef-server" do
   config <<-EOS
 api_fqdn "chef.services.com"
+
+oc_id['applications'] = {
+  "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
+}
 EOS
   action :upgrade
   version :latest

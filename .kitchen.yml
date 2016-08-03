@@ -14,17 +14,21 @@ platforms:
   - name: centos-6.8
     run_list:
       - recipe[yum::default]
-      - recipe[test::yum_update]
+      # - recipe[test::yum_update]
   - name: centos-7.2
     run_list:
       - recipe[yum::default]
-      - recipe[test::yum_update]
+      # - recipe[test::yum_update]
   - name: ubuntu-14.04
     run_list:
       - recipe[apt::default]
   - name: ubuntu-16.04
     run_list:
       - recipe[apt::default]
+  - name: suse/sles11sp3
+    driver:
+      box: suse/sles11sp3
+      box_url: https://atlas.hashicorp.com/suse/boxes/sles11sp3
 
 suites:
   - name: chef-server
@@ -32,8 +36,6 @@ suites:
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
       - recipe[test::chef-server]
-      # - recipe[test::example_org_and_user]
-      # - recipe[test::delivery_setup]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -43,24 +45,7 @@ suites:
         cpus: 2
     attributes:
 
-  - name: supermarket
-    run_list:
-      - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket]
-    attributes:
-      supermarket_omnibus:
-        chef_server_url: 'https://chef.services.com'
-        chef_oauth2_verify_ssl: false
-    driver:
-      vm_hostname: supermarket.services.com
-      network:
-        - ['private_network', {ip: '33.33.33.12'}]
-      customize:
-        memory: 1024
-        cpus: 1
-
-  - name: delivery
+  - name: automate
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
@@ -69,12 +54,14 @@ suites:
       - recipe[test::delivery_node]
     attributes:
       delivery:
-        fqdn: 'delivery.services.com'
-        chef_server: https://chef.services.com/organizations/chef_delivery
+        fqdn: 'automate.services.com'
+        chef_server: https://chef.services.com/organizations/delivery
+        insights:
+          enable: true
     driver:
-      vm_hostname: delivery.services.com
+      vm_hostname: automate.services.com
       network:
-        - ['private_network', {ip: '33.33.33.13'}]
+        - ['private_network', {ip: '33.33.33.11'}]
       customize:
         memory: 1024
         cpus: 1
@@ -92,7 +79,24 @@ suites:
     driver:
       vm_hostname: build.services.com
       network:
-        - ['private_network', {ip: '33.33.33.14'}]
+        - ['private_network', {ip: '33.33.33.12'}]
+      customize:
+        memory: 1024
+        cpus: 1
+
+  - name: supermarket
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::setup_ssh_keys]
+      - recipe[test::supermarket]
+    attributes:
+      supermarket_omnibus:
+        chef_server_url: 'https://chef.services.com'
+        chef_oauth2_verify_ssl: false
+    driver:
+      vm_hostname: supermarket.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.13'}]
       customize:
         memory: 1024
         cpus: 1
@@ -107,7 +111,7 @@ suites:
     driver:
       vm_hostname: compliance.services.com
       network:
-        - ['private_network', {ip: '33.33.33.15'}]
+        - ['private_network', {ip: '33.33.33.14'}]
       customize:
         memory: 1024
         cpus: 1

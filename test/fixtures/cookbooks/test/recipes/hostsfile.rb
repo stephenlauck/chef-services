@@ -14,7 +14,7 @@ hostsfile_entry '33.33.33.12' do
 end
 
 hostsfile_entry '33.33.33.13' do
-  hostname  'delivery.services.com'
+  hostname  'automate.services.com'
   unique    true
 end
 

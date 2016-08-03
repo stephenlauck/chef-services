@@ -1,5 +1,5 @@
 default['delivery']['version'] = 'latest'
-default['delivery']['chef_server'] = 'https://chef.services.com/organizations/chef_delivery'
+default['delivery']['chef_server'] = 'https://chef.services.com/organizations/delivery'
 
 default['compliance']['version'] = 'latest'
 default['compliance']['package_source'] = nil

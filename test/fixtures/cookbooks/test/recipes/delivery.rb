@@ -6,7 +6,7 @@ delivery['chef_username']    = "delivery"
 delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
 delivery['chef_server']      = "#{node['delivery']['chef_server']}"
 
-delivery['default_search']   = "((recipes:delivery_build OR recipes:delivery_build\\\\\\\\:\\\\\\\\:default) AND chef_environment:_default)"
+delivery['default_search']   = "((recipes:delivery_build OR tags:delivery-build-node OR recipes:delivery_build\\\\\\\\:\\\\\\\\:default) AND chef_environment:_default)"
 
 insights['enable'] = true
   EOS
@@ -16,4 +16,22 @@ end
 
 ingredient_config "delivery" do
   notifies :reconfigure, "chef_ingredient[delivery]", :immediately
+end
+
+
+# build node
+
+# install chefdk
+chef_ingredient 'chefdk' do
+  action :upgrade
+end
+
+# set chefdk as default
+file '/etc/bashrc' do
+  content lazy {
+    txt = 'eval "$(chef shell-init bash)"'
+    lines = ::File.read('/etc/bashrc').split("\n")
+    lines << txt unless lines.include?(txt)
+    lines.join("\n")
+  }
 end

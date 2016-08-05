@@ -71,11 +71,10 @@ suites:
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
       - recipe[push-jobs::default]
-      - recipe[delivery_build::default]
-      - recipe[test::delivery_build_node]
+      - recipe[test::build_node]
+      # - recipe[delivery_build::default]
+      # - recipe[test::delivery_build_node]
     attributes:
-      delivery_build:
-        delivery-cli:
     driver:
       vm_hostname: build.services.com
       network:
@@ -108,6 +107,7 @@ suites:
     attributes:
       compliance:
         accept_license: true
+        fqdn: compliance.services.com
     driver:
       vm_hostname: compliance.services.com
       network:

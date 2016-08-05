@@ -15,9 +15,9 @@ kitchen converge
 
 ```
 33.33.33.10 chef.services.com
-33.33.33.13 supermarket.services.com
 33.33.33.11 automate.services.com
 33.33.33.12 build.services.com
+33.33.33.13 supermarket.services.com
 33.33.33.14 compliance.services.com
 ```
 

@@ -15,27 +15,26 @@ verifier:
 
 platforms:
   - name: centos-6.8
-    run_list:
-      - recipe[yum::default]
-      # - recipe[test::yum_update]
   - name: centos-7.2
-    run_list:
-      - recipe[yum::default]
-      # - recipe[test::yum_update]
   - name: ubuntu-14.04
-    run_list:
-      - recipe[apt::default]
   - name: ubuntu-16.04
-    run_list:
-      - recipe[apt::default]
   - name: suse/sles11sp3
     driver:
       box: suse/sles11sp3
       box_url: https://atlas.hashicorp.com/suse/boxes/sles11sp3
+  - name: suse/sles12sp1
+    driver:
+      box: suse/sles12sp1
+      box_url: file:///Users/stephen/dev/bento/builds/sles-12-sp1.virtualbox.box
+    attributes:
+      chefdk:
+        bashrc: '/etc/bash.bashrc'
 
 suites:
   - name: chef-server
     run_list:
+      # - recipe[ntp]
+      - recipe[test::suse_connect]
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
       - recipe[test::chef-server]
@@ -50,6 +49,7 @@ suites:
 
   - name: automate
     run_list:
+      # - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
       - recipe[test::delivery]
@@ -71,6 +71,7 @@ suites:
 
   - name: build
     run_list:
+      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
       - recipe[test::build_node]
@@ -87,6 +88,7 @@ suites:
 
   - name: supermarket
     run_list:
+      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
       - recipe[test::supermarket]
@@ -104,6 +106,7 @@ suites:
 
   - name: compliance
     run_list:
+      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::compliance]
     attributes:

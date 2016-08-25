@@ -5,3 +5,5 @@ default['compliance']['version'] = 'latest'
 default['compliance']['package_source'] = nil
 default['compliance']['channel'] = :stable
 default['compliance']['accept_license'] = false
+
+default['chefdk']['bashrc'] = '/etc/bashrc'

@@ -24,13 +24,14 @@ end
 # install chefdk
 chef_ingredient 'chefdk' do
   action :upgrade
+  version :latest
 end
 
 # set chefdk as default
-file '/etc/bashrc' do
+file node['chefdk']['bashrc'] do
   content lazy {
     txt = 'eval "$(chef shell-init bash)"'
-    lines = ::File.read('/etc/bashrc').split("\n")
+    lines = ::File.read(node['chefdk']['bashrc']).split("\n")
     lines << txt unless lines.include?(txt)
     lines.join("\n")
   }

@@ -18,23 +18,11 @@ platforms:
   - name: centos-7.2
   - name: ubuntu-14.04
   - name: ubuntu-16.04
-  - name: suse/sles11sp3
-    driver:
-      box: suse/sles11sp3
-      box_url: https://atlas.hashicorp.com/suse/boxes/sles11sp3
-  - name: suse/sles12sp1
-    driver:
-      box: suse/sles12sp1
-      box_url: file:///Users/stephen/dev/bento/builds/sles-12-sp1.virtualbox.box
-    attributes:
-      chefdk:
-        bashrc: '/etc/bash.bashrc'
 
 suites:
   - name: chef-server
     run_list:
       # - recipe[ntp]
-      - recipe[test::suse_connect]
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
       - recipe[test::chef-server]
@@ -75,8 +63,6 @@ suites:
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
       - recipe[test::build_node]
-      # - recipe[delivery_build::default]
-      # - recipe[test::delivery_build_node]
     attributes:
     driver:
       vm_hostname: build.services.com

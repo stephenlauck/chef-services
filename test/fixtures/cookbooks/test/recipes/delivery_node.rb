@@ -19,15 +19,10 @@ end
 file '/etc/chef/dna.json' do
   content <<-EOF
 {
-    "delivery": {
-        "fqdn": "automate.services.com",
-        "chef_server": "https://chef.services.com/organizations/delivery"
-    },
     "run_list": [
         "recipe[test::hostsfile]",
         "recipe[test::delivery_keys]",
-        "recipe[test::delivery]",
-        "recipe[test::create_enterprise]"
+        "recipe[test::delivery]"
     ]
 }
   EOF

@@ -13,6 +13,7 @@ cookbook_file '/etc/delivery/builder_key' do
   group 'root'
   mode '0600'
   source 'insecure_private_key'
+  sensitive true
 end
 
 cookbook_file '/etc/delivery/builder_key.pub' do

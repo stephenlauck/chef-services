@@ -1,30 +1,27 @@
-chef_ingredient 'delivery' do
-  config <<-EOS
-delivery_fqdn "#{node['delivery']['fqdn']}"
+%w( delivery chefdk ).each do |pkg|
 
-delivery['chef_username']    = "delivery"
-delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
-delivery['chef_server']      = "#{node['delivery']['chef_server']}"
+  remote_file node[pkg]['package_source'] do
+    source node[pkg]['package_url']
+    only_if { node[pkg]['package_url'] }
+  end
 
-delivery['default_search']   = "((recipes:delivery_build OR tags:delivery-build-node OR recipes:delivery_build\\\\\\\\:\\\\\\\\:default) AND chef_environment:_default)"
+  chef_ingredient pkg do
+    config node[pkg]['config']
+    action :upgrade
+    accept_license true
+    package_source node[pkg]['package_source']
+  end
 
-insights['enable'] = true
-  EOS
-  version node['delivery']['version']
-  action :install
+  ingredient_config pkg do
+    notifies :reconfigure, "chef_ingredient[#{pkg}]", :immediately
+    only_if { node[pkg]['config'] }
+  end
+
 end
 
-ingredient_config "delivery" do
-  notifies :reconfigure, "chef_ingredient[delivery]", :immediately
-end
-
-
-# build node
-
-# install chefdk
-chef_ingredient 'chefdk' do
-  action :upgrade
-  version :latest
+execute 'create test enterprise' do
+  command 'delivery-ctl create-enterprise test --ssh-pub-key-file=/etc/delivery/builder_key.pub > /tmp/test.creds'
+  not_if "delivery-ctl list-enterprises --ssh-pub-key-file=/etc/delivery/builder_key.pub | grep -w test"
 end
 
 # set chefdk as default

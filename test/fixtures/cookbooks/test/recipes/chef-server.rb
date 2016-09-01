@@ -7,7 +7,7 @@
 
   chef_ingredient pkg do
     config node[pkg]['config']
-    action :upgrade
+    action [:upgrade, :reconfigure]
     accept_license true
     package_source node[pkg]['package_source']
   end

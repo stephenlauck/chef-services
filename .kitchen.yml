@@ -7,8 +7,8 @@ driver:
 provisioner:
   name: chef_zero
   chef_zero_port: 9010
-  encrypted_data_bag_secret_key_path: 'test/fixtures/secrets/fakey-mcfakerton'
-  data_bags_path: 'test/fixtures/data_bags'
+  encrypted_data_bag_secret_key_path: './fixtures/secrets/fakey-mcfakerton'
+  data_bags_path: './fixtures/data_bags'
 
 verifier:
   name: inspec
@@ -22,10 +22,10 @@ platforms:
 suites:
   - name: chef-server
     run_list:
-      # - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::chef-server]
+      - recipe[ntp]
+      - recipe[stack::hostsfile]
+      - recipe[stack::setup_ssh_keys]
+      - recipe[stack::chef-server]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -37,12 +37,12 @@ suites:
 
   - name: automate
     run_list:
-      # - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
-      - recipe[test::delivery]
-      - recipe[test::create_enterprise]
-      - recipe[test::delivery_node]
+      - recipe[ntp]
+      - recipe[stack::hostsfile]
+      - recipe[stack::delivery_keys]
+      - recipe[stack::delivery]
+      - recipe[stack::create_enterprise]
+      - recipe[stack::delivery_node]
     attributes:
       delivery:
         fqdn: 'automate.services.com'
@@ -60,9 +60,9 @@ suites:
   - name: build
     run_list:
       - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
-      - recipe[test::build_node]
+      - recipe[stack::hostsfile]
+      - recipe[stack::delivery_keys]
+      - recipe[stack::build_node]
     attributes:
     driver:
       vm_hostname: build.services.com
@@ -75,9 +75,9 @@ suites:
   - name: supermarket
     run_list:
       - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket]
+      - recipe[stack::hostsfile]
+      - recipe[stack::setup_ssh_keys]
+      - recipe[stack::supermarket]
     attributes:
       supermarket_omnibus:
         chef_server_url: 'https://chef.services.com'
@@ -93,8 +93,8 @@ suites:
   - name: compliance
     run_list:
       - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::compliance]
+      - recipe[stack::hostsfile]
+      - recipe[stack::compliance]
     attributes:
       compliance:
         accept_license: true

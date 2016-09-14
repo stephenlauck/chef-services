@@ -7,5 +7,5 @@ cookbook 'supermarket-omnibus-cookbook', git: 'https://github.com/chef-cookbooks
 cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
 
 group :integration do
-  cookbook 'test', path: './test/fixtures/cookbooks/test'
+  cookbook 'stack', path: './fixtures/cookbooks/stack'
 end

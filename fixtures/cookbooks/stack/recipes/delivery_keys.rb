@@ -1,5 +1,5 @@
 
-include_recipe 'test::setup_ssh_keys'
+include_recipe 'stack::setup_ssh_keys'
 
 directory '/etc/delivery' do
   recursive true

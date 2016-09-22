@@ -14,7 +14,7 @@ directory '/etc/delivery'
 delivery_databag = data_bag_item('automate', 'automate')
 
 
-include_recipe 'chef-services::delivery_license'
+include_recipe 'test::delivery_license'
 
 file '/etc/delivery/delivery.pem' do
   content delivery_databag['user_pem']

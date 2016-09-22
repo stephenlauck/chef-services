@@ -4,6 +4,8 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
+require 'base64'
+
 directory '/var/opt/delivery/license/' do
   recursive true
 end
@@ -13,7 +15,7 @@ delivery_databag = data_bag_item('automate', 'automate')
 
 
 file '/var/opt/delivery/license/delivery.license' do
-  content delivery_databag['license_file']
+  content Base64.decode64(delivery_databag['license_file'])
   owner 'root'
   group 'root'
   mode 00644

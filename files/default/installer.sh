@@ -11,13 +11,13 @@
 #
 # ---------- Chef Server ----------
 # ->install Chef
+mkdir -p /tmp/chef_installer
+cd /tmp/chef_installer
+curl -o /tmp/chef_installer/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 fi
-rm -rf /tmp/chef_installer/cookbooks
-#rm -rf ~/.chef/local_mode_cache/cache/cookbooks
 chef-apply /tmp/chef_installer/installer.rb
-cd /tmp/chef_installer/
 chef-client -z -j attributes.json -r "recipe[test::chef-server],recipe[test::save_secrets]"
 
 # ->upload cookbooks to itself

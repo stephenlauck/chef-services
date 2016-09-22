@@ -8,15 +8,16 @@ directory '/var/opt/delivery/license/' do
   recursive true
 end
 
+directory '/etc/delivery'
+delivery_databag = data_bag_item('automate', 'automate')
+
+
 file '/var/opt/delivery/license/delivery.license' do
-  content ::File.read("/tmp/chef_automate.license")
+  content delivery_databag['license_file']
   owner 'root'
   group 'root'
   mode 00644
 end
-
-directory '/etc/delivery'
-delivery_databag = data_bag_item('automate', 'automate')
 
 file '/etc/delivery/delivery.pem' do
   content delivery_databag['user_pem']
@@ -28,10 +29,10 @@ end
 
 chef_ingredient 'delivery' do
   config <<-EOS
-delivery_fqdn "#{node['ec2']['public_hostname']}"
+delivery_fqdn "#{node['chef_automate']['fqdn']}"
 delivery['chef_username']    = "delivery"
 delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
-delivery['chef_server']      = "https://#{node['chef_automate']['chef_server']}/organizations/delivery"
+delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
   EOS
@@ -42,5 +43,5 @@ ingredient_config 'delivery' do
   notifies :reconfigure, 'chef_ingredient[delivery]', :immediately
 end
 
-include_recipe 'chef_automate::_create_enterprise'
-include_recipe 'chef_automate::_install_build_nodes'
+include_recipe 'test::create_enterprise'
+include_recipe 'test::install_build_nodes'

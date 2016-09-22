@@ -16,7 +16,7 @@ ingredient_config "chef-server" do
   notifies :reconfigure, "chef_ingredient[chef-server]", :immediately
 end
 
-%w( manage ).each do |addon|
+%w(manage push-jobs-server).each do |addon|
   chef_ingredient addon do
     accept_license true
   end
@@ -24,18 +24,6 @@ end
   ingredient_config addon do
     notifies :reconfigure, "chef_ingredient[#{addon}]", :immediately
   end
-end
-
-# download and install push-jobs-server
-remote_file '/tmp/opscode-push-jobs-server-1.1.6-1.x86_64.rpm' do
-  source 'https://bintray.com/chef/stable/download_file?file_path=el%2F6%2Fopscode-push-jobs-server-1.1.6-1.x86_64.rpm'
-end
-
-chef_ingredient 'push-jobs-server' do
-  accept_license true
-  version '1.1.6-1'
-  package_source '/tmp/opscode-push-jobs-server-1.1.6-1.x86_64.rpm'
-  notifies :reconfigure, "chef_ingredient[push-jobs-server]"
 end
 
 chef_server_user 'delivery' do

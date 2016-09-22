@@ -11,30 +11,14 @@
 #
 # ---------- Chef Server ----------
 # ->install Chef
-
-#curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
-
-echo 'cookbook_path \"/tmp/workspace/cookbooks\"' > /tmp/solo.rb
-sudo chef-solo -c /tmp/solo.rb -o 'recipe[chef_server::default]'
-
-mkdir /tmp/chef_installer
-yum install git -y
-cat > /tmp/chef_installer/Berksfile <<EOF
-source 'https://supermarket.chef.io'
-
-cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'installer'
-cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
-
-EOF
-
+if [ ! -d "/opt/chefdk" ]; then
+  curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
+fi
+rm -rf /tmp/chef_installer/cookbooks
+#rm -rf ~/.chef/local_mode_cache/cache/cookbooks
+chef-apply /tmp/chef_installer/installer.rb
 cd /tmp/chef_installer/
-berks install
-berks vendor cookbooks/
-
-# ->scp/upload cookbook tarball
-# ->chef-client -z with Chef server cookbook (from tarball ^^)
-chef-client -z -r "test::chef-server"
+chef-client -z -j attributes.json -r "recipe[test::chef-server],recipe[test::save_secrets]"
 
 # ->upload cookbooks to itself
 # ->generate keys, create data_bags

@@ -22,7 +22,7 @@ platforms:
 suites:
   - name: chef-server
     run_list:
-      # - recipe[ntp]
+      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::setup_ssh_keys]
       - recipe[test::chef-server]
@@ -34,21 +34,45 @@ suites:
         memory: 2048
         cpus: 2
     attributes:
+      chef-server:
+        package_url: 'https://packages.chef.io/stable/el/7/chef-server-core-12.8.0-1.el7.x86_64.rpm'
+        package_source: '/tmp/chef-server-core-12.8.0-1.el7.x86_64.rpm'
+        config: |
+          api_fqdn "chef.services.com"
+          oc_id['applications'] = {
+            "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
+          }
+      push-jobs-server:
+        package_url: 'https://packages.chef.io/stable/el/7/opscode-push-jobs-server-2.1.0-1.el7.x86_64.rpm'
+        package_source: '/tmp/opscode-push-jobs-server-2.1.0-1.el7.x86_64.rpm'
+      manage:
+        package_url: 'https://packages.chef.io/stable/el/7/chef-manage-2.4.3-1.el7.x86_64.rpm'
+        package_source: '/tmp/chef-manage-2.4.3-1.el7.x86_64.rpm'
 
   - name: automate
     run_list:
-      # - recipe[ntp]
+      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
       - recipe[test::delivery]
-      - recipe[test::create_enterprise]
       - recipe[test::delivery_node]
     attributes:
       delivery:
-        fqdn: 'automate.services.com'
-        chef_server: https://chef.services.com/organizations/delivery
-        insights:
-          enable: true
+        package_url: 'https://packages.chef.io/stable/el/7/delivery-0.5.125-1.el7.x86_64.rpm'
+        package_source: '/tmp/delivery-0.5.125-1.el7.x86_64.rpm'
+        config: |
+          delivery_fqdn "automate.services.com"
+
+          delivery['chef_username']    = "delivery"
+          delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
+          delivery['chef_server']      = "https://chef.services.com/organizations/delivery"
+
+          delivery['default_search']   = "((recipes:delivery_build OR tags:delivery-build-node OR recipes:delivery_build\\\\\\\\:\\\\\\\\:default) AND chef_environment:_default)"
+
+          insights['enable'] = true
+      chefdk:
+        package_url: 'https://packages.chef.io/stable/el/7/chefdk-0.17.17-1.el7.x86_64.rpm'
+        package_source: '/tmp/chefdk-0.17.17-1.el7.x86_64.rpm'
     driver:
       vm_hostname: automate.services.com
       network:
@@ -72,23 +96,23 @@ suites:
         memory: 1024
         cpus: 1
 
-  - name: supermarket
-    run_list:
-      - recipe[ntp]
-      - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket]
-    attributes:
-      supermarket_omnibus:
-        chef_server_url: 'https://chef.services.com'
-        chef_oauth2_verify_ssl: false
-    driver:
-      vm_hostname: supermarket.services.com
-      network:
-        - ['private_network', {ip: '33.33.33.13'}]
-      customize:
-        memory: 1024
-        cpus: 1
+  # - name: supermarket
+  #   run_list:
+  #     - recipe[ntp]
+  #     - recipe[test::hostsfile]
+  #     - recipe[test::setup_ssh_keys]
+  #     - recipe[test::supermarket]
+  #   attributes:
+  #     supermarket_omnibus:
+  #       chef_server_url: 'https://chef.services.com'
+  #       chef_oauth2_verify_ssl: false
+  #   driver:
+  #     vm_hostname: supermarket.services.com
+  #     network:
+  #       - ['private_network', {ip: '33.33.33.13'}]
+  #     customize:
+  #       memory: 1024
+  #       cpus: 1
 
   - name: compliance
     run_list:

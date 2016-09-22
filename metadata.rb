@@ -8,3 +8,4 @@ version          '2.0.5'
 
 depends 'yum'
 depends 'apt'
+depends 'ntp'

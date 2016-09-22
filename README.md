@@ -38,3 +38,15 @@ kitchen converge
 ##### user/password: admin/password
 
 [http://compliance.services.com](http://compliance.services.com)
+
+### Chef simple install
+
+`kitchen create chef-server-centos-72`
+
+`scp -p files/default/installer.sh vagrant@33.33.33.10:/tmp/installer.sh`
+
+`ssh vagrant@33.33.33.10 "sudo /tmp/installer.sh"`
+
+or
+
+`curl https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.sh && sudo bash ./installer.sh && rm installer.sh`

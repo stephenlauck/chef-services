@@ -6,5 +6,5 @@ description      'Installs/Configures chef-services'
 long_description 'Installs/Configures chef-services'
 version          '2.0.5'
 
-depends 'yum'
-depends 'apt'
+depends 'ntp'
+depends 'fancy_execute'

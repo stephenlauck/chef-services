@@ -18,7 +18,7 @@ if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 fi
 chef-apply /tmp/chef_installer/installer.rb
-chef-client -z -j attributes.json -r "recipe[test::chef-server],recipe[test::save_secrets]"
+chef-client -z -j attributes.json -r "recipe[test::chef-server], recipe[test::delivery_license], recipe[test::save_secrets]"
 
 # ->upload cookbooks to itself
 # ->generate keys, create data_bags

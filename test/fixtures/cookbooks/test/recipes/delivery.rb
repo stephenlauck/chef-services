@@ -14,12 +14,7 @@ directory '/etc/delivery'
 delivery_databag = data_bag_item('automate', 'automate')
 
 
-file '/var/opt/delivery/license/delivery.license' do
-  content Base64.decode64(delivery_databag['license_file'])
-  owner 'root'
-  group 'root'
-  mode 00644
-end
+include_recipe 'chef-services::delivery_license'
 
 file '/etc/delivery/delivery.pem' do
   content delivery_databag['user_pem']

@@ -14,13 +14,13 @@ file '/tmp/chef_installer/Berksfile' do
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
 cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'lauck/delivery_license'
 cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
-cookbook 'test', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'installer', rel: 'test/fixtures/cookbooks/test'"
+cookbook 'test', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'lauck/delivery_license', rel: 'test/fixtures/cookbooks/test'"
 end
 
 execute 'berks update' do
   command 'berks update'
   cwd '/tmp/chef_installer'
-  only_if File.exists?('/tmp/chef_installer/Berksfile.lock')
+  only_if do ::File.exists?('/tmp/chef_installer/Berksfile.lock') end
 end
 
 execute 'berks install' do

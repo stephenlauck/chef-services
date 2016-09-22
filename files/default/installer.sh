@@ -13,7 +13,7 @@
 # ->install Chef
 mkdir -p /tmp/chef_installer
 cd /tmp/chef_installer
-curl -o /tmp/chef_installer/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.rb
+curl -o /tmp/chef_installer/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/lauck/delivery_license/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 fi

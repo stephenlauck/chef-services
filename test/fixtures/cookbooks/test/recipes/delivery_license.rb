@@ -1,5 +1,5 @@
-file '/var/opt/delivery/license/delivery.license' do
-  content Base64.decode64(delivery_databag['license_file'])
+cookbook_file '/var/opt/delivery/license/delivery.license' do
+  source 'delivery.license'
   owner 'root'
   group 'root'
   mode 00644

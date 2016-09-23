@@ -83,12 +83,11 @@ chef-client -z -j attributes.json -r 'recipe[test::chef-server],recipe[test::del
 # -> automate,chef-builder1,chef-builder2,chef-builder3,supermarket,compliance.domain.com
 # --> bootstrap with correct runlist
 
-if [ "$bootstrap_more" == "y" ]; then
+if [ ! -z $CHEF_AUTOMATE_FQDN ]; then
   knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW \
     --sudo -r "recipe[test::automate]" \
-    -j "{\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password:\":\"$CHEF_PW\"}]}}" \
+    -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},{\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password:\":\"$CHEF_PW\"}]}}}" \
     -y --node-ssl-verify-mode none
 fi
 
 chef-client -j attributes.json -r 'recipe[test::chef-server]'
-

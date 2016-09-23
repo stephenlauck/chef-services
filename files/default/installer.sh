@@ -3,19 +3,60 @@
 #
 # Please provide an IP/FQDN for your chef server: domain.com
 
-read -e -p "We are about to install Chef server on this system, proceed? (y/n) [n] " -i "y" name
-name=${name:-n}
+usage="
+This is an installer for Chef. It will install Chef Server, Chef Automate, and a build node for Automate.
+It will install the Chef server on the system you run this script from.
 
-read -e -p "Please provide an IP/FQDN for your chef server: " -i "chef.services.com" chef_server_fqdn
-read -e -p "Do you want to bootstrap your Automate server now? (y/n) [n]" -i "y" bootstrap_more
-bootstrap_more=${bootstrap_more:-n}
+You must specify the following options:
 
-if [ "$bootstrap_more" == "y" ]; then
-  read -e -p "Please provide an IP/FQDN for your Automate server: " -i "automate.services.com" chef_automate_fqdn
-  read -e -p "Please provide an IP/FQDN for your Build node: " -i "build.services.com" chef_build_fqdn
-  read -e -p "What's the SSH username for your servers: " -i "vagrant" chef_user
-  read -e -p "What's the SSH password for your servers: " -i "vagrant" chef_pw
+-c|--chef-server-fqdn         The FQDN of the Chef Server.
+-a|--chef-automate-fqdn       The FQDN of the Chef Automate server.
+-b|--build-node-fqdn          The FQDN of the build node.
+-u|--user                     The ssh username we'll use to connect to other systems.
+-p|--password                 The ssh password we'll use to connect to other systems.
+"
+
+if [ $# -eq 0 ]; then
+  echo -e $usage
+  exit 1
 fi
+
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -c|--chef-server-fqdn)
+    CHEF_SERVER_FQDN="$2"
+    shift # past argument
+    ;;
+    -a|--chef-automate-fqdn)
+    CHEF_AUTOMATE_FQDN="$2"
+    shift # past argument
+    ;;
+    -b|--build-node-fqdn)
+    CHEF_BUILD_FQDN="$2"
+    shift # past argument
+    ;;
+    -u|--user)
+    CHEF_USER="$2"
+    shift
+    ;;
+    -p|--password)
+    CHEF_PASSWORD="$2"
+    shift
+    ;;
+    -h|--help)
+    echo -e $usage
+    exit 0
+    ;;
+    *)
+    echo "Unknown option $1"
+    echo -e $usage
+    exit 1
+    ;;
+esac
+shift # past argument or value
+done
 
 # Do you want to connect by ssh key or user/pass?
 # Please provide a ssh username:
@@ -32,8 +73,8 @@ if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 fi
 chef-apply /tmp/chef_installer/installer.rb
-echo -e "{\"chef_server\": {\"fqdn\":\"$chef_server_fqdn\"}}" > /tmp/chef_installer/attributes.json
-chef-client -z -j attributes.json -r 'recipe[test::hostsfile],recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
+echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\"}}" > /tmp/chef_installer/attributes.json
+chef-client -z -j attributes.json -r 'recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
 
 # ->upload cookbooks to itself
 # ->generate keys, create data_bags
@@ -43,11 +84,11 @@ chef-client -z -j attributes.json -r 'recipe[test::hostsfile],recipe[test::chef-
 # --> bootstrap with correct runlist
 
 if [ "$bootstrap_more" == "y" ]; then
-  knife bootstrap $chef_build_fqdn -N $chef_build_fqdn -x $chef_user -P $chef_pw --sudo -r "recipe[test::hostsfile]" -y --node-ssl-verify-mode none
-  knife bootstrap $chef_automate_fqdn -N $chef_automate_fqdn -x $chef_user -P $chef_pw \
-    --sudo -r "recipe[hostsfile],recipe[chef_automate]" \
-    -j "{\"chef_automate\":{\"fqdn\":\"$chef_automate_fqdn\",\"build_nodes\":[{\"fqdn\":\"$chef_build_fqdn\",\"username\":\"$chef_user\",\"password:\":\"$chef_pw\"}]}}" \
+  knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW \
+    --sudo -r "recipe[test::automate]" \
+    -j "{\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password:\":\"$CHEF_PW\"}]}}" \
     -y --node-ssl-verify-mode none
 fi
 
 chef-client -j attributes.json -r 'recipe[test::chef-server]'
+

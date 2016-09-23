@@ -53,6 +53,7 @@ file '/etc/chef/client.rb' do
 chef_server_url  "https://33.33.33.10/organizations/delivery"
 validation_client_name "delivery-validator"
 validation_key "/tmp/delivery-validator.pem"
+file_cache_path "/root/.chef/local-mode-cache/cache"
 ssl_verify_mode :verify_none
 EOF
 end

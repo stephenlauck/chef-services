@@ -49,4 +49,4 @@ kitchen converge
 
 or
 
-`curl https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.sh && sudo bash ./installer.sh && rm installer.sh`
+`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/lauck/delivery_license/files/default/installer.sh && sudo bash ./installer.sh && rm installer.sh`

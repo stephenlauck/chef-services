@@ -34,7 +34,7 @@ ruby_block 'write_automate_databag' do
       'user_pem' => ::File.read('/tmp/delivery.pem'),
       'builder_pem' => builder_key.to_pem,
       'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
-      'license_file' => Base64.encode64(::File.read('/tmp/delivery.license'))
+      'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license'))
     }
     ::File.write('/tmp/chef_installer/data_bags/automate.json', automate_db_item.to_json)
   end

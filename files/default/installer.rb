@@ -32,7 +32,3 @@ execute 'berks vendor' do
   command 'berks vendor cookbooks/'
   cwd '/tmp/chef_installer'
 end
-
-file '/tmp/chef_installer/attributes.json' do
-  content '{"chef_server": {"fqdn":"chef.services.com"}}'
-end

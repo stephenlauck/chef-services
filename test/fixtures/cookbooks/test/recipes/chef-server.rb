@@ -45,3 +45,14 @@ chef_server_org 'delivery' do
   admins %w{ delivery }
   action :add_admin
 end
+
+directory '/etc/chef'
+
+file '/etc/chef/client.rb' do
+  content <<-EOF
+chef_server_url  "https://33.33.33.10/organizations/delivery"
+validation_client_name "chef-validator"
+validation_key "/tmp/delivery-validator.pem"
+ssl_verify_mode :verify_none
+EOF
+end

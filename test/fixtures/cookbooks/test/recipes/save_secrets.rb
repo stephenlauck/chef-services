@@ -13,13 +13,13 @@ directory '/tmp/chef_installer/.chef/' do
 end
 
 file '/tmp/chef_installer/.chef/knife.rb' do
-  content '
-node_name                "delivery"
-client_key               "/tmp/delivery.pem"
-chef_server_url          "https://localhost/organizations/delivery"
-cookbook_path            ["/tmp/chef_installer/cookbooks"]
+  content "
+node_name                \"delivery\"
+client_key               \"/tmp/delivery.pem\"
+chef_server_url          \"https://#{node['chef_server']['fqdn']}/organizations/delivery\"
+cookbook_path            [\"/tmp/chef_installer/cookbooks\"]
 ssl_verify_mode          :verify_none
-'
+"
 end
 
 builder_key = OpenSSL::PKey::RSA.new(2048)
@@ -38,6 +38,7 @@ ruby_block 'write_automate_databag' do
     }
     ::File.write('/tmp/chef_installer/data_bags/automate.json', automate_db_item.to_json)
   end
+  not_if { ::File.exist('/tmp/chef_installer/data_bags/automate.json') }
 end
 
 execute 'upload databag' do

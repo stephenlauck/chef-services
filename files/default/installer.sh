@@ -45,8 +45,8 @@ chef-client -z -j attributes.json -r 'recipe[test::hostsfile],recipe[test::chef-
 # --> bootstrap with correct runlist
 
 if [ "$bootstrap_more" == "y" ]; then
-  knife bootstrap $chef_build_fqdn -N $chef_build_fqdn -x $chef_build_user -P $chef_build_pw --sudo -r "recipe[hostsfile]" 
-  knife bootstrap $chef_automate_fqdn -N $chef_automate_fqdn -x $chef_automate_user -P $chef_automate_pw --sudo -r "recipe[hostsfile],recipe[chef_automate]" -j "{\"chef_automate\":{\"fqdn\":\"$chef_automate_fqdn\",\"build_nodes\":{\"fqdn\":\"$chef_build_fqdn\",\"username\":\"$chef_build_user\",\"password:\":\"$chef_build_pw\"}}}"
+  knife bootstrap $chef_build_fqdn -N $chef_build_fqdn -x $chef_build_user -P $chef_build_pw --sudo -r "recipe[hostsfile]" -y
+  knife bootstrap $chef_automate_fqdn -N $chef_automate_fqdn -x $chef_automate_user -P $chef_automate_pw --sudo -r "recipe[hostsfile],recipe[chef_automate]" -j "{\"chef_automate\":{\"fqdn\":\"$chef_automate_fqdn\",\"build_nodes\":[{\"fqdn\":\"$chef_build_fqdn\",\"username\":\"$chef_build_user\",\"password:\":\"$chef_build_pw\"}]}}" -y
 fi
 
 chef-client -j attributes.json -r 'recipe[test::chef-server]'

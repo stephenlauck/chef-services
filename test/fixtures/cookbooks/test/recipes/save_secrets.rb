@@ -38,7 +38,7 @@ ruby_block 'write_automate_databag' do
     }
     ::File.write('/tmp/chef_installer/data_bags/automate.json', automate_db_item.to_json)
   end
-  not_if { ::File.exist('/tmp/chef_installer/data_bags/automate.json') }
+  not_if { ::File.exist?('/tmp/chef_installer/data_bags/automate.json') }
 end
 
 execute 'upload databag' do

@@ -51,7 +51,7 @@ case $key in
     CHEF_PW="$2"
     shift
     ;;
-    -i|--install-dir
+    -i|--install-dir)
     INSTALL_DIR="$2"
     shift
     ;;

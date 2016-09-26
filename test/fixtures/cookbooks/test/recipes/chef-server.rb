@@ -50,7 +50,7 @@ directory '/etc/chef'
 
 file '/etc/chef/client.rb' do
   content <<-EOF
-chef_server_url  "https://33.33.33.10/organizations/delivery"
+chef_server_url  "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 validation_client_name "delivery-validator"
 validation_key "/tmp/delivery-validator.pem"
 file_cache_path "/root/.chef/local-mode-cache/cache"

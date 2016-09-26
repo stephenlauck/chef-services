@@ -45,8 +45,8 @@ kitchen converge
 
 `scp -p files/default/installer.sh vagrant@33.33.33.10:/tmp/installer.sh`
 
-`ssh vagrant@33.33.33.10 "sudo /tmp/installer.sh"`
+`ssh vagrant@33.33.33.10 "sudo /tmp/installer.sh -c 33.33.33.10"`
 
 or
 
-`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/lauck/delivery_license/files/default/installer.sh && sudo bash ./installer.sh && rm installer.sh`
+`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.sh && sudo bash ./installer.sh -c 33.33.33.10 && rm installer.sh`

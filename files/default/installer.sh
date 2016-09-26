@@ -17,6 +17,7 @@ You must specify the following options:\n
 -b|--build-node-fqdn          The FQDN of the build node.\n
 -u|--user                     The ssh username we'll use to connect to other systems.\n
 -p|--password                 The ssh password we'll use to connect to other systems.\n
+-i|--install-dir              The directory to use for the installer.
 
 If only -c is specified the local system will be configured with a Chef Server install. \n
 "
@@ -50,6 +51,10 @@ case $key in
     CHEF_PW="$2"
     shift
     ;;
+    -i|--install-dir
+    INSTALL_DIR="$2"
+    shift
+    ;;
     -h|--help)
     echo -e $usage
     exit 0
@@ -71,14 +76,15 @@ done
 #
 # ---------- Chef Server ----------
 # ->install Chef
-mkdir -p /tmp/chef_installer
-cd /tmp/chef_installer
-curl -o /tmp/chef_installer/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/ad/fixes/files/default/installer.rb
+mkdir -p $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/
+cd $INSTALL_DIR/chef_installer
+curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/ad/fixes/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk && rm install.sh
 fi
-chef-apply /tmp/chef_installer/installer.rb
-echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\"}}" > /tmp/chef_installer/attributes.json
+echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
+chef-client -z -j installer.json -r 'recipe[installer::installer]'
+echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\"}}" > attributes.json
 chef-client -z -j attributes.json -r 'recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
 
 # ->upload cookbooks to itself

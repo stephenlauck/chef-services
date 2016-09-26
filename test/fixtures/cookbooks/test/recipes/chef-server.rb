@@ -31,13 +31,13 @@ chef_server_user 'delivery' do
   lastname 'User'
   email 'delivery@services.com'
   password 'delivery'
-  private_key_path '/tmp/delivery.pem'
+  private_key_path "#{node['chef_server']['install_dir']}/delivery.pem"
   action :create
 end
 
 chef_server_org 'delivery' do
   org_long_name 'Delivery Organization'
-  org_private_key_path '/tmp/delivery-validator.pem'
+  org_private_key_path "#{node['chef_server']['install_dir']}/delivery-validator.pem"
   action :create
 end
 
@@ -52,8 +52,8 @@ file '/etc/chef/client.rb' do
   content <<-EOF
 chef_server_url  "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 validation_client_name "delivery-validator"
-validation_key "/tmp/delivery-validator.pem"
-file_cache_path "/root/.chef/local-mode-cache/cache"
+validation_key "#{node['chef_server']['install_dir']}/delivery-validator.pem"
+file_cache_path "#{node['chef_server']['install_dir']}/.chef/local-mode-cache/cache"
 ssl_verify_mode :verify_none
 EOF
 end

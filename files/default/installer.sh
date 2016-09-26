@@ -88,7 +88,7 @@ if [ ! -d "/opt/chefdk" ]; then
 fi
 echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
 chef-client -z -j installer.json -r 'recipe[installer::installer]'
-echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\"}}" > attributes.json
+echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}}" > attributes.json
 chef-client -z -j attributes.json -r 'recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
 
 # ->upload cookbooks to itself

@@ -86,8 +86,9 @@ curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb htt
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk -d $INSTALL_DIR/chef_installer && rm install.sh
 fi
+echo 'file_cache_path "$INSTALL_DIR/chef_installer"' > solo_installer.rb
 echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
-chef-client -z -j installer.json -r 'recipe[installer::installer]'
+chef-client -z -j installer.json -c solo_installer.rb -r 'recipe[installer::installer]'
 echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}}" > attributes.json
 chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -r 'recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
 

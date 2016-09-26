@@ -3,7 +3,10 @@ directory "#{node['install_dir']}/chef_installer/cookbooks" do
 end
 
 file "#{node['install_dir']}/solo.rb" do
-  content 'cookbook_path "/tmp/chef_installer/cookbooks"'
+  content <<-EOF
+cookbook_path '/tmp/chef_installer/cookbooks'
+file_cache_path '#{node['install_dir']}/chef_installer'
+EOF
 end
 
 package 'git'

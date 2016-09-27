@@ -1,6 +1,3 @@
-remote_file '/tmp/chefdk.el6.x86_64.rpm' do
-  source "http://omnitruck.chef.io/stable/chefdk/download?p=el&pv=6&m=x86_64&v=latest"
-end
 
 file '/etc/chef/validation.pem' do
   action :delete

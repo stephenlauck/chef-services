@@ -35,11 +35,10 @@ suites:
   - name: chef-server
     run_list:
       - recipe[ntp]
-      # - recipe[test::hostsfile]
-      # - recipe[test::setup_ssh_keys]
-      # - recipe[test::chef-server]
-      # - recipe[test::cookbook_upload]
-      - recipe[chef-services::default]
+      - recipe[test::hostsfile]
+      - recipe[test::setup_ssh_keys]
+      - recipe[test::chef-server]
+      - recipe[test::cookbook_upload]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -59,7 +58,6 @@ suites:
       - recipe[test::delivery]
       - recipe[test::create_enterprise]
       - recipe[test::delivery_node]
-      - recipe[chef-services::default]
     attributes:
       delivery:
         fqdn: 'automate.services.com'

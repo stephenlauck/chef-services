@@ -7,4 +7,5 @@ ssh -i /root/.ssh/insecure_private_key -o StrictHostKeyChecking=no root@automate
 --overwrite-registration \
 --port 22
 EOD
+not_if do ::File.exists?("/opt/chefdk") end
 end

@@ -4,15 +4,14 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-require 'base64'
-
 directory '/var/opt/delivery/license/' do
   recursive true
 end
 
 directory '/etc/delivery'
-delivery_databag = data_bag_item('automate', 'automate')
+directory '/etc/chef'
 
+delivery_databag = data_bag_item('automate', 'automate')
 
 include_recipe 'test::delivery_license'
 
@@ -41,4 +40,3 @@ ingredient_config 'delivery' do
 end
 
 include_recipe 'test::create_enterprise'
-include_recipe 'test::install_build_nodes'

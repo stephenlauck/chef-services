@@ -27,19 +27,20 @@ verifier:
 
 platforms:
   - name: centos-6.8
-  - name: centos-7.2
-  - name: ubuntu-14.04
-  - name: ubuntu-16.04
+  # - name: centos-7.2
+  # - name: ubuntu-14.04
+  # - name: ubuntu-16.04
 
 suites:
   - name: chef-server
     run_list:
       - recipe[ntp]
-      # - recipe[test::hostsfile]
-      # - recipe[test::setup_ssh_keys]
-      # - recipe[test::chef-server]
-      # - recipe[test::cookbook_upload]
-      - recipe[chef-services::default]
+      - recipe[test::hostsfile]
+      - recipe[test::setup_ssh_keys]
+      - recipe[test::chef-server]
+      - recipe[test::delivery_license]
+      - recipe[test::save_secrets]
+      - recipe[test::save_secrets_kitchen]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -50,22 +51,22 @@ suites:
     attributes:
       chef_server:
         fqdn: chef.services.com
+        install_dir: /tmp/
 
   - name: automate
     run_list:
       - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_keys]
-      - recipe[test::delivery]
-      - recipe[test::create_enterprise]
       - recipe[test::delivery_node]
-      - recipe[chef-services::default]
     attributes:
       delivery:
         fqdn: 'automate.services.com'
         chef_server: https://chef.services.com/organizations/delivery
         insights:
           enable: true
+      chef_automate:
+        fqdn: automate.services.com
     driver:
       vm_hostname: automate.services.com
       network:

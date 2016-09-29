@@ -82,7 +82,7 @@ fi
 
 mkdir -p $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/
 cd $INSTALL_DIR/chef_installer
-curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.rb
+curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/ad/recipe_refactor/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk -d $INSTALL_DIR/chef_installer && rm install.sh
 fi

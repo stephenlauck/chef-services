@@ -47,11 +47,14 @@ execute 'upload databag' do
 end
 
 file "#{node['chef_server']['install_dir']}/chef_installer/Berksfile" do
-  content "source 'https://supermarket.chef.io'
+  content <<-EOF
+source 'https://supermarket.chef.io'
 
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
 cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/recipe_refactor'
 cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
+end
+EOF
 end
 
 execute 'upload cookbooks' do

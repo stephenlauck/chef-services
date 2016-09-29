@@ -57,3 +57,6 @@ file_cache_path "#{node['chef_server']['install_dir']}/.chef/local-mode-cache/ca
 ssl_verify_mode :verify_none
 EOF
 end
+
+include_recipe 'chef-services::delivery_license'
+include_recipe 'chef-services::save_secrets'

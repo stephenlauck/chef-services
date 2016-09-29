@@ -13,7 +13,7 @@ directory '/etc/chef'
 
 delivery_databag = data_bag_item('automate', 'automate')
 
-include_recipe 'test::delivery_license'
+include_recipe 'chef-services::delivery_license'
 
 file '/etc/delivery/delivery.pem' do
   content delivery_databag['user_pem']
@@ -39,4 +39,4 @@ ingredient_config 'delivery' do
   notifies :reconfigure, 'chef_ingredient[delivery]', :immediately
 end
 
-include_recipe 'test::create_enterprise'
+include_recipe 'chef-services::create_enterprise'

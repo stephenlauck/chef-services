@@ -100,7 +100,7 @@ chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -
 # --> bootstrap with correct runlist
 
 if [ ! -z $CHEF_AUTOMATE_FQDN ]; then
-  knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[test::delivery]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password\":\"$CHEF_PW\"}]}}" -y --node-ssl-verify-mode none
+  knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[test::delivery],recipe[test::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password\":\"$CHEF_PW\"}]}}" -y --node-ssl-verify-mode none
 fi
 
 chef-client -j attributes.json -r 'recipe[test::chef-server]'

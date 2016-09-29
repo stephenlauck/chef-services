@@ -8,4 +8,4 @@ default['compliance']['accept_license'] = false
 default['chef_automate']['fqdn'] = 'automate.services.com'
 default['chefdk']['bashrc'] = '/etc/bashrc'
 default['chefdk']['version'] = 'latest'
-default['chefdk']['source'] = "http://omnitruck.chef.io/stable/chefdk/metadata?p=#{node['platform']}&pv=#{node['platform_version']}&m=#{node['kernel']['processor']}&v=latest"
+default['chefdk']['source'] = "http://omnitruck.chef.io/stable/chefdk/download?p=#{node['platform']}&pv=#{node['platform_version']}&m=#{node['kernel']['processor']}&v=latest"

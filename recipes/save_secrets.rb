@@ -53,7 +53,6 @@ source 'https://supermarket.chef.io'
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
 cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/recipe_refactor'
 cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
-end
 EOF
 end
 

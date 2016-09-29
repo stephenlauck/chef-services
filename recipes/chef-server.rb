@@ -9,7 +9,6 @@ EOS
   action :upgrade
   version :latest
   accept_license true
-  package_source node['chef-server']['package_source']
 end
 
 ingredient_config "chef-server" do

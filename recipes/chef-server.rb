@@ -25,7 +25,7 @@ end
   end
 end
 
-wait_for_server_startup
+wait_for_server_startup "wait"
 
 chef_server_user 'delivery' do
   firstname 'Delivery'

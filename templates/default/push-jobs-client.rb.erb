@@ -1,3 +1,4 @@
+# File managed by Chef. Do not modify.
 
 chef_server_url   "https://<%= node['chef_server']['fqdn'] %>/organizations/delivery"
 
@@ -5,6 +6,7 @@ allow_unencrypted true
 
 # Chef server connect options
 
+node_name "<%= @node_name %>"
 trusted_certs_dir "/etc/chef/trusted_certs"
 verify_api_cert   true
 ssl_verify_mode   :verify_peer

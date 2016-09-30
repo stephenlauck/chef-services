@@ -3,8 +3,14 @@ directory '/var/log/push-jobs-client' do
   recursive true
 end
 
+push_node_name = get_node_name_from_config
+
 template '/etc/chef/push-jobs-client.rb' do
   source 'push-jobs-client.rb.erb'
+  variables({
+   :node_name => push_node_name
+})
+  notifies :restart, 'service[push-jobs-client]', :delayed
 end
 
 case node['platform_family']

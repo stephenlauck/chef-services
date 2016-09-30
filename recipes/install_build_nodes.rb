@@ -8,10 +8,6 @@ directory '/etc/chef/trusted_certs' do
   recursive true
 end
 
-template '/etc/chef/client.rb' do
-  source 'build-node-client.rb.erb'
-end
-
 %W(#{node['chef_server']['fqdn']} #{node['chef_automate']['fqdn']}).each do |server|
   execute "fetch ssl cert for #{server}" do
     command "knife ssl fetch https://#{server} -c /etc/chef/client.rb"

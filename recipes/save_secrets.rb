@@ -44,8 +44,6 @@ unless automate_db
       }
       ::File.write("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json", automate_db_item.to_json)
       chef_server_install_dir = '/tmp/chef_installer'
-      ::File.write(chef_server_install_dir + '/hello.txt', 'hello world!')
-      ::File.write("#{chef_server_install_dir}/hello.txt")
     end
     not_if { ::File.exist?("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json") }
   end

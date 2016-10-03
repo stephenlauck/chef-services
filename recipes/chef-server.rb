@@ -27,6 +27,17 @@ end
 
 wait_for_server_startup "wait"
 
+# Even with our wait_for_server_startup resource, we can hit a race condition.
+# For now I've added an arbitraty 10 seconds.
+
+# TODO: make this less awful.
+
+ruby_block 'wait' do
+  block do
+    sleep 10
+  end
+end
+
 chef_server_user 'delivery' do
   firstname 'Delivery'
   lastname 'User'

@@ -21,42 +21,52 @@ cookbook_path            [\"#{node['chef_server']['install_dir']}/chef_installer
 ssl_verify_mode          :verify_none
 "
 end
+automate_db =  begin
+                  data_bag('automate')
+               rescue Net::HTTPServerException, Chef::Exceptions::InvalidDataBagPath
+                  nil # empty array for length comparison
+               end
 
-builder_key = OpenSSL::PKey::RSA.new(2048)
+unless automate_db
+  builder_key = OpenSSL::PKey::RSA.new(2048)
 
-directory "#{node['chef_server']['install_dir']}/chef_installer/data_bags"
+  directory "#{node['chef_server']['install_dir']}/chef_installer/data_bags"
 
-ruby_block 'write_automate_databag' do
-  block do
-    automate_db_item = {
-      'id' => 'automate',
-      'validator_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery-validator.pem"),
-      'user_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery.pem"),
-      'builder_pem' => builder_key.to_pem,
-      'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
-      'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license'))
-    }
-    ::File.write("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json", automate_db_item.to_json)
+  ruby_block 'write_automate_databag' do
+    block do
+      automate_db_item = {
+        'id' => 'automate',
+        'validator_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery-validator.pem"),
+        'user_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery.pem"),
+        'builder_pem' => builder_key.to_pem,
+        'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
+        'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license'))
+      }
+      ::File.write("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json", automate_db_item.to_json)
+      chef_server_install_dir = '/tmp/chef_installer'
+      ::File.write(chef_server_install_dir + '/hello.txt', 'hello world!')
+      ::File.write("#{chef_server_install_dir}/hello.txt")
+    end
+    not_if { ::File.exist?("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json") }
   end
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json") }
-end
 
-execute 'upload databag' do
-  command 'knife data bag create automate;knife data bag from file automate data_bags/automate.json'
-  cwd "#{node['chef_server']['install_dir']}/chef_installer"
-end
+  execute 'upload databag' do
+    command 'knife data bag create automate;knife data bag from file automate data_bags/automate.json'
+    cwd "#{node['chef_server']['install_dir']}/chef_installer"
+  end
 
-file "#{node['chef_server']['install_dir']}/chef_installer/Berksfile" do
-  content <<-EOF
-source 'https://supermarket.chef.io'
+  file "#{node['chef_server']['install_dir']}/chef_installer/Berksfile" do
+    content <<-EOF
+  source 'https://supermarket.chef.io'
 
-cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/recipe_refactor'
-cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
-EOF
-end
+  cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
+  cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/recipe_refactor'
+  cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
+  EOF
+  end
 
-execute 'upload cookbooks' do
-  command 'berks install;berks upload --no-ssl-verify --force'
-  cwd "#{node['chef_server']['install_dir']}/chef_installer"
+  execute 'upload cookbooks' do
+    command 'berks install;berks upload --no-ssl-verify'
+    cwd "#{node['chef_server']['install_dir']}/chef_installer"
+  end
 end

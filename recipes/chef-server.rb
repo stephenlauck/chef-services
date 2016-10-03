@@ -49,12 +49,16 @@ end
 
 directory '/etc/chef'
 
+directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/cache" do
+  recursive true
+end
+
 file '/etc/chef/client.rb' do
   content <<-EOF
 chef_server_url  "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 validation_client_name "delivery-validator"
 validation_key "#{node['chef_server']['install_dir']}/delivery-validator.pem"
-file_cache_path "#{node['chef_server']['install_dir']}/chef_installer"
+file_cache_path "#{node['chef_server']['install_dir']}/chef_installer/.chef/cache"
 ssl_verify_mode :verify_none
 EOF
 end

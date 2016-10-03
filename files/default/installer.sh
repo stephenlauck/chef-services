@@ -81,12 +81,13 @@ if [ -z $INSTALL_DIR ]; then
 fi
 
 mkdir -p $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/
+mkdir -p $INSTALL_DIR/chef_installer/.chef/cache/
 cd $INSTALL_DIR/chef_installer
 curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/ad/recipe_refactor/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk -d $INSTALL_DIR/chef_installer && rm install.sh
 fi
-echo 'file_cache_path "$INSTALL_DIR/chef_installer"' > solo_installer.rb
+echo "file_cache_path \"$INSTALL_DIR/chef_installer/.chef/cache\"" > solo_installer.rb
 echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
 chef-client -z -j installer.json -c solo_installer.rb -r 'recipe[installer::installer]'
 echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}}" > attributes.json

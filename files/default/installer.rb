@@ -5,7 +5,7 @@ end
 file "#{node['install_dir']}/solo.rb" do
   content <<-EOF
 cookbook_path "#{node['install_dir']}/chef_installer/cookbooks"
-file_cache_path "#{node['install_dir']}/chef_installer"
+file_cache_path "#{node['install_dir']}/chef_installer/.chef/cache"
 EOF
 end
 

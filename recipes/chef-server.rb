@@ -54,7 +54,7 @@ file '/etc/chef/client.rb' do
 chef_server_url  "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 validation_client_name "delivery-validator"
 validation_key "#{node['chef_server']['install_dir']}/delivery-validator.pem"
-file_cache_path "#{node['chef_server']['install_dir']}/.chef/local-mode-cache/cache"
+file_cache_path "#{node['chef_server']['install_dir']}/chef_installer"
 ssl_verify_mode :verify_none
 EOF
 end

@@ -32,6 +32,7 @@ end
 template init_file do
   source init_template
   mode 0755
+  notifies :restart, 'service[push-jobs-client]', :delayed
 end
 
 service 'push-jobs-client' do

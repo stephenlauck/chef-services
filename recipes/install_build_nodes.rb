@@ -8,15 +8,6 @@ directory '/etc/chef/trusted_certs' do
   recursive true
 end
 
-%W(#{node['chef_server']['fqdn']} #{node['chef_automate']['fqdn']}).each do |server|
-  execute "fetch ssl cert for #{server}" do
-    command "knife ssl fetch -s https://#{server}"
-  end
-  execute "fetch ssl cert for #{server}" do
-    command "knife ssl fetch -s https://#{server} -c /etc/chef/client.rb"
-  end
-end
-
 directory workspace do
   action :create
   recursive true
@@ -46,7 +37,7 @@ end
   end
 end
 
-%w(etc/delivery_key .chef/delivery_key).each do |delivery_key|
+%w(etc/delivery_key .chef/delivery_key etc/delivery.pem).each do |delivery_key|
   file "#{workspace}/#{delivery_key}" do
     content delivery_databag['user_pem']
     mode 0600
@@ -93,12 +84,21 @@ file '/etc/chef/client.rb' do
   mode 00755
 end
 
-execute 'chmod trusted certs' do
-  command 'chmod 0644 /etc/chef/trusted_certs/*'
-end
-
 file '/etc/chef/client.pem' do
   mode 0640
+end
+
+%W(#{node['chef_server']['fqdn']} #{node['chef_automate']['fqdn']}).each do |server|
+  execute "fetch ssl cert for #{server}" do
+    command "knife ssl fetch -s https://#{server}"
+  end
+  execute "fetch ssl cert for #{server}" do
+    command "knife ssl fetch -s https://#{server} -c /etc/chef/client.rb"
+  end
+end
+
+execute 'chmod trusted certs' do
+  command 'chmod 0644 /etc/chef/trusted_certs/*'
 end
 
 include_recipe 'chef-services::install_push_jobs'

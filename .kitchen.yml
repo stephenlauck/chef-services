@@ -36,11 +36,7 @@ suites:
     run_list:
       - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::chef-server]
-      - recipe[test::delivery_license]
-      - recipe[test::save_secrets]
-      - recipe[test::save_secrets_kitchen]
+      - recipe[test::chef_server]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -57,7 +53,6 @@ suites:
     run_list:
       - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
       - recipe[test::delivery_node]
     attributes:
       delivery:
@@ -67,6 +62,8 @@ suites:
           enable: true
       chef_automate:
         fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
     driver:
       vm_hostname: automate.services.com
       network:
@@ -79,9 +76,12 @@ suites:
     run_list:
       - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
-      - recipe[test::build_node]
+      - recipe[test::delivery_build_node]
     attributes:
+      chef_automate:
+        fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
     driver:
       vm_hostname: build.services.com
       network:

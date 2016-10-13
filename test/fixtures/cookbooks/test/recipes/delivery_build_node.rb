@@ -1,11 +1,15 @@
+directory '/etc/chef'
+
 file '/etc/chef/client.rb' do
   content <<-EOF
+node_name                "build.services.com"
 log_level                :info
 log_location             STDOUT
 validation_client_name   "delivery-validator"
 validation_key           "/etc/chef/delivery-validator.pem"
 chef_server_url          "https://chef.services.com/organizations/delivery"
 encrypted_data_bag_secret "/tmp/kitchen/encrypted_data_bag_secret"
+trusted_certs_dir         "/etc/chef/trusted_certs"
 EOF
 end
 
@@ -44,15 +48,19 @@ end
 file '/etc/chef/dna.json' do
   content <<-EOF
 {
-    "delivery_build": {
-        "trusted_certs": {
-            "delivery server cert": "/etc/chef/trusted_certs/automate.services.com.crt"
-        }
+    "chef_server": {
+        "fqdn": "chef.services.com"
+      },
+    "chef_automate": {
+      "fqdn": "automate.services.com"
     },
     "run_list": [
-        "recipe[push-jobs::default]",
-        "recipe[delivery_build::default]"
+        "recipe[chef-services::install_build_nodes]"
     ]
 }
   EOF
 end
+
+execute 'knife ssl fetch -c /etc/chef/client.rb'
+
+execute 'chef-client -j /etc/chef/dna.json'

@@ -27,9 +27,9 @@ verifier:
 
 platforms:
   - name: centos-6.8
-  # - name: centos-7.2
-  # - name: ubuntu-14.04
-  # - name: ubuntu-16.04
+  - name: centos-7.2
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
 
 suites:
   - name: chef-server
@@ -69,7 +69,7 @@ suites:
       network:
         - ['private_network', {ip: '33.33.33.11'}]
       customize:
-        memory: 1024
+        memory: 2560
         cpus: 1
 
   - name: build

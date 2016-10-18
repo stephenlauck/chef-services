@@ -1,3 +1,7 @@
+remote_file "#{node['chef_server']['install_dir']}/chefdk.rpm" do
+  source "http://omnitruck.chef.io/stable/chef-server/download?p=sles&pv=12&m=x86_64&v=latest"
+end
+
 chef_ingredient "chef-server" do
   config <<-EOS
 api_fqdn "#{node['chef_server']['fqdn']}"
@@ -8,6 +12,7 @@ oc_id['applications'] = {
 EOS
   action :upgrade
   version :latest
+  source "#{node['chef_server']['install_dir']}/chefdk.rpm"
   accept_license true
 end
 

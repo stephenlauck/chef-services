@@ -9,15 +9,13 @@ file_cache_path "#{node['install_dir']}/chef_installer/.chef/cache"
 EOF
 end
 
-package 'git'
-
 file "#{node['install_dir']}/chef_installer/Berksfile" do
   content <<-EOF
 source 'https://supermarket.chef.io'
 
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/recipe_refactor'
-cookbook 'chef-ingredient', git: 'https://github.com/chef-cookbooks/chef-ingredient.git'
+cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/suse'
+cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
 EOF
 end
 
@@ -25,14 +23,17 @@ execute 'berks update' do
   command 'berks update'
   cwd "#{node['install_dir']}/chef_installer"
   only_if do ::File.exists?("#{node['install_dir']}/chef_installer/Berksfile.lock") end
+  environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
 end
 
 execute 'berks install' do
   command 'berks install'
   cwd "#{node['install_dir']}/chef_installer"
+  environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
 end
 
 execute 'berks vendor' do
   command 'berks vendor cookbooks/'
   cwd "#{node['install_dir']}/chef_installer"
+  environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
 end

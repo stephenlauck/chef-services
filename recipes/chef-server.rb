@@ -21,8 +21,12 @@ ingredient_config "chef-server" do
 end
 
 %w(manage push-jobs-server).each do |addon|
+  remote_file "#{node['chef_server']['install_dir']}/#{addon}.rpm" do
+    source "http://omnitruck.chef.io/stable/#{addon}/download?p=sles&pv=12&m=x86_64&v=latest"
+  end
   chef_ingredient addon do
     accept_license true
+    package_source "#{node['chef_server']['install_dir']}/#{addon}.rpm"
   end
 
   ingredient_config addon do

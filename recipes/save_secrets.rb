@@ -3,9 +3,13 @@ require 'json'
 require 'net/ssh'
 require 'base64'
 
-chef_ingredient 'chefdk'
+remote_file "#{node['chef_server']['install_dir']}/chefdk.rpm" do
+  source "http://omnitruck.chef.io/stable/chefdk/download?p=sles&pv=12&m=x86_64&v=latest"
+end
 
-package 'git'
+chef_ingredient 'chefdk' do
+  source "#{node['chef_server']['install_dir']}/chefdk.rpm"
+end
 
 directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/" do
   action :create
@@ -51,6 +55,7 @@ unless automate_db
   execute 'upload databag' do
     command 'knife data bag create automate;knife data bag from file automate data_bags/automate.json'
     cwd "#{node['chef_server']['install_dir']}/chef_installer"
+    environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
   end
 
   file "#{node['chef_server']['install_dir']}/chef_installer/Berksfile" do
@@ -66,5 +71,6 @@ unless automate_db
   execute 'upload cookbooks' do
     command 'berks install;berks upload --no-ssl-verify'
     cwd "#{node['chef_server']['install_dir']}/chef_installer"
+    environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
   end
 end

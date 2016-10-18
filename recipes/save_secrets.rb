@@ -8,7 +8,7 @@ remote_file "#{node['chef_server']['install_dir']}/chefdk.rpm" do
 end
 
 chef_ingredient 'chefdk' do
-  source "#{node['chef_server']['install_dir']}/chefdk.rpm"
+  package_source "#{node['chef_server']['install_dir']}/chefdk.rpm"
 end
 
 directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/" do

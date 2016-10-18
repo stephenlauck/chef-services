@@ -12,7 +12,7 @@ oc_id['applications'] = {
 EOS
   action :upgrade
   version :latest
-  source "#{node['chef_server']['install_dir']}/chefdk.rpm"
+  package_source "#{node['chef_server']['install_dir']}/chefdk.rpm"
   accept_license true
 end
 

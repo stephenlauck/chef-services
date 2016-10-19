@@ -1,3 +1,6 @@
+file_info = get_product_info("supermarket", node['chef-services']['supermarket']['version'])
+node.default['supermarket_omnibus']['package_url'] = file_info['url']
+
 delivery_databag = data_bag_item('automate', 'automate')
 
 supermarket_server 'supermarket' do

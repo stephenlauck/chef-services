@@ -12,7 +12,6 @@ action_class do
     STDOUT.sync = true
     (0..attempts).each do |attempt|
       break if erchef_ready?
-
       sleep 1
       print '.'
       if attempt == attempts

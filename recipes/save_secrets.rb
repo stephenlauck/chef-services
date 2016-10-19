@@ -3,12 +3,15 @@ require 'json'
 require 'net/ssh'
 require 'base64'
 
-remote_file "#{node['chef_server']['install_dir']}/chefdk.rpm" do
-  source "http://omnitruck.chef.io/stable/chefdk/download?p=sles&pv=12&m=x86_64&v=latest"
+file_info = get_product_info("chefdk", node['chef-services']['chefdk']['version'])
+
+remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+  source file_info['url']
+  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
 end
 
 chef_ingredient 'chefdk' do
-  package_source "#{node['chef_server']['install_dir']}/chefdk.rpm"
+  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
 end
 
 directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/" do
@@ -25,11 +28,11 @@ cookbook_path            [\"#{node['chef_server']['install_dir']}/chef_installer
 ssl_verify_mode          :verify_none
 "
 end
-automate_db =  begin
-                  data_bag('automate')
-               rescue Net::HTTPServerException, Chef::Exceptions::InvalidDataBagPath
-                  nil # empty array for length comparison
-               end
+automate_db = begin
+                data_bag('automate')
+              rescue Net::HTTPServerException, Chef::Exceptions::InvalidDataBagPath
+                nil # empty array for length comparison
+              end
 
 unless automate_db
   builder_key = OpenSSL::PKey::RSA.new(2048)

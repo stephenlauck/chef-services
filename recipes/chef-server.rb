@@ -24,8 +24,9 @@ ingredient_config "chef-server" do
 end
 
 %w(manage push-jobs-server).each do |addon|
+  file_info = nil
   file_info = get_product_info(addon, node['chef-services'][addon]['version'])
-  remote_file "#{node['chef_server']['install_dir']}/#{file_info['filename']}" do
+  remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
     source file_info['url']
     not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
   end

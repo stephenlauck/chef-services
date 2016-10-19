@@ -26,6 +26,7 @@ GRAPH
     chef-server-ctl (>= 0.0.0)
     fancy_execute (>= 0.0.0)
     ntp (>= 0.0.0)
+    supermarket-omnibus-cookbook (>= 0.0.0)
   compat_resource (12.14.7)
   fancy_execute (1.0.2)
   hostsfile (2.4.5)

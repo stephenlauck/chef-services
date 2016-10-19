@@ -41,13 +41,17 @@ unless automate_db
 
   ruby_block 'write_automate_databag' do
     block do
+      supermarket_ocid = JSON.parse(::File.read('/etc/opscode/oc-id-applications/supermarket.json'))
+
       automate_db_item = {
         'id' => 'automate',
         'validator_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery-validator.pem"),
         'user_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery.pem"),
         'builder_pem' => builder_key.to_pem,
         'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
-        'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license'))
+        'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license')),
+        'supermarket_oauth2_app_id' => supermarket_ocid['uid'],
+        'supermarket_oauth2_secret' => supermarket_ocid['secret']
       }
       ::File.write("#{node['chef_server']['install_dir']}/chef_installer/data_bags/automate.json", automate_db_item.to_json)
       chef_server_install_dir = '/tmp/chef_installer'
@@ -68,6 +72,7 @@ unless automate_db
   cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
   cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/suse'
   cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
+  cookbook 'supermarket-omnibus-cookbook'
   EOF
   end
 

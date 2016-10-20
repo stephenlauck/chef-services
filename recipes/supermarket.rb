@@ -1,8 +1,8 @@
 file_info = get_product_info("supermarket", node['chef-services']['supermarket']['version'])
 
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{file_info['name']}" do
   source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
+  not_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/#{file_info['name']}") }
 end
 
 delivery_databag = data_bag_item('automate', 'automate')
@@ -18,5 +18,5 @@ chef_ingredient 'supermarket' do
   config JSON.pretty_generate(supermarket_config.merge(node['chef-services']['supermarket']['config']))
   ctl_command '/opt/supermarket/bin/supermarket-ctl'
   sensitive   true
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
+  package_source "#{Chef::Config[:file_cache_path]}/#{file_info['name']}"
 end

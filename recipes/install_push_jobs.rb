@@ -14,7 +14,7 @@ template '/etc/chef/push-jobs-client.rb' do
 end
 
 case node['platform_family']
-when 'ubuntu'
+when 'debian'
   init_template = 'push-jobs-client-upstart'
   init_file = '/etc/init/push-jobs-client.conf'
 when 'rhel', 'suse'

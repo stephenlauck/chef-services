@@ -8,7 +8,7 @@ end
 delivery_databag = data_bag_item('automate', 'automate')
 
 supermarket_config = {
-      'chef_server_url' => node['chef_server']['fqdn'],
+      'chef_server_url' => "https://#{node['chef_server']['fqdn']}",
       'chef_oauth2_app_id' => delivery_databag['supermarket_oauth2_app_id'],
       'chef_oauth2_secret' => delivery_databag['supermarket_oauth2_secret'],
       'chef_oauth2_verify_ssl' => node['chef-supermarket']['supermarket']['verify_ssl']

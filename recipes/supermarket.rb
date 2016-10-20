@@ -20,3 +20,8 @@ chef_ingredient 'supermarket' do
   sensitive   true
   package_source "#{Chef::Config[:file_cache_path]}/#{file_info['name']}"
 end
+
+
+ingredient_config 'supermarket' do
+  notifies :reconfigure, 'chef_ingredient[supermarket]', :immediately
+end

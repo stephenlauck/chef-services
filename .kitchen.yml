@@ -112,7 +112,7 @@ suites:
     run_list:
       - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::compliance]
+      - recipe[test::compliance_node]
     attributes:
       compliance:
         accept_license: true

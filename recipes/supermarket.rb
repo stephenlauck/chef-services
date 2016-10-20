@@ -21,11 +21,14 @@ chef_ingredient 'supermarket' do
   package_source "#{Chef::Config[:file_cache_path]}/#{file_info['name']}"
 end
 
-user 'supermarket' do
-  group 'supermarket'
-  action :manage
-end
-
 ingredient_config 'supermarket' do
   notifies :reconfigure, 'chef_ingredient[supermarket]', :immediately
+end
+
+if node['platform'] == 'suse'
+  user 'supermarket' do
+    group 'supermarket'
+    action :manage
+    notifies :reconfigure, 'chef_ingredient[supermarket]', :immediately
+  end
 end

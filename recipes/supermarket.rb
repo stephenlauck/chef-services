@@ -30,5 +30,6 @@ if node['platform'] == 'suse'
     group 'supermarket'
     action :manage
     notifies :reconfigure, 'chef_ingredient[supermarket]', :immediately
+    notifies :restart, 'chef_ingredient[supermarket]', :delayed
   end
 end

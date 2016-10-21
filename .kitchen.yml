@@ -34,7 +34,6 @@ platforms:
 suites:
   - name: chef-server
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::chef_server]
     driver:
@@ -51,7 +50,6 @@ suites:
 
   - name: automate
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_node]
     attributes:
@@ -74,7 +72,6 @@ suites:
 
   - name: build
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::delivery_build_node]
     attributes:
@@ -92,10 +89,8 @@ suites:
 
   - name: supermarket
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket]
+      - recipe[test::supermarket_node]
     attributes:
       supermarket_omnibus:
         chef_server_url: 'https://chef.services.com'
@@ -110,7 +105,6 @@ suites:
 
   - name: compliance
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
       - recipe[test::compliance_node]
     attributes:

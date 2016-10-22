@@ -81,16 +81,17 @@ if [ -z $INSTALL_DIR ]; then
 fi
 
 mkdir -p $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/
+mkdir -p $INSTALL_DIR/chef_installer/.chef/cache/
 cd $INSTALL_DIR/chef_installer
-curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.rb
+curl -o $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/installer.rb https://raw.githubusercontent.com/stephenlauck/chef-services/ad/suse/files/default/installer.rb
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk -d $INSTALL_DIR/chef_installer && rm install.sh
 fi
-echo 'file_cache_path "$INSTALL_DIR/chef_installer"' > solo_installer.rb
+echo "file_cache_path \"$INSTALL_DIR/chef_installer/.chef/cache\"" > solo_installer.rb
 echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
 chef-client -z -j installer.json -c solo_installer.rb -r 'recipe[installer::installer]'
 echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}}" > attributes.json
-chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -r 'recipe[test::chef-server],recipe[test::delivery_license],recipe[test::save_secrets]'
+chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -r 'recipe[chef-services::chef-server]'
 
 # ->upload cookbooks to itself
 # ->generate keys, create data_bags
@@ -100,7 +101,8 @@ chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -
 # --> bootstrap with correct runlist
 
 if [ ! -z $CHEF_AUTOMATE_FQDN ]; then
-  knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[test::delivery],recipe[test::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\",\"build_nodes\":[{\"fqdn\":\"$CHEF_BUILD_FQDN\",\"username\":\"$CHEF_USER\",\"password\":\"$CHEF_PW\"}]}}" -y --node-ssl-verify-mode none
+  knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[chef-services::delivery]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"}}" -y --node-ssl-verify-mode none
+  knife bootstrap $CHEF_BUILD_FQDN -N $CHEF_BUILD_FQDN -x vagrant -P vagrant --sudo -r "recipe[chef-services::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"},\"tags\":\"delivery-build-node\"}" -y --node-ssl-verify-mode none
 fi
 
-chef-client -j attributes.json -r 'recipe[test::chef-server]'
+chef-client -j attributes.json -r 'recipe[chef-services::chef-server]'

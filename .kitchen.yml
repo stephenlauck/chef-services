@@ -27,20 +27,15 @@ verifier:
 
 platforms:
   - name: centos-6.8
-  # - name: centos-7.2
-  # - name: ubuntu-14.04
-  # - name: ubuntu-16.04
+  - name: centos-7.2
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
 
 suites:
   - name: chef-server
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::chef-server]
-      - recipe[test::delivery_license]
-      - recipe[test::save_secrets]
-      - recipe[test::save_secrets_kitchen]
+      - recipe[test::chef_server]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -55,9 +50,7 @@ suites:
 
   - name: automate
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
       - recipe[test::delivery_node]
     attributes:
       delivery:
@@ -67,21 +60,25 @@ suites:
           enable: true
       chef_automate:
         fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
     driver:
       vm_hostname: automate.services.com
       network:
         - ['private_network', {ip: '33.33.33.11'}]
       customize:
-        memory: 1024
+        memory: 2560
         cpus: 1
 
   - name: build
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::delivery_keys]
-      - recipe[test::build_node]
+      - recipe[test::delivery_build_node]
     attributes:
+      chef_automate:
+        fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
     driver:
       vm_hostname: build.services.com
       network:
@@ -92,10 +89,8 @@ suites:
 
   - name: supermarket
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::setup_ssh_keys]
-      - recipe[test::supermarket]
+      - recipe[test::supermarket_node]
     attributes:
       supermarket_omnibus:
         chef_server_url: 'https://chef.services.com'
@@ -110,9 +105,8 @@ suites:
 
   - name: compliance
     run_list:
-      - recipe[ntp]
       - recipe[test::hostsfile]
-      - recipe[test::compliance]
+      - recipe[test::compliance_node]
     attributes:
       compliance:
         accept_license: true

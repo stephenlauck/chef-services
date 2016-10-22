@@ -8,3 +8,6 @@ version          '2.0.5'
 
 depends 'ntp'
 depends 'fancy_execute'
+depends 'chef-ingredient'
+depends 'chef-server-ctl'
+depends 'supermarket-omnibus-cookbook'

@@ -59,8 +59,11 @@ file '/etc/chef/dna.json' do
     "chef_server": {
       "fqdn": "chef.services.com"
     },
+    "supermarket_omnibus": {
+      "chef_oauth2_verify_ssl": false
+    },
     "run_list": [
-        "recipe[chef-services::delivery]"
+        "recipe[chef-services::supermarket]"
     ]
 }
   EOF

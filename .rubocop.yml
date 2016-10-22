@@ -1,0 +1,6 @@
+AllCops:
+  Exclude:
+    - 'test/**/*'
+    - 'spec/**/*'
+Metrics/LineLength:
+  Max: 120

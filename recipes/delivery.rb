@@ -13,7 +13,7 @@ directory '/etc/chef'
 
 delivery_databag = data_bag_item('automate', 'automate')
 
-include_recipe 'test::delivery_license'
+include_recipe 'chef-services::delivery_license'
 
 file '/etc/delivery/delivery.pem' do
   content delivery_databag['user_pem']
@@ -21,6 +21,13 @@ end
 
 file '/etc/chef/validation.pem' do
   content delivery_databag['validator_pem']
+end
+
+file_info = get_product_info("delivery", node['chef-services']['delivery']['version'])
+
+remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+  source file_info['url']
+  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
 end
 
 chef_ingredient 'delivery' do
@@ -32,6 +39,7 @@ delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizat
 delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
   EOS
+  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
   action :install
 end
 
@@ -39,4 +47,4 @@ ingredient_config 'delivery' do
   notifies :reconfigure, 'chef_ingredient[delivery]', :immediately
 end
 
-include_recipe 'test::create_enterprise'
+include_recipe 'chef-services::create_enterprise'

@@ -23,6 +23,13 @@ file '/etc/chef/validation.pem' do
   content delivery_databag['validator_pem']
 end
 
+file_info = get_product_info("delivery", node['chef-services']['delivery']['version'])
+
+remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+  source file_info['url']
+  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
+end
+
 chef_ingredient 'delivery' do
   config <<-EOS
 delivery_fqdn "#{node['chef_automate']['fqdn']}"
@@ -32,6 +39,7 @@ delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizat
 delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
   EOS
+  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
   action :install
 end
 

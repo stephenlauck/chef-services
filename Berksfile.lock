@@ -1,7 +1,7 @@
 DEPENDENCIES
   chef-ingredient
-    git: https://github.com/chef-cookbooks/chef-ingredient.git
-    revision: b18b627f0c1e4bf7558f868268ba9970cb98262b
+    git: https://github.com/andy-dufour/chef-ingredient.git
+    revision: 65ebd9f698cb9532b4d0718558a97e43fab6acb7
   chef-server-ctl
     git: https://github.com/stephenlauck/chef-server-ctl.git
     revision: 55bfa054f9d5cda86f1a96b28b5ccaddbec7a69d
@@ -15,7 +15,7 @@ DEPENDENCIES
     path: test/fixtures/cookbooks/test
 
 GRAPH
-  chef-ingredient (0.20.0)
+  chef-ingredient (0.21.0)
     compat_resource (>= 12.10.0)
   chef-server (5.1.0)
     chef-ingredient (>= 0.18.0)
@@ -26,10 +26,11 @@ GRAPH
     chef-server-ctl (>= 0.0.0)
     fancy_execute (>= 0.0.0)
     ntp (>= 0.0.0)
-  compat_resource (12.14.6)
+    supermarket-omnibus-cookbook (>= 0.0.0)
+  compat_resource (12.14.7)
   fancy_execute (1.0.2)
   hostsfile (2.4.5)
-  ntp (3.1.0)
+  ntp (3.2.0)
   supermarket-omnibus-cookbook (2.0.0)
     chef-ingredient (>= 0.19.0)
     compat_resource (>= 12.14.3)

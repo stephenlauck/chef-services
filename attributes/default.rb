@@ -7,5 +7,13 @@ default['compliance']['channel'] = :stable
 default['compliance']['accept_license'] = false
 default['chef_automate']['fqdn'] = 'automate.services.com'
 default['chefdk']['bashrc'] = '/etc/bashrc'
-default['chefdk']['version'] = 'latest'
-default['chefdk']['source'] = "http://omnitruck.chef.io/stable/chefdk/download?p=#{node['platform']}&pv=#{node['platform_version']}&m=#{node['kernel']['processor']}&v=latest"
+default['chef-services']['chefdk']['version'] = 'latest'
+default['chef-services']['chef-server']['version'] = 'latest'
+default['chef-services']['manage']['version'] = 'latest'
+default['chef-services']['push-jobs-server']['version'] = 'latest'
+default['chef-services']['delivery']['version'] = 'latest'
+default['chef-services']['supermarket']['version'] = 'latest'
+default['chef-services']['compliance']['version'] = 'latest'
+default['chef-services']['compliance']['accept_license'] = true
+default['chef-supermarket']['supermarket']['verify_ssl'] = false
+default['chef-services']['supermarket']['config'] = {}

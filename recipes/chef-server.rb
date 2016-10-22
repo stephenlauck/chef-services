@@ -1,3 +1,10 @@
+file_info = get_product_info("chef-server", node['chef-services']['chef-server']['version'])
+
+remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+  source file_info['url']
+  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
+end
+
 chef_ingredient "chef-server" do
   config <<-EOS
 api_fqdn "#{node['chef_server']['fqdn']}"
@@ -8,6 +15,7 @@ oc_id['applications'] = {
 EOS
   action :upgrade
   version :latest
+  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
   accept_license true
 end
 
@@ -16,8 +24,14 @@ ingredient_config "chef-server" do
 end
 
 %w(manage push-jobs-server).each do |addon|
+  file_info = get_product_info(addon, node['chef-services'][addon]['version'])
+  remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
+    source file_info['url']
+    not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
+  end
   chef_ingredient addon do
     accept_license true
+    package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
   end
 
   ingredient_config addon do

@@ -1,5 +1,5 @@
 remote_file '/tmp/installer.sh' do
-  source 'https://raw.githubusercontent.com/stephenlauck/chef-services/ad/suse/files/default/installer.sh'
+  source 'https://raw.githubusercontent.com/stephenlauck/chef-services/installer/files/default/installer.sh'
   mode 0755
 end
 

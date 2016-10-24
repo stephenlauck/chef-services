@@ -70,7 +70,7 @@ unless automate_db
   source 'https://supermarket.chef.io'
 
   cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-  cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'installer'
+  cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git'
   cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
   cookbook 'supermarket-omnibus-cookbook'
   EOF

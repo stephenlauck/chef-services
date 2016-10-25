@@ -1,16 +1,65 @@
+# Context
+
+The repo, Chef-Services, will become the recommended way to install commercial Chef Products.
+It provides full automation of the install.
+It works both behind the firewall on pre-provisioned machines and out on the internet.
+
+For provisioning:
+- It will set up today in any environment where the machines are already provisioned, including VMware.
+- it supports the provisioning step today only on AWS.
+- In the future it will provision other computing resources using Terraform; this is not yet supported.
+
+## Objectives
+- This suite is for people that want a full set of Commercial products for Chef. 
+- This installs Chef Server, Chef Automate (Workflow, Visibility and Compliance)
+
+## Product Maturity
+- This in active test on some large customer sites.
+- It is still considered preproduction and needs hand-holding to install
+
+## Environments 
+- Presently works on Ubuntu 14, Centos 6 & 7.
+- Some issues on Ubuntu 16.
+
+## Pre-requisites
+list the things I need to have / know before starting
+- You must be prepared to run Chef Server for controlling your nodes (no Chef Solo)
+- It must be a Chef 12 server
+- An accessible domain (assumed ".services.com") must be in a DNS server reachable by the servers
+- 
+
+
+## Manual Preparation
+list the things I need to do before 
+- change .services.com in (which?) files
+
+## How to install
+- what do I log into
+- what do I clone
+- what do I run
+
+## Troubleshooting
+- known issues
+- order of things to check
+- how to ask for help
+
 # chef-services
 ```
-kitchen list
-kitchen converge
+kitchen list - shows AWS nodes
+kitchen converge - does what??
 ```
 ### Sets up:
 
+kitchen converge - does what??
 1. chef-server
 4. automate
 5. build-node
 3. supermarket
 6. compliance
 
+## Process
+
+If you don't have DNS pointing to the computing resources.
 ### Add this to your local workstation /etc/hosts
 
 ```
@@ -22,6 +71,10 @@ kitchen converge
 ```
 
 #### Login to chef-server  
+
+?? Does my Chef Server have to already exist?
+?? What steps do I do to actually install??
+
 ##### user/password: delivery/delivery
 [http://chef.services.com](http://chef.services.com)
 

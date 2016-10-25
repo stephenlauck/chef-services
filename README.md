@@ -26,8 +26,6 @@ list the things I need to have / know before starting
 - You must be prepared to run Chef Server for controlling your nodes (no Chef Solo)
 - It must be a Chef 12 server
 - An accessible domain (assumed ".services.com") must be in a DNS server reachable by the servers
-- 
-
 
 ## Manual Preparation
 list the things I need to do before 

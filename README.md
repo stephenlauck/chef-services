@@ -7,7 +7,7 @@ It works both behind the firewall on pre-provisioned machines and out on the int
 For provisioning:
 - It will set up today in any environment where the machines are already provisioned, including VMware.
 - it supports the provisioning step today only on AWS.
-- In the future it will provision other computing resources using Terraform; this is not yet supported.
+- In the future it will provision other computing resources using Terraform; this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
 
 ## Objectives
 - This suite is for people that want a full set of Commercial products for Chef. 

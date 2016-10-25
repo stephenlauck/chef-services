@@ -41,19 +41,43 @@ list the things I need to do before
 - order of things to check
 - how to ask for help
 
-# chef-services
+### Testing and Development
+See TESTING.md
+
+?? It's not clear if these are only for development and testing
 ```
 kitchen list - shows AWS nodes
 kitchen converge - see TESTING.md
 ```
 
-### Testing and Development
-See [TESTING.md]
+## Installation
 
-#### Login to chef-server  
+You perform the installation from a Chef Server.
+This (? does not / should not / must not) be installed prior to running the following
 
 ?? Does my Chef Server have to already exist?
 ?? What steps do I do to actually install??
+
+#### Login to chef-server  
+`` ssh chef-server``
+
+#### Clone the repo 
+`` git clone xxxxxxxxxx``
+
+#### Run the installer
+`` files/default/installer.sh yourdomainname.com``
+
+#### Example Output
+
+`` blah blah ``
+
+## Success!
+
+You can now login to the Chef services with the details shown below.
+
+## Next Steps
+- Change passwords.
+- Win
 
 ##### user/password: delivery/delivery
 [http://chef.services.com](http://chef.services.com)

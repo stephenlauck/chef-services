@@ -47,6 +47,9 @@ kitchen list - shows AWS nodes
 kitchen converge - see TESTING.md
 ```
 
+### Testing and Development
+See [TESTING.md]
+
 #### Login to chef-server  
 
 ?? Does my Chef Server have to already exist?

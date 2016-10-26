@@ -1,6 +1,6 @@
 # Context
 
-The repo, Chef-Services, will become the recommended way to install commercial Chef Products.
+The repo, Chef-Services, will become the recommended way to install both the Open Source and commercial Chef Products.
 It provides full automation of the install.
 It works both behind the firewall on pre-provisioned machines and out on the internet.
 
@@ -11,7 +11,10 @@ For provisioning:
 
 ## Objectives
 - This suite is for people that want a full set of Commercial products for Chef. 
-- This installs Chef Server, Chef Automate (Workflow, Visibility and Compliance)
+- This installs:
+-- Chef Server,
+-- Chef Supermarket
+-- Chef Automate (Workflow, Visibility and Compliance)
 
 ## Product Maturity
 - This in active test on some large customer sites.
@@ -20,6 +23,11 @@ For provisioning:
 ## Environments 
 - Presently works on Ubuntu 14, Centos 6 & 7.
 - Some issues on Ubuntu 16.
+
+## Installation
+
+You perform the installation from a Chef Server. It will either provision and use or just use the other machines in the /etc/hosts file.
+Chef Server itself does not have to (but can) be installed prior to running
 
 ## Pre-requisites
 list the things I need to have / know before starting
@@ -30,11 +38,17 @@ list the things I need to have / know before starting
 ## Manual Preparation
 list the things I need to do before 
 - change .services.com in (which?) files
+- plan IP addresses for the VMs used for the services
 
 ## How to install
 - what do I log into
+``ssh your-empty-chef-server``
 - what do I clone
+``git clone https://github.com/stephenlauck/chef-services.git``
+- preparation
+Set up your /etc/hosts file
 - what do I run
+``kitchen create 72``
 
 ## Troubleshooting
 - known issues
@@ -50,22 +64,8 @@ kitchen list - shows AWS nodes
 kitchen converge - see TESTING.md
 ```
 
-## Installation
 
-You perform the installation from a Chef Server.
-This (? does not / should not / must not) be installed prior to running the following
 
-?? Does my Chef Server have to already exist?
-?? What steps do I do to actually install??
-
-#### Login to chef-server  
-`` ssh chef-server``
-
-#### Clone the repo 
-`` git clone xxxxxxxxxx``
-
-#### Run the installer
-`` files/default/installer.sh yourdomainname.com``
 
 #### Example Output
 
@@ -77,7 +77,7 @@ You can now login to the Chef services with the details shown below.
 
 ## Next Steps
 - Change passwords.
-- Win
+- Enjoy
 
 ##### user/password: delivery/delivery
 [http://chef.services.com](http://chef.services.com)

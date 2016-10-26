@@ -3,6 +3,7 @@
 The repo, Chef-Services, will become the recommended way to install both the Open Source and commercial Chef Products.
 It provides full automation of the install.
 It works both behind the firewall on pre-provisioned machines and out on the internet.
+It is a work in progress.
 
 For provisioning:
 - It will set up today in any environment where the machines are already provisioned, including VMware.

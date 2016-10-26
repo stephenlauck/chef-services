@@ -7,7 +7,8 @@ It is a work in progress.
 
 For provisioning:
 - It will set up today in any environment where the machines are already provisioned, including VMware.
-- it supports the provisioning step today only on AWS.
+- Server provisioning is presently out of scope from this repository. Just supply IP addresses.
+- it supports the provisioning step today only on AWS; this is covered in https://github.com/echohack/tf_chef_automate
 - In the future it will provision other computing resources using Terraform; this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
 
 ## Objectives
@@ -35,6 +36,7 @@ list the things I need to have / know before starting
 - You must be prepared to run Chef Server for controlling your nodes (no Chef Solo)
 - It must be a Chef 12 server
 - An accessible domain (assumed ".services.com") must be in a DNS server reachable by the servers
+- All servers need access via the ssh keys held on the Chef Server server
 
 ## Manual Preparation
 list the things I need to do before 

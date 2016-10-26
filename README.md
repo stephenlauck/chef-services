@@ -13,12 +13,14 @@ For provisioning:
   * features include private networking and basic security: see the repo for details.
 * In the future it will provision other computing resources using Terraform
   * this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
-* If you are creating machines manually, the following are suggested names, sizes and O/S:
-  * chef-server 2g Centos-7
-  * automate 2g Centos-7
-  * build-node 2g Centos-7
-  * supermarket 2g Centos-7
-  * compliance 2g Centos-7
+* If you are creating machines manually:
+  * the following are suggested names, sizes and O/S:
+    * chef-server 2g Centos-7
+    * automate 2g Centos-7
+    * build-node 2g Centos-7
+    * supermarket 2g Centos-7
+    * compliance 2g Centos-7
+  * Make a note of the IP addresses
 
 ## Objectives
 * This suite is for people that want a full set of Commercial products for Chef. 

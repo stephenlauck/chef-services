@@ -43,6 +43,9 @@ validation_client_name   "delivery-validator"
 validation_key           "/etc/chef/delivery-validator.pem"
 chef_server_url          "https://chef.services.com/organizations/delivery"
 encrypted_data_bag_secret "/tmp/kitchen/encrypted_data_bag_secret"
+
+data_collector.server_url "https://automate.services.com/data-collector/v0/"
+data_collector.token "93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506"
 EOF
 end
 

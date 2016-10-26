@@ -36,6 +36,7 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::chef_server]
+      - recipe[test::trusted_certs]
     driver:
       vm_hostname: chef.services.com
       network:
@@ -47,11 +48,14 @@ suites:
       chef_server:
         fqdn: chef.services.com
         install_dir: /tmp/
+      chef_automate:
+        fqdn: automate.services.com
 
   - name: automate
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::delivery_node]
+      - recipe[test::trusted_certs]
     attributes:
       delivery:
         fqdn: 'automate.services.com'
@@ -60,7 +64,7 @@ suites:
           enable: true
       chef_automate:
         fqdn: automate.services.com
-      chef_services:
+      chef_server:
         fqdn: chef.services.com
     driver:
       vm_hostname: automate.services.com
@@ -74,10 +78,11 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::delivery_build_node]
+      - recipe[test::trusted_certs]
     attributes:
       chef_automate:
         fqdn: automate.services.com
-      chef_services:
+      chef_server:
         fqdn: chef.services.com
     driver:
       vm_hostname: build.services.com
@@ -91,10 +96,15 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::supermarket_node]
+      - recipe[test::trusted_certs]
     attributes:
       supermarket_omnibus:
         chef_server_url: 'https://chef.services.com'
         chef_oauth2_verify_ssl: false
+      chef_automate:
+        fqdn: automate.services.com
+      chef_server:
+        fqdn: chef.services.com
     driver:
       vm_hostname: supermarket.services.com
       network:
@@ -107,10 +117,15 @@ suites:
     run_list:
       - recipe[test::hostsfile]
       - recipe[test::compliance_node]
+      - recipe[test::trusted_certs]
     attributes:
       compliance:
         accept_license: true
         fqdn: compliance.services.com
+      chef_automate:
+        fqdn: automate.services.com
+      chef_server:
+        fqdn: chef.services.com
     driver:
       vm_hostname: compliance.services.com
       network:

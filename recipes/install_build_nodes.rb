@@ -87,6 +87,7 @@ end
 
 directory '/etc/chef/trusted_certs' do
   mode 00755
+  recursive true
 end
 
 file '/etc/chef/client.rb' do

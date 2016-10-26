@@ -26,4 +26,5 @@ end
 execute 'add delivery validator' do
   command 'chef-server-ctl add-client-key delivery delivery-validator --public-key-path /tmp/pre-delivery-validator.pub'
   action :run
+  not_if "chef-server-ctl list-client-keys delivery delivery-validator"
 end

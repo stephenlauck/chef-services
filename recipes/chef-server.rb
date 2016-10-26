@@ -12,6 +12,9 @@ api_fqdn "#{node['chef_server']['fqdn']}"
 oc_id['applications'] = {
   "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
 }
+
+data_collector['root_url'] = 'https://automate.services.com/data-collector/v0/'
+data_collector['token'] = '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
 EOS
   action :upgrade
   version :latest
@@ -85,6 +88,9 @@ validation_client_name "delivery-validator"
 validation_key "#{node['chef_server']['install_dir']}/delivery-validator.pem"
 file_cache_path "#{node['chef_server']['install_dir']}/chef_installer/.chef/cache"
 ssl_verify_mode :verify_none
+
+data_collector.server_url "https://automate.services.com/data-collector/v0/"
+data_collector.token "93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506"
 EOF
 end
 

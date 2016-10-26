@@ -6,12 +6,12 @@ It works both behind the firewall on pre-provisioned machines and out on the int
 It is a work in progress.
 
 For provisioning:
-- It will set up today in any environment where the machines are already provisioned, including VMware.
-- Server provisioning is presently out of scope from this repository. Just supply IP addresses.
-- this is covered in https://github.com/echohack/tf_chef_automate
--- it supports the provisioning step today only on AWS 
--- features include private networking and basic security: see the repo for details.
-- In the future it will provision other computing resources using Terraform
+* It will set up today in any environment where the machines are already provisioned, including VMware.
+* Server provisioning is presently out of scope from this repository. Just supply IP addresses.
+* this is covered in https://github.com/echohack/tf_chef_automate
+  * it supports the provisioning step today only on AWS 
+  * features include private networking and basic security: see the repo for details.
+* In the future it will provision other computing resources using Terraform
 -- this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
 - If you are creating machines manually, the following are suggested names, sizes and O/S:
 -- chef-server 2g Centos-7

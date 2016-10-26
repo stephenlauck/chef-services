@@ -8,8 +8,17 @@ It is a work in progress.
 For provisioning:
 - It will set up today in any environment where the machines are already provisioned, including VMware.
 - Server provisioning is presently out of scope from this repository. Just supply IP addresses.
-- it supports the provisioning step today only on AWS; this is covered in https://github.com/echohack/tf_chef_automate
-- In the future it will provision other computing resources using Terraform; this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
+- this is covered in https://github.com/echohack/tf_chef_automate
+-- it supports the provisioning step today only on AWS 
+-- features include private networking and basic security: see the repo for details.
+- In the future it will provision other computing resources using Terraform
+-- this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
+- If you are creating machines manually, the following are suggested names, sizes and O/S:
+-- chef-server 2g Centos-7
+-- automate 2g Centos-7
+-- build-node 2g Centos-7
+-- supermarket 2g Centos-7
+-- compliance 2g Centos-7
 
 ## Objectives
 - This suite is for people that want a full set of Commercial products for Chef. 
@@ -52,6 +61,12 @@ list the things I need to do before
 Set up your /etc/hosts file
 - what do I run
 ``kitchen create 72``
+
+For the scenario you described where you have 3-5 existing machines, you could use the one liner
+
+``curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/master/files/default/installer.sh && sudo bash ./installer.sh -c 33.33.33.10 -a 33.33.33.11 -b 33.33.33.12 -u vagrant -p vagrant``
+
+executed on whatever machine you want to be the chef server, and give the inputs of the FQDN or IP of the other machines and the user/pass for the root user
 
 ## Troubleshooting
 - known issues
@@ -107,6 +122,4 @@ You can now login to the Chef services with the details shown below.
 
 `ssh vagrant@33.33.33.10 "sudo /tmp/installer.sh -c 33.33.33.10"`
 
-or
 
-`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/master/files/default/installer.sh && sudo bash ./installer.sh -c 33.33.33.10 -a 33.33.33.11 -b 33.33.33.12 -u vagrant -p vagrant`

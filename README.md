@@ -12,28 +12,28 @@ For provisioning:
   * it supports the provisioning step today only on AWS 
   * features include private networking and basic security: see the repo for details.
 * In the future it will provision other computing resources using Terraform
--- this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
-- If you are creating machines manually, the following are suggested names, sizes and O/S:
--- chef-server 2g Centos-7
--- automate 2g Centos-7
--- build-node 2g Centos-7
--- supermarket 2g Centos-7
--- compliance 2g Centos-7
+  * this is not yet supported. https://github.com/stephenlauck/chef-services/issues/44
+* If you are creating machines manually, the following are suggested names, sizes and O/S:
+  * chef-server 2g Centos-7
+  * automate 2g Centos-7
+  * build-node 2g Centos-7
+  * supermarket 2g Centos-7
+  * compliance 2g Centos-7
 
 ## Objectives
-- This suite is for people that want a full set of Commercial products for Chef. 
-- This installs:
--- Chef Server,
--- Chef Supermarket
--- Chef Automate (Workflow, Visibility and Compliance)
+* This suite is for people that want a full set of Commercial products for Chef. 
+* This installs:
+  * Chef Server,
+  * Chef Supermarket
+  * Chef Automate (Workflow, Visibility and Compliance)
 
 ## Product Maturity
-- This in active test on some large customer sites.
-- It is still considered preproduction and needs hand-holding to install
+* This in active test on some large customer sites.
+* It is still considered preproduction and needs hand-holding to install
 
 ## Environments 
-- Presently works on Ubuntu 14, Centos 6 & 7.
-- Some issues on Ubuntu 16.
+* Presently works on Ubuntu 14, Centos 6 & 7.
+* Some issues on Ubuntu 16.
 
 ## Installation
 
@@ -42,24 +42,24 @@ Chef Server itself does not have to (but can) be installed prior to running
 
 ## Pre-requisites
 list the things I need to have / know before starting
-- You must be prepared to run Chef Server for controlling your nodes (no Chef Solo)
-- It must be a Chef 12 server
-- An accessible domain (assumed ".services.com") must be in a DNS server reachable by the servers
-- All servers need access via the ssh keys held on the Chef Server server
+* You must be prepared to run Chef Server for controlling your nodes (no Chef Solo)
+* It must be a Chef 12 server
+* An accessible domain (assumed ".services.com") must be in a DNS server reachable by the servers
+* All servers need access via the ssh keys held on the Chef Server server
 
 ## Manual Preparation
 list the things I need to do before 
-- change .services.com in (which?) files
-- plan IP addresses for the VMs used for the services
+* change .services.com in (which?) files
+* plan IP addresses for the VMs used for the services
 
 ## How to install
-- what do I log into
+* what do I log into
 ``ssh your-empty-chef-server``
-- what do I clone
+* what do I clone
 ``git clone https://github.com/stephenlauck/chef-services.git``
-- preparation
+* preparation
 Set up your /etc/hosts file
-- what do I run
+* what do I run
 ``kitchen create 72``
 
 For the scenario you described where you have 3-5 existing machines, you could use the one liner
@@ -94,8 +94,8 @@ kitchen converge - see TESTING.md
 You can now login to the Chef services with the details shown below.
 
 ## Next Steps
-- Change passwords.
-- Enjoy
+* Change passwords.
+* Enjoy
 
 ##### user/password: delivery/delivery
 [http://chef.services.com](http://chef.services.com)

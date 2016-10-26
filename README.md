@@ -20,7 +20,14 @@ For provisioning:
     * build-node 2g Centos-7
     * supermarket 2g Centos-7
     * compliance 2g Centos-7
-  * Make a note of the IP addresses
+  * Make a note of the names / IP addresses, these become parameters to installer.sh:
+```
+installer.sh \
+-c|--chef-server-fqdn         REQUIRED: The FQDN you want the Chef Server configured to use.
+-a|--chef-automate-fqdn       The FQDN of the Chef Automate server.
+-b|--build-node-fqdn          The FQDN of the build node.
+```
+    * (See Installer.sh for more options)
 
 ## Objectives
 * This suite is for people that want a full set of Commercial products for Chef. 
@@ -56,13 +63,13 @@ list the things I need to do before
 
 ## How to install
 * what do I log into
-``ssh your-empty-chef-server``
+  * ``ssh your-empty-chef-server``
 * what do I clone
-``git clone https://github.com/stephenlauck/chef-services.git``
+  * ``git clone https://github.com/stephenlauck/chef-services.git``
 * preparation
 Set up your /etc/hosts file
 * what do I run
-``kitchen create 72``
+  * ``kitchen create 72``
 
 For the scenario you described where you have 3-5 existing machines, you could use the one liner
 

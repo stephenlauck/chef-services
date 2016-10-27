@@ -6,19 +6,14 @@ def get_node_name_from_config
 end
 
 def get_product_info(project, version, platform = node['platform'], platform_version = node['platform_version'], omnitruck_url = 'omnitruck.chef.io', channel = 'stable', arch="x86_64")
-  case platform
-  when "ubuntu"
-    pv = platform_version.delete('.')
-  else
-    pv = platform_version.to_i
-  end
+  pv = (node['platform'].eql?('ubuntu') ? node['platform_version'].delete('.') : node['platform_version'].to_i)
   url = URI.parse("http://#{omnitruck_url}/#{channel}/#{project}/metadata?p=#{platform}&pv=#{pv}&m=#{arch}&v=#{version}")
-  res = Net::HTTP.get(url)
-  dl_info = res.split("\n").map do |resource|
+  request = Net::HTTP.new(url.host, url.port)
+  res = request.get(url)
+  dl_info = res.body.split("\n").map do |resource|
               resource = resource.split("\t")
             end
   dl_info = dl_info.to_h
   dl_info['name'] = File.basename(dl_info['url'])
-
   dl_info
 end

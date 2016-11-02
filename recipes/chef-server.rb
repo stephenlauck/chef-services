@@ -1,41 +1,17 @@
-file_info = get_product_info("chef-server", node['chef-services']['chef-server']['version'])
-
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
-
-chef_ingredient "chef-server" do
-  config <<-EOS
-api_fqdn "#{node['chef_server']['fqdn']}"
-
-oc_id['applications'] = {
-  "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
-}
-EOS
-  action :upgrade
-  version :latest
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
-  accept_license true
-end
-
-ingredient_config "chef-server" do
-  notifies :reconfigure, "chef_ingredient[chef-server]", :immediately
-end
-
-%w(manage push-jobs-server).each do |addon|
-  file_info = get_product_info(addon, node['chef-services'][addon]['version'])
-  remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-    source file_info['url']
-    not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-  end
-  chef_ingredient addon do
-    accept_license true
-    package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
+%w( chef-server manage push-jobs-server chefdk reporting ).each do |svc|
+  remote_file "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" do
+    source node[svc]['package_url']
+    only_if { node[svc]['package_url'] }
   end
 
-  ingredient_config addon do
-    notifies :reconfigure, "chef_ingredient[#{addon}]", :immediately
+  chef_ingredient svc do
+    config node[pkg]['config'] if node[pkg]['config']
+    package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" if node[svc]['package_url']
+    action :install
+  end
+
+  ingredient_config svc do
+    notifies :reconfigure, "chef_ingredient[#{svc}]", :immediately
   end
 end
 

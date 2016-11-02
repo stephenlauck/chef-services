@@ -3,17 +3,6 @@ require 'json'
 require 'net/ssh'
 require 'base64'
 
-file_info = get_product_info("chefdk", node['chef-services']['chefdk']['version'])
-
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
-
-chef_ingredient 'chefdk' do
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
-end
-
 directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/" do
   action :create
   recursive true

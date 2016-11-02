@@ -23,28 +23,21 @@ file '/etc/chef/validation.pem' do
   content delivery_databag['validator_pem']
 end
 
-file_info = get_product_info("delivery", node['chef-services']['delivery']['version'])
+%w( delivery chefdk ).each do |svc|
+  remote_file "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" do
+    source node[svc]['package_url']
+    only_if { node[svc]['package_url'] }
+  end
 
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
+  chef_ingredient svc do
+    config node[pkg]['config'] if node[pkg]['config']
+    package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" if node[svc]['package_url']
+    action :install
+  end
 
-chef_ingredient 'delivery' do
-  config <<-EOS
-delivery_fqdn "#{node['chef_automate']['fqdn']}"
-delivery['chef_username']    = "delivery"
-delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
-delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizations/delivery"
-delivery['default_search']   = "tags:delivery-build-node"
-insights['enable']           = true
-  EOS
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
-  action :install
-end
-
-ingredient_config 'delivery' do
-  notifies :reconfigure, 'chef_ingredient[delivery]', :immediately
+  ingredient_config svc do
+    notifies :reconfigure, "chef_ingredient[#{svc}]", :immediately
+  end
 end
 
 include_recipe 'chef-services::create_enterprise'

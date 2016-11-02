@@ -1,5 +1,6 @@
 workspace = '/var/opt/delivery/workspace'
 delivery_databag = data_bag_item('automate', 'automate')
+tag 'delivery-build-node'
 
 file_info = get_product_info("chefdk", node['chef-services']['chefdk']['version'])
 

@@ -1,13 +1,15 @@
-%w( chef-server manage push-jobs-server chefdk reporting ).each do |svc|
-  remote_file "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" do
+%w( chef-server manage push-jobs-server chefdk ).each do |svc|
+  remote_file "#{svc} package" do
+    path "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}"
     source node[svc]['package_url']
     only_if { node[svc]['package_url'] }
   end
 
   chef_ingredient svc do
-    config node[pkg]['config'] if node[pkg]['config']
+    config node[svc]['config'] if node[svc]['config']
     package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" if node[svc]['package_url']
-    action :install
+    accept_license node['chef-services']['accept_license']
+    action :upgrade
   end
 
   ingredient_config svc do

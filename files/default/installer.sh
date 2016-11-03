@@ -55,6 +55,10 @@ case $key in
     INSTALL_DIR="$2"
     shift
     ;;
+    -cs-source|--chef-services-source)
+    CHEF_SERVICES_SOURCE="$2"
+    shift
+    ;;
     -h|--help)
     echo -e $usage
     exit 0
@@ -79,6 +83,9 @@ done
 if [ -z $INSTALL_DIR ]; then
   INSTALL_DIR=/tmp
 fi
+if [ -z $CHEF_SERVICES_SOURCE ]; then
+  CHEF_SERVICES_SOURCE="git: 'https://github.com/stephenlauck/chef-services.git'"
+fi
 
 mkdir -p $INSTALL_DIR/chef_installer/cookbooks/installer/recipes/
 mkdir -p $INSTALL_DIR/chef_installer/.chef/cache/
@@ -86,14 +93,12 @@ cd $INSTALL_DIR/chef_installer
 if [ ! -d "/opt/chefdk" ]; then
   curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -P chefdk -d $INSTALL_DIR/chef_installer && rm install.sh
 fi
-echo "file_cache_path \"$INSTALL_DIR/chef_installer/.chef/cache\"" > solo_installer.rb
-echo -e "{\"install_dir\":\"$INSTALL_DIR\"}" > installer.json
-chef-client -z -j installer.json -c solo_installer.rb -r 'recipe[installer::installer]'
+
 cat << EOF > $INSTALL_DIR/chef_installer/Berksfile
 source 'https://supermarket.chef.io'
 
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git', branch: 'ad/simplify_pkgs'
+cookbook 'chef-services', $CHEF_SERVICES_SOURCE
 cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
 EOF
 
@@ -106,6 +111,7 @@ berks vendor cookbooks/
 echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}}" > attributes.json
 chef-client -z -j attributes.json --config-option file_cache_path=$INSTALL_DIR -r 'recipe[chef-services::chef-server]'
 
+berks upload --no-ssl-verify
 # ->upload cookbooks to itself
 # ->generate keys, create data_bags
 # ->bootstrap Chef to Chef

@@ -4,7 +4,7 @@ remote_file '/tmp/installer.sh' do
 end
 
 execute 'install Chef server' do
-  command './installer.sh -c chef.services.com'
+  command "./installer.sh -c chef.services.com -cs-source \"path: '/tmp/kitchen/cookbooks/chef-services'\""
   cwd '/tmp'
   action :run
 end

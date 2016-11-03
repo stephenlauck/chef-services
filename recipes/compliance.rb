@@ -1,14 +1,19 @@
-file_info = get_product_info("compliance", node['chef-services']['supermarket']['version'])
 
-remote_file "#{Chef::Config[:file_cache_path]}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{Chef::Config[:file_cache_path]}/#{file_info['name']}") }
+remote_file "compliance package" do
+  path "#{node['chef_server']['install_dir']}/#{::File.basename(node['compliance']['package_url'])}"
+  source node['compliance']['package_url']
+  only_if { node['compliance']['package_url'] }
 end
 
-chef_ingredient 'compliance' do
-	package_source "#{Chef::Config[:file_cache_path]}/#{file_info['name']}"
-	accept_license node['chef-services']['compliance']['accept_license'] unless node['compliance']['accept_license'].nil?
-  action [:install,:reconfigure]
+chef_ingredient "compliance" do
+  config node['compliance']['config'] if node['compliance']['config']
+  package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node['compliance']['package_url'])}" if node['compliance']['package_url']
+  accept_license node['chef-services']['accept_license']
+  action :upgrade
+end
+
+ingredient_config "compliance" do
+  notifies :reconfigure, "chef_ingredient[compliance]", :immediately
 end
 
 # Extra steps needed for SuSE

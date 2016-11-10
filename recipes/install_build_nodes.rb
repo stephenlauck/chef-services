@@ -2,15 +2,23 @@ workspace = '/var/opt/delivery/workspace'
 delivery_databag = data_bag_item('automate', 'automate')
 tag 'delivery-build-node'
 
-file_info = get_product_info("chefdk", node['chef-services']['chefdk']['version'])
+%w( chefdk ).each do |svc|
+  remote_file "#{svc} package" do
+    path "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}"
+    source node[svc]['package_url']
+    only_if { node[svc]['package_url'] }
+  end
 
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
+  chef_ingredient svc do
+    config node[svc]['config'] if node[svc]['config']
+    package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node[svc]['package_url'])}" if node[svc]['package_url']
+    accept_license node['chef-services']['accept_license']
+    action :upgrade
+  end
 
-chef_ingredient 'chefdk' do
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
+  ingredient_config svc do
+    notifies :reconfigure, "chef_ingredient[#{svc}]", :immediately
+  end
 end
 
 directory '/etc/chef/trusted_certs' do

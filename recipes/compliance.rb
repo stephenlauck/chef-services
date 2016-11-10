@@ -9,7 +9,7 @@ chef_ingredient "compliance" do
   config node['compliance']['config'] if node['compliance']['config']
   package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node['compliance']['package_url'])}" if node['compliance']['package_url']
   accept_license node['chef-services']['accept_license']
-  action :upgrade
+  action [:upgrade,:reconfigure]
 end
 
 ingredient_config "compliance" do

@@ -24,6 +24,7 @@ eos
 end
 
 execute 'add delivery validator' do
-  command 'chef-server-ctl add-client-key delivery delivery-validator --public-key-path /tmp/pre-delivery-validator.pub'
+  command 'chef-server-ctl add-client-key delivery delivery-validator --public-key-path /tmp/pre-delivery-validator.pub --key-name delivery-pub'
   action :run
+  not_if 'chef-server-ctl list-client-keys delivery delivery-validator | grep delivery-pub'
 end

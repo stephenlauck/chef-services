@@ -80,10 +80,10 @@ done
 #
 # ---------- Chef Server ----------
 # ->install Chef
-if [ -z $INSTALL_DIR ]; then
+if [ -z "$INSTALL_DIR" ]; then
   INSTALL_DIR=/tmp
 fi
-if [ -z $CHEF_SERVICES_SOURCE ]; then
+if [ -z "$CHEF_SERVICES_SOURCE" ]; then
   CHEF_SERVICES_SOURCE="git: 'https://github.com/stephenlauck/chef-services.git'"
 fi
 

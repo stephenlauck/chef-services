@@ -1,3 +1,65 @@
+# Package logic
+# Since we're trying to keep this cookbook simple, and not use external API's
+# to simplify the proxy story, we're setting package URL's in attributes.
+# To make this work on more than one platform we're using some logic here.
+#
+# If you're overriding the package values you don't need to worry about this.
+#
+# pv = platform version
+# pl = platform
+# pf = package format
+# s = seperator, we apparently use - for el and _ for ubuntu between the package
+#     name and version.
+
+case node['platform_family']
+when 'rhel'
+  pl = 'el'
+  pv = node['platform_version'].to_i
+  pf = ".#{pl}#{pv}.x86_64.rpm"
+  s = '-'
+when 'suse'
+  pl = 'el'
+  if node['platform_version'].to_i == 12
+    pv = '7'
+  else
+    pv = '6'
+  end
+  pf = ".#{pl}#{pv}.x86_64.rpm"
+  s = '-'
+when 'debian'
+  pl = 'ubuntu'
+  pv = node['platform_version']
+  pf = "_amd64.deb"
+  s = "_"
+else
+  raise "You seem to be running on an unrecognized platform."
+end
+
+default['delivery']['version'] = "0.6.7-1"
+default['chef-server']['version'] = "12.11.1-1"
+default['manage']['version'] = "2.4.4-1"
+default['push-jobs-server']['version'] = "2.1.0-1"
+default['chefdk']['version'] = "1.0.3-1"
+default['supermarket']['version'] = "2.8.34-1"
+default['compliance']['version'] = "1.6.8-1"
+
+%w(delivery chefdk chef-server manage push-jobs-server supermarket compliance).each do |pkg|
+  case pkg
+  when 'chef-server'
+    pn = 'chef-server-core'
+  when 'manage'
+    pn = 'chef-manage'
+  when 'push-jobs-server'
+    pn = 'opscode-push-jobs-server'
+  else
+    pn = pkg
+  end
+  v = node[pkg]['version']
+  # Derive the package URL from platform (pl), platform version (pv), the
+  # package name (pn), the package version (v), and package format (pf)
+  default[pkg]['package_url'] = "https://packages.chef.io/stable/#{pl}/#{pv}/#{pn}#{s}#{v}#{pf}"
+end
+
 # License attributes
 
 default['chef-services']['accept_license'] = true
@@ -14,9 +76,6 @@ delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
 EOS
 
-default['delivery']['package_url'] = "https://packages.chef.io/files/stable/delivery/0.5.432/el/6/delivery-0.5.432-1.el6.x86_64.rpm"
-
-
 # Chef server attributes
 
 default['chef_server']['fqdn'] = nil
@@ -28,22 +87,11 @@ oc_id['applications'] = {
 }
 EOS
 
-default['chef-server']['package_url'] = "https://packages.chef.io/files/stable/chef-server/12.10.0/el/6/chef-server-core-12.10.0-1.el6.x86_64.rpm"
-default['manage']['package_url'] = "https://packages.chef.io/files/stable/chef-manage/2.4.4/el/6/chef-manage-2.4.4-1.el6.x86_64.rpm"
-default['push-jobs-server']['package_url'] = "https://packages.chef.io/files/stable/opscode-push-jobs-server/2.1.0/el/6/opscode-push-jobs-server-2.1.0-1.el6.x86_64.rpm"
-default['reporting']['package_url'] = "https://packages.chef.io/files/stable/opscode-reporting/1.6.4/el/6/opscode-reporting-1.6.4-1.el6.x86_64.rpm"
-
-
 # ChefDK Attributes
-
-default['chefdk']['package_url'] = "https://packages.chef.io/files/stable/chefdk/0.19.6/el/6/chefdk-0.19.6-1.el6.x86_64.rpm"
 
 # Supermarket Attributes
 
 default['chef-supermarket']['supermarket']['verify_ssl'] = false
 default['chef-services']['supermarket']['config'] = {}
-default['supermarket']['package_url'] = "https://packages.chef.io/files/stable/supermarket/2.8.30/el/6/supermarket-2.8.30-1.el6.x86_64.rpm"
 
 # Compliance attributes
-
-default['compliance']['package_url'] = "https://packages.chef.io/files/stable/chef-compliance/1.6.8/el/6/chef-compliance-1.6.8-1.el6.x86_64.rpm"

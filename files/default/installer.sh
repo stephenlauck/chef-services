@@ -100,6 +100,7 @@ source 'https://supermarket.chef.io'
 cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
 cookbook 'chef-services', $CHEF_SERVICES_SOURCE
 cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
+cookbook 'chef', git: 'https://github.com/ncerny/chef-cookbook.git'
 EOF
 
 export PATH=/opt/chefdk/gitbin:$PATH

@@ -9,3 +9,5 @@ cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient
 group :integration do
   cookbook 'test', path: './test/fixtures/cookbooks/test'
 end
+
+cookbook 'chef', git: 'https://github.com/ncerny/chef-cookbook.git'

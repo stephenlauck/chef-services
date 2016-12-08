@@ -38,7 +38,6 @@ unless automate_db
         'user_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery.pem"),
         'builder_pem' => builder_key.to_pem,
         'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
-        'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license')),
         'supermarket_oauth2_app_id' => supermarket_ocid['uid'],
         'supermarket_oauth2_secret' => supermarket_ocid['secret']
       }

@@ -45,6 +45,8 @@ suites:
       chef_server:
         fqdn: chef.services.com
         install_dir: /tmp/
+      chef_automate:
+        fqdn: automate.services.com
 
   - name: automate
     run_list:

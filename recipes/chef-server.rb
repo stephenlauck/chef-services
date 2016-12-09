@@ -3,6 +3,7 @@ chef_server node['fqdn'] do
   addons 'manage' => { config: node['manage']['config'] },
          'push-jobs-server' => { config: node['push-jobs-server']['config'] }
   accept_license node['chef-services']['accept_license']
+  data_collector_url node['chef_automate']['fqdn']
 end
 
 chef_user 'delivery' do

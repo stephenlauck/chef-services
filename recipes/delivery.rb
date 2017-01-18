@@ -38,6 +38,7 @@ delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
 delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
+compliance_profiles['enable'] = true
   EOS
   package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
   action :install

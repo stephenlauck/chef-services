@@ -9,6 +9,10 @@ chef_ingredient "chef-server" do
   config <<-EOS
 api_fqdn "#{node['chef_server']['fqdn']}"
 
+data_collector['root_url'] = 'https://automate.services.com/data-collector/v0/'
+data_collector['token'] = '93a49a4f2482c64126f7b6015e6b0f30284287ee4054ff8807fb63d9cbd1c506'
+profiles['root_url'] = 'https://automate.services.com'
+
 oc_id['applications'] = {
   "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
 }

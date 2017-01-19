@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license          'all_rights'
 description      'Installs/Configures chef-services'
 long_description 'Installs/Configures chef-services'
-version          '3.0.5'
+version          '3.0.7'
 
 depends 'ntp'
 depends 'fancy_execute'

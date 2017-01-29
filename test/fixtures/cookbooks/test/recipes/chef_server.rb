@@ -1,10 +1,10 @@
 remote_file '/tmp/installer.sh' do
-  source 'https://raw.githubusercontent.com/stephenlauck/chef-services/master/files/default/installer.sh'
+  source 'file:///tmp/kitchen/cookbooks/chef-services/files/default/installer.sh'
   mode 0755
 end
 
 execute 'install Chef server' do
-  command './installer.sh -c chef.services.com'
+  command "./installer.sh -c chef.services.com -cs-source \"path: '/tmp/kitchen/cookbooks/chef-services'\""
   cwd '/tmp'
   action :run
 end

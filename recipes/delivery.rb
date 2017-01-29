@@ -4,48 +4,33 @@
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
 
-directory '/var/opt/delivery/license/' do
-  recursive true
-end
-
-directory '/etc/delivery'
-directory '/etc/chef'
-
 delivery_databag = data_bag_item('automate', 'automate')
 
-include_recipe 'chef-services::delivery_license'
-
-file '/etc/delivery/delivery.pem' do
-  content delivery_databag['user_pem']
+chef_automate 'automate.services.com' do
+  chef_user 'delivery'
+  chef_user_pem delivery_databag['user_pem']
+  validation_pem delivery_databag['validator_pem']
+  builder_pem delivery_databag['builder_pem']
+  config node['delivery']['config']
+  enterprise 'test'
+  license 'cookbook_file://chef-services::delivery.license'
+  accept_license node['chef-services']['accept_license']
+  notifies :run, 'ruby_block[add automate password to databag]', :immediately
 end
 
-file '/etc/chef/validation.pem' do
-  content delivery_databag['validator_pem']
+ruby_block 'add automate password to databag' do
+  block do
+    delivery_databag['automate_password'] = ::File.read('/etc/delivery/test.creds')[/Admin password: (?<pw>.*)$/, 'pw']
+
+    @chef_rest = Chef::ServerAPI.new(
+      Chef::Config[:chef_server_url],
+      {
+        client_name: 'delivery',
+        signing_key_filename: '/etc/delivery/delivery.pem'
+      }
+    )
+
+    @chef_rest.put('data/automate/automate', delivery_databag)
+  end
+  action :nothing
 end
-
-file_info = get_product_info("delivery", node['chef-services']['delivery']['version'])
-
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
-
-chef_ingredient 'delivery' do
-  config <<-EOS
-delivery_fqdn "#{node['chef_automate']['fqdn']}"
-delivery['chef_username']    = "delivery"
-delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
-delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizations/delivery"
-delivery['default_search']   = "tags:delivery-build-node"
-insights['enable']           = true
-compliance_profiles['enable'] = true
-  EOS
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
-  action :install
-end
-
-ingredient_config 'delivery' do
-  notifies :reconfigure, 'chef_ingredient[delivery]', :immediately
-end
-
-include_recipe 'chef-services::create_enterprise'

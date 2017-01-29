@@ -13,6 +13,10 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+.kitchen.local*
+
+# Berks
+Berksfile.lock
 
 #Mac
 .DS_Store

@@ -3,17 +3,6 @@ require 'json'
 require 'net/ssh'
 require 'base64'
 
-file_info = get_product_info("chefdk", node['chef-services']['chefdk']['version'])
-
-remote_file "#{node['chef_server']['install_dir']}/#{file_info['name']}" do
-  source file_info['url']
-  not_if { ::File.exist?("#{node['chef_server']['install_dir']}/#{file_info['name']}") }
-end
-
-chef_ingredient 'chefdk' do
-  package_source "#{node['chef_server']['install_dir']}/#{file_info['name']}"
-end
-
 directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/" do
   action :create
   recursive true
@@ -49,7 +38,6 @@ unless automate_db
         'user_pem' => ::File.read("#{node['chef_server']['install_dir']}/delivery.pem"),
         'builder_pem' => builder_key.to_pem,
         'builder_pub' => "ssh-rsa #{[builder_key.to_blob].pack('m0')}",
-        'license_file' => Base64.encode64(::File.read('/var/opt/delivery/license/delivery.license')),
         'supermarket_oauth2_app_id' => supermarket_ocid['uid'],
         'supermarket_oauth2_secret' => supermarket_ocid['secret']
       }
@@ -65,20 +53,4 @@ unless automate_db
     environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
   end
 
-  file "#{node['chef_server']['install_dir']}/chef_installer/Berksfile" do
-    content <<-EOF
-  source 'https://supermarket.chef.io'
-
-  cookbook 'chef-server-ctl', git: 'https://github.com/stephenlauck/chef-server-ctl.git'
-  cookbook 'chef-services', git: 'https://github.com/stephenlauck/chef-services.git'
-  cookbook 'chef-ingredient', git: 'https://github.com/andy-dufour/chef-ingredient.git'
-  cookbook 'supermarket-omnibus-cookbook'
-  EOF
-  end
-
-  execute 'upload cookbooks' do
-    command 'berks install;berks upload --no-ssl-verify'
-    cwd "#{node['chef_server']['install_dir']}/chef_installer"
-    environment 'PATH' => "/opt/chefdk/gitbin:#{ENV['PATH']}"
-  end
 end

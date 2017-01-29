@@ -1,43 +1,45 @@
 DEPENDENCIES
-  chef-ingredient
-    git: https://github.com/andy-dufour/chef-ingredient.git
-    revision: fc00557d9badcf77fe7bf3d687299601980a4114
   chef-server-ctl
     git: https://github.com/stephenlauck/chef-server-ctl.git
     revision: 55bfa054f9d5cda86f1a96b28b5ccaddbec7a69d
   chef-services
     path: .
     metadata: true
+  chef_stack
+    git: https://github.com/ncerny/chef_stack.git
+    revision: 33cf778c58bee9b74d47113bb000e21fc3ebeecd
+    branch: lauck/fix_cookbook_name
   supermarket-omnibus-cookbook
     git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
-    revision: a711a83cfa8a2c0c48ba94a2cf1416c8a9cc19f5
+    revision: d4b0fd8a0dcd5f01b89fab3140eb0f948a5d990c
   test
     path: test/fixtures/cookbooks/test
 
 GRAPH
-  chef-ingredient (0.21.0)
-    compat_resource (>= 12.10.0)
+  chef-ingredient (0.21.2)
+    compat_resource (>= 12.10)
   chef-server (5.1.0)
     chef-ingredient (>= 0.18.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (3.0.5)
-    chef-ingredient (>= 0.0.0)
+  chef-services (4.1.0)
     chef-server-ctl (>= 0.0.0)
+    chef_stack (>= 0.0.0)
     fancy_execute (>= 0.0.0)
     ntp (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)
+  chef_stack (0.5.1)
+    chef-ingredient (>= 0.0.0)
   compat_resource (12.16.3)
   fancy_execute (1.0.2)
   hostsfile (2.4.5)
   ntp (3.3.1)
-  supermarket-omnibus-cookbook (2.0.0)
-    chef-ingredient (>= 0.19.0)
+  supermarket-omnibus-cookbook (2.0.1)
+    chef-ingredient (>= 0.21.2)
     compat_resource (>= 12.14.3)
     fancy_execute (>= 0.0.0)
     hostsfile (>= 0.0.0)
   test (0.0.1)
-    chef-ingredient (>= 0.0.0)
     chef-server-ctl (>= 0.0.0)
     hostsfile (>= 0.0.0)
     supermarket-omnibus-cookbook (>= 0.0.0)

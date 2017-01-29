@@ -7,7 +7,7 @@ workflow_builder node['fqdn'] do
   builder_pem delivery_databag['builder_pem']
   chef_fqdn node['chef_server']['fqdn']
   automate_fqdn node['chef_automate']['fqdn']
-  supermarket_fqdn 'supermarket.local'
+  supermarket_fqdn 'supermarket.services.com'
   job_dispatch_version 'v2'
   automate_user 'admin'
   automate_password delivery_databag['automate_password']

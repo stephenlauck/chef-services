@@ -9,4 +9,4 @@ group :integration do
   cookbook 'test', path: './test/fixtures/cookbooks/test'
 end
 
-cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git', branch: 'lauck/fix_cookbook_name'
+cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git'

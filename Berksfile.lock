@@ -7,8 +7,7 @@ DEPENDENCIES
     metadata: true
   chef_stack
     git: https://github.com/ncerny/chef_stack.git
-    revision: 33cf778c58bee9b74d47113bb000e21fc3ebeecd
-    branch: lauck/fix_cookbook_name
+    revision: bc7f587ca4156ce12140f86891be42f3216eef10
   supermarket-omnibus-cookbook
     git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
     revision: d4b0fd8a0dcd5f01b89fab3140eb0f948a5d990c

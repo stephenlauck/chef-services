@@ -6,7 +6,7 @@
 
 delivery_databag = data_bag_item('automate', 'automate')
 
-chef_automate 'automate.services.com' do
+chef_automate node['chef_automate']['fqdn'] do
   chef_user 'delivery'
   chef_user_pem delivery_databag['user_pem']
   validation_pem delivery_databag['validator_pem']

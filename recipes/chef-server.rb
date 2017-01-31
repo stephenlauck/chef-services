@@ -3,7 +3,7 @@ chef_server node['chef_server']['fqdn'] do
   config <<-EOS
 topology 'standalone'
 ip_version 'ipv4'
-api_fqdn 'chef.services.com'
+api_fqdn #{node['chef_server']['fqdn']}
 oc_id['applications'] = {
   "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
 }

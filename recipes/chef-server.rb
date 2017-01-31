@@ -1,4 +1,4 @@
-chef_server node['fqdn'] do
+chef_server node['chef_server']['fqdn'] do
   version :latest
   config <<-EOS
 topology 'standalone'
@@ -32,7 +32,7 @@ directory "#{node['chef_server']['install_dir']}/chef_installer/.chef/cache" do
   recursive true
 end
 
-chef_client node['fqdn'] do
+chef_client node['chef_server']['fqdn'] do
   chef_server_url "https://#{node['chef_server']['fqdn']}/organizations/delivery"
   validation_client_name 'delivery-validator'
   validation_pem "file://#{node['chef_server']['install_dir']}/delivery-validator.pem"

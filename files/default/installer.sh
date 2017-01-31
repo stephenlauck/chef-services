@@ -122,7 +122,7 @@ berks upload --no-ssl-verify
 
 if [ ! -z $CHEF_AUTOMATE_FQDN ]; then
   knife bootstrap $CHEF_AUTOMATE_FQDN -N $CHEF_AUTOMATE_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[chef-services::delivery]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"}}" -y --node-ssl-verify-mode none
-  knife bootstrap $CHEF_BUILD_FQDN -N $CHEF_BUILD_FQDN -x vagrant -P vagrant --sudo -r "recipe[chef-services::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"},\"tags\":\"delivery-build-node\"}" -y --node-ssl-verify-mode none
+  knife bootstrap $CHEF_BUILD_FQDN -N $CHEF_BUILD_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "recipe[chef-services::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"},\"tags\":\"delivery-build-node\"}" -y --node-ssl-verify-mode none
 fi
 
 chef-client -j attributes.json -r 'recipe[chef-services::chef-server]'

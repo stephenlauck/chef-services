@@ -21,7 +21,7 @@ GRAPH
     chef-ingredient (>= 0.18.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (4.1.4)
+  chef-services (4.1.6)
     chef-server-ctl (>= 0.0.0)
     chef_stack (>= 0.0.0)
     fancy_execute (>= 0.0.0)

@@ -27,7 +27,7 @@ kitchen converge
 
 ### Automate credentials for admin login
 
-`kitchen exec delivery -c 'cat /tmp/test.creds'`
+`kitchen exec delivery -c 'cat /etc/delivery/test.creds'`
 
 [http://automate.services.com/e/test](http://automate.services.com/e/test)
 

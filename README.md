@@ -41,12 +41,10 @@ kitchen converge
 
 ### Chef simple install
 
-`kitchen create chef-server-centos-72`
+`kitchen create 72`
 
-`scp -p files/default/installer.sh vagrant@33.33.33.10:/tmp/installer.sh`
+`kitchen login chef-server-centos-72`
 
-`ssh vagrant@33.33.33.10 "sudo /tmp/installer.sh -c 33.33.33.10"`
+`sudo su -`
 
-or
-
-`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/master/files/default/installer.sh && sudo bash ./installer.sh -c 33.33.33.10 -a 33.33.33.11 -b 33.33.33.12 -u vagrant -p vagrant`
+`curl -O https://raw.githubusercontent.com/stephenlauck/chef-services/master/files/default/installer.sh && sudo bash ./installer.sh -c chef.services.com -a automate.services.com -b build.services.com -u vagrant -p vagrant`

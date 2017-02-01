@@ -15,6 +15,7 @@ client_key               \"#{node['chef_server']['install_dir']}/delivery.pem\"
 chef_server_url          \"https://#{node['chef_server']['fqdn']}/organizations/delivery\"
 cookbook_path            [\"#{node['chef_server']['install_dir']}/chef_installer/cookbooks\"]
 ssl_verify_mode          :verify_none
+validation_key           \"/nonexist\"
 "
 end
 automate_db = begin

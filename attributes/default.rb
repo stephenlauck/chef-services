@@ -41,7 +41,7 @@ default['manage']['version'] = "2.4.4-1"
 default['push-jobs-server']['version'] = "2.1.0-1"
 default['chefdk']['version'] = "1.0.3-1"
 default['supermarket']['version'] = "2.8.34-1"
-default['compliance']['version'] = "1.6.8-1"
+default['compliance']['version'] = "1.7.7-1"
 
 %w(delivery chefdk chef-server manage push-jobs-server supermarket compliance).each do |pkg|
   case pkg
@@ -51,13 +51,15 @@ default['compliance']['version'] = "1.6.8-1"
     pn = 'chef-manage'
   when 'push-jobs-server'
     pn = 'opscode-push-jobs-server'
+  when 'compliance'
+    pn = 'chef-compliance'
   else
     pn = pkg
   end
   v = node[pkg]['version']
   # Derive the package URL from platform (pl), platform version (pv), the
   # package name (pn), the package version (v), and package format (pf)
-  default[pkg]['package_url'] = "https://packages.chef.io/stable/#{pl}/#{pv}/#{pn}#{s}#{v}#{pf}"
+  default[pkg]['package_url'] = "https://packages.chef.io/files/stable/#{pn}/#{v.split('-').first}/#{pl}/#{pv}/#{pn}#{s}#{v}#{pf}"
 end
 
 # License attributes

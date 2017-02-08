@@ -100,3 +100,19 @@ suites:
       customize:
         memory: 1024
         cpus: 1
+
+  - name: compliance
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[chef-services::compliance]
+    attributes:
+      compliance:
+        accept_license: true
+        fqdn: compliance.services.com
+    driver:
+      vm_hostname: compliance.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.14'}]
+      customize:
+        memory: 1024
+        cpus: 1

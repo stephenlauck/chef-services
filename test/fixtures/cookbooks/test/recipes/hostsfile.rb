@@ -1,3 +1,5 @@
+include_recipe 'ntp'
+
 hostsfile_entry '33.33.33.10' do
   hostname  'chef.services.com'
   unique    true

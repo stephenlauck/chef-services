@@ -15,13 +15,13 @@ DEPENDENCIES
     path: test/fixtures/cookbooks/test
 
 GRAPH
-  chef-ingredient (0.21.3)
+  chef-ingredient (0.21.4)
     compat_resource (>= 12.16.3)
   chef-server (5.1.0)
     chef-ingredient (>= 0.18.0)
   chef-server-ctl (0.1.0)
     chef-server (>= 0.0.0)
-  chef-services (4.1.10)
+  chef-services (4.2.3)
     chef_stack (>= 0.0.0)
     fancy_execute (>= 0.0.0)
   chef_stack (0.5.2)

@@ -73,10 +73,6 @@ suites:
       - recipe[test::hostsfile]
       - recipe[test::delivery_build_node]
     attributes:
-      chef_automate:
-        fqdn: automate.services.com
-      chef_services:
-        fqdn: chef.services.com
     driver:
       vm_hostname: build.services.com
       network:
@@ -104,7 +100,7 @@ suites:
   - name: compliance
     run_list:
       - recipe[test::hostsfile]
-      - recipe[chef-services::compliance]
+      - recipe[test::compliance_node]
     attributes:
       compliance:
         accept_license: true

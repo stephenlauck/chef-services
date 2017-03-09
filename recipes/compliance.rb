@@ -9,6 +9,8 @@ chef_ingredient "compliance" do
   config node['compliance']['config'] if node['compliance']['config']
   package_source "#{node['chef_server']['install_dir']}/#{::File.basename(node['compliance']['package_url'])}" if node['compliance']['package_url']
   accept_license node['chef-services']['accept_license']
+  platform 'el' if node['platform'] == 'suse'
+  platform_version '6' if node['platform'] == 'suse'
   action [:upgrade,:reconfigure]
 end
 

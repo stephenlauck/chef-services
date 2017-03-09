@@ -12,4 +12,6 @@ workflow_builder node['fqdn'] do
   automate_user 'admin'
   automate_password delivery_databag['automate_password']
   automate_enterprise 'test'
+  platform 'el' if node['platform'] == 'suse'
+  platform_version '6' if node['platform'] == 'suse'
 end

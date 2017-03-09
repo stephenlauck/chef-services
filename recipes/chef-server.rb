@@ -9,6 +9,8 @@ EOS
   addons manage: { version: '2.4.3', config: '' },
          :"push-jobs-server" => { version: '2.1.0', config: '' }
   accept_license true
+  platform 'el' if node['platform'] == 'suse'
+  platform_version '6' if node['platform'] == 'suse'
   # data_collector_url 'https://automate.services.com/data-collector/v0/' if search(:node, 'name:automate-centos-68', filter_result: { 'name' => ['name'] }) # ~FC003
 end
 
@@ -36,6 +38,8 @@ chef_client node['chef_server']['fqdn'] do
   validation_pem "file://#{node['chef_server']['install_dir']}/delivery-validator.pem"
   config "file_cache_path '#{node['chef_server']['install_dir']}/chef_installer/.chef/cache'"
   ssl_verify false
+  platform 'el' if node['platform'] == 'suse'
+  platform_version '6' if node['platform'] == 'suse'
 end
 
 include_recipe 'chef-services::save_secrets'

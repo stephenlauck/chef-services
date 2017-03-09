@@ -15,6 +15,8 @@ chef_automate node['chef_automate']['fqdn'] do
   enterprise 'test'
   license 'cookbook_file://chef-services::delivery.license'
   accept_license node['chef-services']['accept_license']
+  platform 'el' if node['platform'] == 'suse'
+  platform_version '6' if node['platform'] == 'suse'
   notifies :run, 'ruby_block[add automate password to databag]', :immediately
 end
 

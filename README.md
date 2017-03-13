@@ -21,7 +21,61 @@ kitchen converge
 33.33.33.14 compliance.services.com
 ```
 
-#### Login to chef-server  
+### vsphere settings
+
+If you would like to bootstrap this into a vSphere environment, you need to edit the `.kitchen.vsphere.yml` file. The following settings should get you most of the way there.
+
+Fill out anything that is in UPPERCASE.
+
+```
+  driver_options:
+    host: 'HOSTIP'
+    user: 'USERNAME'
+    password: 'PASSWORD'
+    insecure: true
+  machine_options:
+    start_timeout: 600
+    create_timeout: 600
+    ready_timeout: 90
+    bootstrap_options:
+      use_linked_clone: true
+      datacenter: 'DATACENTER'
+      template_name: 'TEMPLATENAME'
+      template_folder: 'FOLDER'
+      resource_pool: 'CLUSTER'
+```
+
+The SSH transport account.
+
+```
+ssh:
+  user: admini # ssh username
+  paranoid: false
+  password: admini # ssh password
+  port: 22
+```
+
+The SSH transport account.
+
+```
+transport:
+  username: "admin" # ssh username
+  password: admini # ssh password
+```
+
+After this, you can run:
+
+```bash
+$ KITCHEN_YAML=.kitchen.vsphere.yml kitchen list
+```
+
+and
+
+```bash
+$ KITCHEN_YAML=.kitchen.vsphere.yml kitchen converge ubuntu
+```
+
+#### Login to chef-server
 ##### user/password: delivery/delivery
 [http://chef.services.com](http://chef.services.com)
 

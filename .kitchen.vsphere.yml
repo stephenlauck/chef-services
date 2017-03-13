@@ -1,0 +1,142 @@
+---
+driver:
+  name: vsphere
+  ssh:
+    insert_key: false
+  # http_proxy: http://10.0.0.53:8888
+  # https_proxy: http://10.0.0.53:8888
+  # no_proxy: localhost,*.localdomain,127.0.0.1,*.services.com
+  driver_options:
+    host: 'HOSTIP'
+    user: 'USERNAME'
+    password: 'PASSWORD'
+    insecure: true
+  machine_options:
+    start_timeout: 600
+    create_timeout: 600
+    ready_timeout: 90
+    bootstrap_options:
+      use_linked_clone: true
+      datacenter: 'DATACENTER'
+      template_name: 'TEMPLATENAME'
+      template_folder: 'FOLDER'
+      resource_pool: 'CLUSTER'
+      num_cpus: 2
+      memory_mb: 4096
+      ssh:
+        user: admini # ssh username
+        paranoid: false
+        password: admini # ssh password
+        port: 22
+
+provisioner:
+  name: chef_zero
+  chef_zero_port: 9010
+  encrypted_data_bag_secret_key_path: 'test/fixtures/secrets/fakey-mcfakerton'
+  data_bags_path: 'test/fixtures/data_bags'
+  sudo_command: sudo
+  # client_rb:
+  #   http_proxy: http://10.0.0.53:8888
+  #   https_proxy: http://10.0.0.53:8888
+  #   no_proxy: localhost,*.localdomain,127.0.0.1,*.services.com
+  # http_proxy: http://10.0.0.53:8888
+  # https_proxy: http://10.0.0.53:8888
+  # no_proxy: localhost,*.localdomain,127.0.0.1,*.services.com
+
+verifier:
+  name: inspec
+
+transport:
+  username: "admini" # ssh username
+  password: admini # ssh password
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: chef-server
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::chef_server]
+    driver:
+      vm_hostname: chef.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.10'}]
+      customize:
+        memory: 2048
+        cpus: 2
+    attributes:
+      chef_server:
+        fqdn: chef.services.com
+        install_dir: /tmp/
+
+  - name: automate
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::delivery_node]
+    attributes:
+      delivery:
+        fqdn: 'automate.services.com'
+        chef_server: https://chef.services.com/organizations/delivery
+        insights:
+          enable: true
+      chef_automate:
+        fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
+    driver:
+      vm_hostname: automate.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.11'}]
+      customize:
+        memory: 2560
+        cpus: 1
+
+  - name: build
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::delivery_build_node]
+    attributes:
+      chef_automate:
+        fqdn: automate.services.com
+      chef_services:
+        fqdn: chef.services.com
+    driver:
+      vm_hostname: build.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.12'}]
+      customize:
+        memory: 1024
+        cpus: 1
+
+  - name: supermarket
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[test::supermarket_node]
+    attributes:
+      supermarket_omnibus:
+        chef_server_url: 'https://chef.services.com'
+        chef_oauth2_verify_ssl: false
+    driver:
+      vm_hostname: supermarket.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.13'}]
+      customize:
+        memory: 1024
+        cpus: 1
+
+  - name: compliance
+    run_list:
+      - recipe[test::hostsfile]
+      - recipe[chef-services::compliance]
+    attributes:
+      compliance:
+        accept_license: true
+        fqdn: compliance.services.com
+    driver:
+      vm_hostname: compliance.services.com
+      network:
+        - ['private_network', {ip: '33.33.33.14'}]
+      customize:
+        memory: 1024
+        cpus: 1

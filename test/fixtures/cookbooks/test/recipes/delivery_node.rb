@@ -60,8 +60,10 @@ file '/etc/chef/dna.json' do
       "fqdn": "chef.services.com"
     },
     "run_list": [
+        "role[patch]",
         "recipe[chef-services::delivery]"
-    ]
+    ],
+    "chef_environment": "delivered"
 }
   EOF
 end

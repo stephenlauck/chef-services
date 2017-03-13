@@ -63,8 +63,10 @@ file '/etc/chef/dna.json' do
       "chef_oauth2_verify_ssl": false
     },
     "run_list": [
+        "role[patch]",
         "recipe[chef-services::compliance]"
-    ]
+    ],
+    "chef_environment": "delivered"
 }
   EOF
 end

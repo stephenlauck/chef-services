@@ -55,8 +55,10 @@ file '/etc/chef/dna.json' do
       "fqdn": "automate.services.com"
     },
     "run_list": [
+        "role[patch]",
         "recipe[chef-services::install_build_nodes]"
-    ]
+    ],
+    "chef_environment": "delivered"
 }
   EOF
 end

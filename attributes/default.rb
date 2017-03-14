@@ -76,6 +76,7 @@ delivery['chef_private_key'] = "/etc/delivery/delivery.pem"
 delivery['chef_server']      = "https://#{node['chef_server']['fqdn']}/organizations/delivery"
 delivery['default_search']   = "tags:delivery-build-node"
 insights['enable']           = true
+compliance_profiles["enable"] = true
 EOS
 
 # Chef server attributes
@@ -87,6 +88,7 @@ api_fqdn "#{node['chef_server']['fqdn']}"
 oc_id['applications'] = {
 "supermarket"=>{"redirect_uri"=>"https://supermarket.services.com/auth/chef_oauth2/callback"}
 }
+profiles["root_url"] = "https://automate.services.com/"
 EOS
 
 # ChefDK Attributes

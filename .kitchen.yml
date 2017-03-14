@@ -84,34 +84,34 @@ suites:
         memory: 1024
         cpus: 1
 
-  - name: supermarket
-    run_list:
-      - recipe[test::hostsfile]
-      - recipe[test::supermarket_node]
-    attributes:
-      supermarket_omnibus:
-        chef_server_url: 'https://chef.services.com'
-        chef_oauth2_verify_ssl: false
-    driver:
-      vm_hostname: supermarket.services.com
-      network:
-        - ['private_network', {ip: '33.33.33.13'}]
-      customize:
-        memory: 1024
-        cpus: 1
-
-  - name: compliance
-    run_list:
-      - recipe[test::hostsfile]
-      - recipe[test::compliance_node]
-    attributes:
-      compliance:
-        accept_license: true
-        fqdn: compliance.services.com
-    driver:
-      vm_hostname: compliance.services.com
-      network:
-        - ['private_network', {ip: '33.33.33.14'}]
-      customize:
-        memory: 1024
-        cpus: 1
+  # - name: supermarket
+  #   run_list:
+  #     - recipe[test::hostsfile]
+  #     - recipe[test::supermarket_node]
+  #   attributes:
+  #     supermarket_omnibus:
+  #       chef_server_url: 'https://chef.services.com'
+  #       chef_oauth2_verify_ssl: false
+  #   driver:
+  #     vm_hostname: supermarket.services.com
+  #     network:
+  #       - ['private_network', {ip: '33.33.33.13'}]
+  #     customize:
+  #       memory: 1024
+  #       cpus: 1
+  #
+  # - name: compliance
+  #   run_list:
+  #     - recipe[test::hostsfile]
+  #     - recipe[test::compliance_node]
+  #   attributes:
+  #     compliance:
+  #       accept_license: true
+  #       fqdn: compliance.services.com
+  #   driver:
+  #     vm_hostname: compliance.services.com
+  #     network:
+  #       - ['private_network', {ip: '33.33.33.14'}]
+  #     customize:
+  #       memory: 1024
+  #       cpus: 1

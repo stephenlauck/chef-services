@@ -19,10 +19,14 @@ file "#{node['chef_server']['install_dir']}/chef_installer/roles/patch.json" do
             "url": "https://github.com/dev-sec/linux-patch-benchmark"
           }
         ]
+      },
+      "chef-client": {
+        "interval": "300"
       }
     },
     "chef_type": "role",
     "run_list": [
+      "recipe[chef-client]",
       "recipe[audit]"
     ]
   }

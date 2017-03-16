@@ -4,10 +4,10 @@ directory "#{node['chef_server']['install_dir']}/chef_installer/roles/" do
   recursive true
 end
 
-file "#{node['chef_server']['install_dir']}/chef_installer/roles/patch.json" do
+file "#{node['chef_server']['install_dir']}/chef_installer/roles/compliance.json" do
   content <<-EOD
   {
-    "name": "patch",
+    "name": "compliance",
     "description": "",
     "json_class": "Chef::Role",
     "default_attributes": {

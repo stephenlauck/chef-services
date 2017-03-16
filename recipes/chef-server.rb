@@ -37,7 +37,7 @@ chef_client node['chef_server']['fqdn'] do
   config "file_cache_path '#{node['chef_server']['install_dir']}/chef_installer/.chef/cache'"
   ssl_verify false
   run_list [
-    "role[patch]",
+    "role[compliance]",
     "recipe[chef-services::chef-server]"
   ]
 end

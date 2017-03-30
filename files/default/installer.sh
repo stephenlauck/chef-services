@@ -60,6 +60,10 @@ case $key in
     CHEF_SERVICES_SOURCE="$2"
     shift
     ;;
+    -stack-source|--chef-stack-source)
+    CHEF_STACK_SOURCE="$2"
+    shift
+    ;;
     -h|--help)
     echo -e $usage
     exit 0
@@ -81,6 +85,10 @@ fi
 if [ -z "$CHEF_SERVICES_SOURCE" ]; then
   CHEF_SERVICES_SOURCE="git: 'https://github.com/stephenlauck/chef-services.git'"
 fi
+if [ -z "$CHEF_STACK_SOURCE" ]; then
+  CHEF_STACK_SOURCE="git: 'https://github.com/ncerny/chef_stack.git', branch: 'lauck/fix_runner_knife_rb'"
+fi
+
 
 mkdir -p $INSTALL_DIR/chef_installer/.chef/cache/
 cd $INSTALL_DIR/chef_installer
@@ -93,7 +101,7 @@ cat << EOF > $INSTALL_DIR/chef_installer/Berksfile
 source 'https://supermarket.chef.io'
 
 cookbook 'chef-services', $CHEF_SERVICES_SOURCE
-cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git', branch: 'lauck/fix_runner_knife_rb'
+cookbook 'chef_stack', $CHEF_STACK_SOURCE
 cookbook 'audit'
 cookbook 'chef-client'
 EOF

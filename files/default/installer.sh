@@ -93,7 +93,7 @@ cat << EOF > $INSTALL_DIR/chef_installer/Berksfile
 source 'https://supermarket.chef.io'
 
 cookbook 'chef-services', $CHEF_SERVICES_SOURCE
-cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git', branch: 'lauck/fix_runner_knife_rb'
+cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git'
 cookbook 'audit'
 cookbook 'chef-client'
 EOF

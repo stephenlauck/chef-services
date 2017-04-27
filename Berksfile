@@ -9,4 +9,4 @@ group :integration do
   cookbook 'test', path: './test/fixtures/cookbooks/test'
 end
 
-cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git'
+cookbook 'chef_stack', git: 'https://github.com/ncerny/chef_stack.git', branch: 'nc/modify-frozen-string'

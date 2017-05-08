@@ -7,7 +7,7 @@ DEPENDENCIES
     metadata: true
   chef_stack
     git: https://github.com/ncerny/chef_stack.git
-    revision: 4a102bdb2782268fe1ccbd15ae4ac6c364721ad5
+    revision: 8e96c1d6adea13f8e580608d3a18c2fe6fca61f0
     branch: nc/modify-frozen-string
   supermarket-omnibus-cookbook
     git: https://github.com/chef-cookbooks/supermarket-omnibus-cookbook.git
@@ -24,7 +24,7 @@ GRAPH
   chef-services (5.1.1)
     chef_stack (>= 0.0.0)
     fancy_execute (>= 0.0.0)
-  chef_stack (0.8.2)
+  chef_stack (0.8.6)
     chef-ingredient (>= 0.0.0)
   fancy_execute (2.0.0)
   hostsfile (2.4.5)

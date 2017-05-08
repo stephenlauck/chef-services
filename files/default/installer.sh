@@ -124,5 +124,6 @@ if [ ! -z $CHEF_BUILD_FQDN ]; then
   knife bootstrap $CHEF_BUILD_FQDN -N $CHEF_BUILD_FQDN -x $CHEF_USER -P $CHEF_PW --sudo -r "role[patch],recipe[chef-services::install_build_nodes]" -j "{\"chef_server\":{\"fqdn\":\"$CHEF_SERVER_FQDN\"},\"chef_automate\":{\"fqdn\":\"$CHEF_AUTOMATE_FQDN\"},\"tags\":\"delivery-build-node\"}" -E delivered -y --node-ssl-verify-mode none
 fi
 
+# add correct compliance role, environment and scan
 echo -e "{\"chef_server\": {\"fqdn\":\"$CHEF_SERVER_FQDN\",\"install_dir\":\"$INSTALL_DIR\"}, \"chef_environment\": \"delivered\"}" > attributes.json
 chef-client -j attributes.json -r 'role[patch],recipe[chef-services::chef-server]'
